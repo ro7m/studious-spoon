@@ -780,36 +780,39 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <script>
-    // Wait for DOM
-    document.addEventListener('DOMContentLoaded', () => {
+    // Initialize cart functionality - More robust approach
+    (function() {
+      'use strict';
+      
       // Cart state
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
+      let cart = [];
+      
       // DOM Elements
-      const cartIcon = document.getElementById('cartIcon');
-      const cartCount = document.getElementById('cartCount');
-      const cartModal = document.getElementById('cartModal');
-      const closeCart = document.getElementById('closeCart');
-      const cartItems = document.getElementById('cartItems');
-      const cartFooter = document.getElementById('cartFooter');
-
-      // Update cart count
-      function updateCartCount() {
-        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCount.textContent = count;
-      }
-
-      // Render cart
-      function renderCart() {
-        if (cart.length === 0) {
-          cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
-          cartFooter.innerHTML = '';
-          return;
+      let cartIcon, cartCount, cartModal, closeCart, cartItems, cartFooter;
+      
+      // Initialize function
+      function initCart() {
+        // Load cart from localStorage
+        try {
+          cart = JSON.parse(localStorage.getItem('cart')) || [];
+        } catch (e) {
+          console.error('Error loading cart:', e);
+          cart = [];
         }
-
-        let itemsHtml = '';
-        let total = 0;
-
-        cart.forEach(item => {
-          const itemTotal = item.price * item.quantity;
-     
+        
+        // Get DOM elements
+        cartIcon = document.getElementById('cartIcon');
+        cartCount = document.getElementById('cartCount');
+        cartModal = document.getElementById('cartModal');
+        closeCart = document.getElementById('closeCart');
+        cartItems = document.getElementById('cartItems');
+        cartFooter = document.getElementById('cartFooter');
+        
+        // Setup event listeners
+        setupEventListeners();
+        
+        // Update UI
+        updateCartCount();
+        
+        console.log('Cart initialized successfully');
+      }

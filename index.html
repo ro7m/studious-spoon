@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Misha – Pure Silver Jewelry</title>
+  <title>Misha • Pure Silver Jewelry</title>
+  <meta name="description" content="Handcrafted 925 Sterling Silver Jewelry by Misha. Ethically made in India. Free shipping on prepaid orders.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -30,6 +31,7 @@
       color: var(--text);
       line-height: 1.7;
       letter-spacing: 0.3px;
+      padding-bottom: 70px;
     }
     
     h1, h2, h3, h4 {
@@ -45,7 +47,6 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      transition: all 0.3s ease;
     }
     
     .top-banner {
@@ -162,7 +163,7 @@
       position: fixed;
       width: 60px;
       height: 60px;
-      bottom: 40px;
+      bottom: 90px;
       right: 40px;
       background-color: #25d366;
       color: #FFF;
@@ -561,6 +562,40 @@
       border-color: var(--primary);
     }
     
+    /* Mobile Bottom Nav */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      border-top: 1px solid var(--border);
+      z-index: 1000;
+    }
+    
+    .mobile-nav ul {
+      display: flex;
+      justify-content: space-around;
+      list-style: none;
+      padding: 12px 0;
+      margin: 0;
+    }
+    
+    .mobile-nav a {
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 12px;
+      gap: 4px;
+    }
+    
+    .mobile-nav i {
+      font-size: 20px;
+    }
+    
     /* Responsive */
     @media (max-width: 768px) {
       .container {
@@ -610,10 +645,18 @@
       .whatsapp-float {
         width: 50px;
         height: 50px;
-        bottom: 20px;
+        bottom: 85px;
         right: 20px;
         font-size: 25px;
       }
+      
+      .mobile-nav { display: flex; }
+      body { padding-bottom: 70px; }
+      .cart-icon-desktop { display: none; }
+    }
+    
+    @media (min-width: 769px) {
+      .mobile-nav { display: none !important; }
     }
   </style>
 </head>
@@ -632,7 +675,7 @@
         <a href="#">Contact</a>
       </nav>
       <div class="header-icons">
-        <div class="cart-icon" id="cartIcon">
+        <div class="cart-icon cart-icon-desktop" id="cartIcon">
           <i class="fas fa-shopping-bag"></i>
           <span class="cart-count" id="cartCount">0</span>
         </div>
@@ -732,12 +775,110 @@
         </div>
       </div>
     </div>
+
+    <!-- OUR BESTSELLER -->
+    <div class="section-header">
+      <h2 class="section-title">Our Bestseller</h2>
+    </div>
+    <p style="text-align:center; max-width:800px; margin:0 auto 4rem; font-style:italic; line-height:1.8;">
+      At <strong>Misha</strong>, we create jewelry that blends elegance, purity, and trust. 
+      Every piece is crafted from authentic 925 Sterling Silver with attention to detail, 
+      combining timeless beauty with modern grace to suit both everyday wear and special celebrations. 
+      <strong>Our mission is to make you feel confident, radiant, and cherished</strong> 
+      while enjoying the charm of honest, affordable luxury.
+    </p>
+
+    <!-- THE GIFTING EDIT -->
+    <div class="section-header">
+      <h2 class="section-title">The Gifting Edit</h2>
+      <p class="section-subtitle">Explore timeless treasures crafted to perfection.</p>
+    </div>
+
+    <div class="products">
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600" alt="Golden Grace Pendant">
+        </div>
+        <div class="product-info">
+          <h3>Golden Grace Pendant</h3>
+          <p>Reflects sophistication with a modern twist.</p>
+          <div class="price">₹3,800</div>
+          <button class="add-to-cart"
+            data-id="pendant-01"
+            data-name="Golden Grace Pendant"
+            data-price="3800"
+            data-image="https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1618312900238-2f3a4e5e3e1d?auto=format&fit=crop&w=600" alt="Starlight Shine Ring">
+        </div>
+        <div class="product-info">
+          <h3>Starlight Shine Ring</h3>
+          <p>Bold, chic, and timeless.</p>
+          <div class="price">₹2,200</div>
+          <button class="add-to-cart"
+            data-id="ring-01"
+            data-name="Starlight Shine Ring"
+            data-price="2200"
+            data-image="https://images.unsplash.com/photo-1618312900238-2f3a4e5e3e1d?auto=format&fit=crop&w=600">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSTAGRAM SHOP -->
+    <div class="section-header">
+      <h2 class="section-title">Instagram Shop</h2>
+      <p class="section-subtitle">Add a touch of charm to every outfit!</p>
+    </div>
+
+    <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:2rem; margin-bottom:4rem;">
+      <div style="text-align:center; max-width:200px;">
+        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T165035.213_200x.png?v=1757348835" alt="Quality" style="width:60px; margin-bottom:0.8rem;">
+        <p>HIGH QUALITY BRAND<br>Curated for style, quality and durability.</p>
+      </div>
+      <div style="text-align:center; max-width:200px;">
+        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T164844.161_200x.png?v=1757348836" alt="Support" style="width:60px; margin-bottom:0.8rem;">
+        <p>24/7 SUPPORT<br>Real-time chat & email support</p>
+      </div>
+      <div style="text-align:center; max-width:200px;">
+        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T165018.296_200x.png?v=1757348836" alt="Shipping" style="width:60px; margin-bottom:0.8rem;">
+        <p>FREE SHIPPING<br>On all prepaid orders above ₹999</p>
+      </div>
+      <div style="text-align:center; max-width:200px;">
+        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T165001.497_200x.png?v=1757348836" alt="Payments" style="width:60px; margin-bottom:0.8rem;">
+        <p>SECURE PAYMENTS<br>All major cards & UPI accepted</p>
+      </div>
+    </div>
   </main>
 
   <!-- WhatsApp Float Button -->
   <a href="https://wa.me/918871542203" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-nav">
+    <ul>
+      <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="#"><i class="fas fa-user"></i> Account</a></li>
+      <li>
+        <a href="#" id="mobileCart">
+          <div style="position: relative;">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-count" id="mobileCartCount">0</span>
+          </div>
+          Cart
+        </a>
+      </li>
+    </ul>
+  </nav>
 
   <!-- Cart Modal -->
   <div class="cart-modal" id="cartModal">
@@ -790,26 +931,24 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <script>
-    // YOUR ORIGINAL WORKING JAVASCRIPT
     document.addEventListener('DOMContentLoaded', () => {
-      // Cart state
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-      // DOM Elements
       const cartIcon = document.getElementById('cartIcon');
       const cartCount = document.getElementById('cartCount');
+      const mobileCart = document.getElementById('mobileCart');
+      const mobileCartCount = document.getElementById('mobileCartCount');
       const cartModal = document.getElementById('cartModal');
       const closeCart = document.getElementById('closeCart');
       const cartItems = document.getElementById('cartItems');
       const cartFooter = document.getElementById('cartFooter');
 
-      // Update cart count
       function updateCartCount() {
         const count = cart.reduce((sum, item) => sum + item.quantity, 0);
         cartCount.textContent = count;
+        mobileCartCount.textContent = count;
       }
 
-      // Render cart
       function renderCart() {
         if (cart.length === 0) {
           cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
@@ -850,7 +989,6 @@
         `;
       }
 
-      // Add to cart (alert removed as requested)
       function addToCart(product) {
         const existing = cart.find(p => p.id === product.id);
         if (existing) {
@@ -862,21 +1000,18 @@
         updateCartCount();
       }
 
-      // Event delegation
       document.addEventListener('click', (e) => {
-        // Add to cart button
         if (e.target.classList.contains('add-to-cart')) {
           const btn = e.target;
           const product = {
-            id: btn.dataset.id,
-            name: btn.dataset.name,
+            id: btn.dataset.id.trim(),
+            name: btn.dataset.name.trim(),
             price: parseFloat(btn.dataset.price),
-            image: btn.dataset.image
+            image: btn.dataset.image.trim()
           };
           addToCart(product);
         }
 
-        // Cart modal buttons
         if (e.target.classList.contains('decrease')) {
           const id = e.target.dataset.id;
           const item = cart.find(p => p.id === id);
@@ -914,12 +1049,11 @@
             key: 'rzp_test_1DP5mmOlF5G5ag',
             amount: total * 100,
             currency: 'INR',
-            name: 'Misha',
+            name: 'Misha •',
             description: 'Silver Jewelry Order',
             image: 'https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=100',
             handler: function (response) {
-              alert('✅ Payment successful!
-Payment ID: ' + response.razorpay_payment_id);
+              alert('✅ Payment successful!\nPayment ID: ' + response.razorpay_payment_id);
               cart = [];
               localStorage.setItem('cart', JSON.stringify(cart));
               updateCartCount();
@@ -933,8 +1067,13 @@ Payment ID: ' + response.razorpay_payment_id);
         }
       });
 
-      // Cart modal controls
       cartIcon.addEventListener('click', () => {
+        renderCart();
+        cartModal.style.display = 'flex';
+      });
+
+      mobileCart.addEventListener('click', (e) => {
+        e.preventDefault();
         renderCart();
         cartModal.style.display = 'flex';
       });
@@ -947,7 +1086,6 @@ Payment ID: ' + response.razorpay_payment_id);
         if (e.target === cartModal) cartModal.style.display = 'none';
       });
 
-      // Initialize
       updateCartCount();
     });
   </script>

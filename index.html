@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Misha – Timeless Silver Jewelry</title>
+  <title>Misha • Timeless Silver Jewelry</title>
   <meta name="description" content="Pure 925 Sterling Silver Jewelry by Misha. Handcrafted with love in India. Free shipping on prepaid orders.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
@@ -33,12 +33,19 @@
       padding: 0 1.2rem;
     }
     header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 1.2rem 0;
-      text-align: center;
     }
     .logo {
       font-size: 1.8rem;
       font-weight: bold;
+    }
+    .cart-icon-desktop {
+      font-size: 1.4rem;
+      color: var(--text);
+      cursor: pointer;
     }
     .hero {
       background: url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1400') center/cover no-repeat;
@@ -178,7 +185,7 @@
       align-items: center;
       text-decoration: none;
     }
-    /* Mobile Bottom Nav */
+    /* Mobile Bottom Nav – Deepika Style */
     .mobile-nav {
       display: none;
       position: fixed;
@@ -193,7 +200,8 @@
       display: flex;
       justify-content: space-around;
       list-style: none;
-      padding: 0.8rem 0;
+      padding: 12px 0;
+      margin: 0;
     }
     .mobile-nav a {
       color: var(--text);
@@ -201,11 +209,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 0.8rem;
+      font-size: 12px;
+      gap: 4px;
     }
     .mobile-nav i {
-      font-size: 1.4rem;
-      margin-bottom: 0.2rem;
+      font-size: 20px;
     }
     .cart-count-badge {
       position: absolute;
@@ -213,7 +221,7 @@
       right: -6px;
       background: var(--gold);
       color: white;
-      font-size: 0.6rem;
+      font-size: 10px;
       width: 16px;
       height: 16px;
       border-radius: 50%;
@@ -250,35 +258,37 @@
       border-radius: 6px;
     }
     #contactModal button {
-      padding: 8px 20px;
+      padding: 10px 20px;
       border: none;
       border-radius: 20px;
       font-weight: bold;
       margin-top: 10px;
       font-size: 0.9rem;
-    }
-    #contactModal .primary-btn {
       background: var(--text);
       color: white;
-    }
-    #contactModal .cancel-btn {
-      background: #eee;
-      color: #333;
-      margin-left: 10px;
+      width: 100%;
     }
     @media (max-width: 768px) {
       .mobile-nav { display: flex; }
-      body { padding-bottom: 60px; }
+      body { padding-bottom: 70px; }
       .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
       .hero h1 { font-size: 2.2rem; }
-      .whatsapp-float { bottom: 80px; }
+      .whatsapp-float { bottom: 85px; }
+      .cart-icon-desktop { display: none; }
+    }
+    @media (min-width: 769px) {
+      .mobile-nav { display: none !important; }
     }
   </style>
 </head>
 <body>
   <header>
     <div class="container">
-      <div class="logo">Misha</div>
+      <div class="logo">Misha <span style="color:var(--gold);">•</span></div>
+      <div class="cart-icon-desktop" id="desktopCart">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count-badge" id="desktopCartCount">0</span>
+      </div>
     </div>
   </header>
 
@@ -453,15 +463,15 @@
   <!-- Mobile Nav -->
   <nav class="mobile-nav">
     <ul>
-      <li><a href="#"><i class="fas fa-home"></i> <span>Home</span></a></li>
-      <li><a href="#"><i class="fas fa-user"></i> <span>Account</span></a></li>
+      <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="#"><i class="fas fa-user"></i> Account</a></li>
       <li>
         <a href="#" id="mobileCart">
           <div style="position: relative;">
             <i class="fas fa-shopping-cart"></i>
             <span class="cart-count-badge" id="mobileCartCount">0</span>
           </div>
-          <span>Cart</span>
+          Cart
         </a>
       </li>
     </ul>
@@ -474,10 +484,7 @@
       <input type="text" id="customerName" placeholder="Full Name">
       <input type="tel" id="customerPhone" placeholder="Mobile (10 digits)">
       <textarea id="customerAddress" placeholder="Full Delivery Address" rows="3"></textarea>
-      <div style="text-align:center;">
-        <button class="primary-btn" onclick="startPayment()">Proceed to Pay</button>
-        <button class="cancel-btn" onclick="document.getElementById('contactModal').style.display='none'">Cancel</button>
-      </div>
+      <button onclick="startPayment()">Proceed to Pay</button>
     </div>
   </div>
 
@@ -491,6 +498,7 @@
       function updateCartCount() {
         const count = cart.reduce((sum, item) => sum + item.quantity, 0);
         document.getElementById('mobileCartCount').textContent = count;
+        document.getElementById('desktopCartCount').textContent = count;
       }
 
       document.querySelectorAll('.add-to-cart').forEach(btn => {
@@ -513,14 +521,20 @@
         });
       });
 
+      // Both desktop and mobile cart open form
+      document.getElementById('desktopCart').addEventListener('click', openForm);
       document.getElementById('mobileCart').addEventListener('click', (e) => {
         e.preventDefault();
+        openForm();
+      });
+
+      function openForm() {
         if (cart.length === 0) {
           alert('Your cart is empty.');
           return;
         }
         document.getElementById('contactModal').style.display = 'flex';
-      });
+      }
 
       function startPayment() {
         const name = document.getElementById('customerName').value.trim();
@@ -543,12 +557,13 @@
           key: 'rzp_test_1DP5mmOlF5G5ag',
           amount: total,
           currency: 'INR',
-          name: 'Misha',
+          name: 'Misha •',
           description: desc.substring(0, 45) + '...',
           handler: function (response) {
             cart = [];
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount();
+            document.getElementById('contactModal').style.display = 'none';
             alert('✅ Order placed! We’ll contact you shortly. You can also WhatsApp us for order updates.');
           },
           prefill: { name, contact: '91' + phone },
@@ -562,4 +577,4 @@
     });
   </script>
 </body>
-</html>
+  </html>

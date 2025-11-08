@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Silver Heritage – Pure Silver Jewelry</title>
-  <meta name="description" content="Authentic 925 Sterling Silver Jewelry – Handcrafted in India. Free shipping on prepaid orders.">
+  <title>Misha – Timeless Silver Jewelry</title>
+  <meta name="description" content="Authentic 925 Sterling Silver Jewelry by Misha. Handcrafted in India. Free shipping on prepaid orders.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root {
@@ -144,10 +144,6 @@
       gap: 1.5rem;
       margin-top: 2rem;
     }
-    .feature {
-      text-align: center;
-      max-width: 160px;
-    }
     .feature img {
       width: 50px;
       margin-bottom: 0.8rem;
@@ -280,7 +276,7 @@
   <!-- Header -->
   <header>
     <div class="container">
-      <div class="logo">Silver <span>Heritage</span></div>
+      <div class="logo">Misha</div>
     </div>
   </header>
 
@@ -299,7 +295,7 @@
       <h2 class="section-title">Our Story</h2>
       <p class="subtitle">Pure 925 Sterling Silver • Handcrafted in India</p>
       <div class="about-text">
-        At <strong>Silver Heritage</strong>, we create jewelry that blends elegance, purity, and trust. 
+        At <strong>Misha</strong>, we create jewelry that blends elegance, purity, and trust. 
         Every piece is crafted from authentic 925 Sterling Silver with attention to detail.
       </div>
     </div>
@@ -394,7 +390,7 @@
   <!-- Trust Badges -->
   <section class="section">
     <div class="container">
-      <h2 class="section-title">Why Choose Us?</h2>
+      <h2 class="section-title">Why Choose Misha?</h2>
       <div class="features">
         <div class="feature">
           <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T165035.213_200x.png?v=1757348835" alt="Quality">
@@ -418,18 +414,17 @@
 
   <footer>
     <div class="container">
-      <p>© 2025 Silver Heritage</p>
+      <p>© 2025 Misha</p>
       <p>Payments powered by <strong>Razorpay</strong></p>
     </div>
   </footer>
 
   <!-- WhatsApp Help Button -->
-  <!-- Replace 919876543210 with your WhatsApp number (with country code) -->
-  <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+  <a href="https://wa.me/918871542203" class="whatsapp-float" target="_blank">
     <i class="fab fa-whatsapp"></i>
   </a>
 
-  <!-- Mobile Bottom Nav -->
+  <!-- Mobile Bottom Navigation -->
   <nav class="mobile-nav">
     <ul>
       <li><a href="#"><i class="fas fa-home"></i> <span>Home</span></a></li>
@@ -499,7 +494,10 @@
       // Open form on cart click
       document.getElementById('mobileCart').addEventListener('click', (e) => {
         e.preventDefault();
-        if (cart.length === 0) return;
+        if (cart.length === 0) {
+          alert('Your cart is empty.');
+          return;
+        }
         document.getElementById('contactModal').style.display = 'flex';
       });
 
@@ -522,13 +520,12 @@
         const orderDesc = cart.map(i => `${i.name} x${i.quantity}`).join(', ');
 
         const options = {
-          key: 'rzp_test_1DP5mmOlF5G5ag', // ← Keep this for testing
+          key: 'rzp_test_1DP5mmOlF5G5ag',
           amount: total,
           currency: 'INR',
-          name: 'Silver Heritage',
+          name: 'Misha',
           description: orderDesc.substring(0, 45) + '...',
           handler: function (response) {
-            // On success: clear cart, show message
             cart = [];
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount();
@@ -548,4 +545,4 @@
     });
   </script>
 </body>
-  </html>
+          </html>

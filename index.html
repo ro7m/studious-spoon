@@ -5,154 +5,334 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Misha – Pure Silver Jewelry</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1a1a1a;
-      --secondary: #c0c0c0;
-      --accent: #d4af37; /* Gold */
-      --light: #f8f8f8;
-      --text: #333;
+      --primary: #2c2c2c;
+      --secondary: #8b7355;
+      --accent: #d4af37;
+      --light: #fafafa;
+      --white: #ffffff;
+      --text: #4a4a4a;
+      --text-light: #757575;
+      --border: #e8e8e8;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
     body {
-      font-family: 'Georgia', serif;
-      background: var(--light);
+      font-family: 'Montserrat', sans-serif;
+      background: var(--white);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.7;
+      letter-spacing: 0.3px;
     }
+    
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+    
+    /* Header */
     header {
-      background: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 100;
+      transition: all 0.3s ease;
     }
+    
+    .top-banner {
+      background: var(--primary);
+      color: var(--white);
+      text-align: center;
+      padding: 8px 0;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+    
     .container {
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 2rem;
     }
+    
     .header-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 0;
+      padding: 1.2rem 0;
     }
+    
     .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
       color: var(--primary);
       text-decoration: none;
+      letter-spacing: 3px;
+      text-transform: uppercase;
     }
-    .logo span { color: var(--accent); }
-    nav a {
-      margin-left: 1.5rem;
-      text-decoration: none;
-      color: var(--primary);
+    
+    .logo span { 
+      color: var(--accent);
       font-weight: 500;
     }
+    
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+    
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    
+    nav a:hover {
+      color: var(--secondary);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--secondary);
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .header-icons {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    
     .cart-icon {
       position: relative;
       cursor: pointer;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
+      color: var(--text);
+      transition: color 0.3s ease;
     }
+    
+    .cart-icon:hover {
+      color: var(--secondary);
+    }
+    
     .cart-count {
       position: absolute;
       top: -8px;
-      right: -8px;
+      right: -10px;
       background: var(--accent);
-      color: var(--primary);
-      font-size: 0.65rem;
-      width: 18px;
-      height: 18px;
+      color: var(--white);
+      font-size: 0.6rem;
+      width: 17px;
+      height: 17px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-weight: bold;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
     }
+    
+    /* Hero Section */
     .hero {
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1400');
+      position: relative;
+      background: linear-gradient(rgba(44,44,44,0.3), rgba(44,44,44,0.3)), url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1400');
       background-size: cover;
-      color: white;
+      background-position: center;
+      color: var(--white);
       text-align: center;
-      padding: 5rem 1rem;
-      margin-bottom: 2rem;
+      padding: 8rem 1rem;
+      margin-bottom: 4rem;
     }
-    .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; }
-    .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 1.5rem; }
+    
+    .hero-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .hero-subtitle {
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 300;
+      opacity: 0.9;
+    }
+    
+    .hero h1 { 
+      font-size: 3.5rem; 
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+      line-height: 1.2;
+      letter-spacing: 2px;
+    }
+    
+    .hero p { 
+      font-size: 1rem;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+    
     .btn {
       display: inline-block;
-      background: var(--accent);
-      color: var(--primary);
-      padding: 0.8rem 2rem;
+      background: transparent;
+      color: var(--white);
+      padding: 1rem 3rem;
       text-decoration: none;
-      font-weight: bold;
-      border-radius: 30px;
-      transition: transform 0.3s;
+      font-weight: 400;
+      border: 1.5px solid var(--white);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      transition: all 0.4s ease;
     }
-    .btn:hover { transform: translateY(-3px); }
-    .section-title {
-      text-align: center;
-      margin: 2.5rem 0 1.5rem;
-      font-size: 2rem;
+    
+    .btn:hover { 
+      background: var(--white);
       color: var(--primary);
     }
+    
+    /* Section Title */
+    .section-header {
+      text-align: center;
+      margin: 4rem 0 3rem;
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+    
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+    
+    /* Products Grid */
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2.5rem;
-      margin-bottom: 3rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 5rem;
     }
+    
     .product-card {
-      background: white;
-      border-radius: 12px;
+      background: var(--white);
+      border: 1px solid var(--border);
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      transition: transform 0.3s;
+      transition: all 0.4s ease;
+      position: relative;
     }
-    .product-card:hover { transform: translateY(-8px); }
+    
+    .product-card:hover { 
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      transform: translateY(-5px);
+    }
+    
     .product-img {
-      height: 280px;
+      height: 380px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f0f0f0;
+      background: var(--light);
+      overflow: hidden;
+      position: relative;
     }
+    
     .product-img img {
-      max-width: 80%;
-      max-height: 80%;
+      max-width: 85%;
+      max-height: 85%;
       object-fit: contain;
+      transition: transform 0.5s ease;
     }
+    
+    .product-card:hover .product-img img {
+      transform: scale(1.05);
+    }
+    
     .product-info {
-      padding: 1.5rem;
+      padding: 2rem 1.5rem;
       text-align: center;
     }
+    
     .product-info h3 {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.8rem;
       color: var(--primary);
-    }
-    .price {
       font-size: 1.4rem;
-      color: var(--accent);
-      margin: 0.5rem 0;
-      font-weight: bold;
+      font-weight: 400;
+      letter-spacing: 1px;
     }
+    
+    .product-info p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+    
+    .price {
+      font-size: 1.3rem;
+      color: var(--secondary);
+      margin: 1rem 0;
+      font-weight: 500;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 1px;
+    }
+    
     .add-to-cart {
       width: 100%;
-      padding: 0.8rem;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 4px;
+      padding: 0.9rem;
+      background: transparent;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 500;
       margin-top: 1rem;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-family: 'Montserrat', sans-serif;
     }
+    
     .add-to-cart:hover {
-      background: #000;
+      background: var(--primary);
+      color: var(--white);
     }
+    
+    /* Cart Modal */
     .cart-modal {
       display: none;
       position: fixed;
@@ -160,123 +340,316 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.75);
       z-index: 1000;
       justify-content: center;
       align-items: center;
+      backdrop-filter: blur(5px);
     }
+    
     .cart-content {
-      background: white;
+      background: var(--white);
       width: 90%;
-      max-width: 500px;
-      border-radius: 12px;
-      padding: 2rem;
-      max-height: 80vh;
+      max-width: 480px;
+      border-radius: 0;
+      padding: 2.5rem;
+      max-height: 85vh;
       overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
+    
     .cart-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
     }
-    .cart-header h2 { color: var(--primary); }
-    .close-cart { font-size: 1.5rem; background: none; border: none; cursor: pointer; }
+    
+    .cart-header h2 { 
+      color: var(--primary);
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+    
+    .close-cart { 
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text);
+      transition: color 0.3s ease;
+    }
+    
+    .close-cart:hover {
+      color: var(--primary);
+    }
+    
     .cart-item {
       display: flex;
-      gap: 1rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid #eee;
+      gap: 1.2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
     }
+    
     .cart-item img {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       object-fit: contain;
-      background: #f9f9f9;
-      padding: 8px;
-      border-radius: 4px;
+      background: var(--light);
+      padding: 10px;
     }
+    
+    .cart-item-info {
+      flex: 1;
+    }
+    
+    .cart-item h4 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      font-weight: 400;
+    }
+    
+    .cart-item p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      font-weight: 300;
+    }
+    
     .cart-actions {
       display: flex;
-      gap: 8px;
-      margin-top: 0.5rem;
+      gap: 10px;
+      margin-top: 0.8rem;
+      align-items: center;
     }
+    
     .cart-actions button {
-      padding: 4px 8px;
-      border: 1px solid #ccc;
-      background: white;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      background: var(--white);
       cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
     }
+    
+    .cart-actions button:hover {
+      background: var(--light);
+      border-color: var(--text);
+    }
+    
+    .cart-actions .remove {
+      color: #c0392b;
+      border-color: #c0392b;
+      margin-left: 10px;
+    }
+    
+    .cart-actions .remove:hover {
+      background: #c0392b;
+      color: var(--white);
+    }
+    
     .cart-total {
       display: flex;
       justify-content: space-between;
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin: 1.5rem 0;
-      padding-top: 1rem;
-      border-top: 2px solid #eee;
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin: 2rem 0 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--border);
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--primary);
     }
+    
     .checkout-btn {
       width: 100%;
-      padding: 1rem;
-      background: var(--accent);
-      color: var(--primary);
+      padding: 1.1rem;
+      background: var(--primary);
+      color: var(--white);
       border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 1.1rem;
+      font-weight: 500;
+      font-size: 0.85rem;
       cursor: pointer;
       margin-top: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
     }
+    
     .checkout-btn:hover {
-      background: #c59e2d;
+      background: var(--secondary);
     }
+    
     .empty-cart {
       text-align: center;
-      padding: 2rem;
-      color: #777;
+      padding: 3rem 2rem;
+      color: var(--text-light);
+      font-weight: 300;
+      letter-spacing: 0.5px;
     }
+    
+    /* Footer */
     footer {
-      background: var(--primary);
-      color: white;
-      text-align: center;
-      padding: 2rem 0;
-      margin-top: 3rem;
+      background: var(--light);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+      margin-top: 5rem;
     }
-    @media (max-width: 600px) {
-      .header-content { flex-direction: column; gap: 1rem; }
-      nav { display: flex; gap: 1rem; }
-      .hero h1 { font-size: 2.2rem; }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 2rem;
+    }
+    
+    .footer-section h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-weight: 400;
+      letter-spacing: 1.5px;
+    }
+    
+    .footer-section p,
+    .footer-section a {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 300;
+    }
+    
+    .footer-section a:hover {
+      color: var(--secondary);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-light);
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-icons a {
+      width: 35px;
+      height: 35px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      transition: all 0.3s ease;
+    }
+    
+    .social-icons a:hover {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 0;
+      }
+      
+      nav {
+        gap: 1.5rem;
+      }
+      
+      nav a {
+        font-size: 0.75rem;
+      }
+      
+      .logo {
+        font-size: 1.6rem;
+      }
+      
+      .hero {
+        padding: 5rem 1rem;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .products {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Top Banner -->
+  <div class="top-banner">
+    Free Shipping on Orders Above ₹2,500 • Handcrafted in India
+  </div>
+
   <header>
     <div class="container header-content">
       <a href="/" class="logo">Misha<span>.</span></a>
       <nav>
-        <a href="#">Collection</a>
+        <a href="#products">Collection</a>
         <a href="#">About</a>
-        <a href="#">Care</a>
+        <a href="#">Care Guide</a>
         <a href="#">Contact</a>
       </nav>
-      <div class="cart-icon" id="cartIcon">
-        <i class="fas fa-shopping-bag"></i>
-        <span class="cart-count" id="cartCount">0</span>
+      <div class="header-icons">
+        <div class="cart-icon" id="cartIcon">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
       </div>
     </div>
   </header>
 
   <section class="hero">
-    <div class="container">
-      <h1>Ethically Crafted Silver Jewelry</h1>
-      <p>925 Sterling Silver • Handmade in India • Free Shipping</p>
+    <div class="hero-content">
+      <div class="hero-subtitle">Timeless Elegance</div>
+      <h1>Jewelry That Speaks Softly, Shines Boldly</h1>
+      <p>Handcrafted 925 Sterling Silver • Ethically Sourced • Designed for the Modern Woman</p>
       <a href="#products" class="btn">Explore Collection</a>
     </div>
   </section>
 
   <main class="container">
-    <h2 class="section-title" id="products">Our Signature Pieces</h2>
+    <div class="section-header" id="products">
+      <h2 class="section-title">Our Signature Pieces</h2>
+      <p class="section-subtitle">Minimal. Meaningful. Timeless.</p>
+    </div>
+    
     <div class="products">
       <!-- Product 1 -->
       <div class="product-card">
@@ -370,8 +743,36 @@
 
   <footer>
     <div class="container">
-      <p>© 2025 Misha. All rights reserved.</p>
-      <p>Pure Silver • Handmade with Love</p>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Misha</h3>
+          <p>Handcrafted 925 Sterling Silver jewelry, ethically sourced and designed with love in India.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Customer Care</h3>
+          <a href="#">Shipping & Returns</a>
+          <a href="#">Size Guide</a>
+          <a href="#">Care Instructions</a>
+          <a href="#">FAQs</a>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Email: hello@misha.com</p>
+          <p>Phone: +91 98765 43210</p>
+          <p>Mon-Sat: 10 AM - 6 PM</p>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© 2025 Misha. All Rights Reserved. | Pure Silver • Handmade with Love</p>
+      </div>
     </div>
   </footer>
 
@@ -411,134 +812,4 @@
 
         cart.forEach(item => {
           const itemTotal = item.price * item.quantity;
-          total += itemTotal;
-          itemsHtml += `
-            <div class="cart-item">
-              <img src="${item.image}" alt="${item.name}">
-              <div>
-                <h4>${item.name}</h4>
-                <p>₹${item.price} × ${item.quantity}</p>
-                <div class="cart-actions">
-                  <button class="decrease" data-id="${item.id}">−</button>
-                  <span>${item.quantity}</span>
-                  <button class="increase" data-id="${item.id}">+</button>
-                  <button class="remove" data-id="${item.id}" style="margin-left: 10px; color: #e74c3c;">Remove</button>
-                </div>
-              </div>
-            </div>
-          `;
-        });
-
-        cartItems.innerHTML = itemsHtml;
-        cartFooter.innerHTML = `
-          <div class="cart-total">
-            <span>Total:</span>
-            <span>₹${total}</span>
-          </div>
-          <button class="checkout-btn" id="checkoutBtn">Proceed to Payment</button>
-        `;
-      }
-
-      // Add to cart
-      function addToCart(product) {
-        const existing = cart.find(p => p.id === product.id);
-        if (existing) {
-          existing.quantity += 1;
-        } else {
-          cart.push({ ...product, quantity: 1 });
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
-        alert('✅ Added to cart!');
-      }
-
-      // Event delegation
-      document.addEventListener('click', (e) => {
-        // Add to cart button
-        if (e.target.classList.contains('add-to-cart')) {
-          const btn = e.target;
-          const product = {
-            id: btn.dataset.id,
-            name: btn.dataset.name,
-            price: parseFloat(btn.dataset.price),
-            image: btn.dataset.image
-          };
-          addToCart(product);
-        }
-
-        // Cart modal buttons
-        if (e.target.classList.contains('decrease')) {
-          const id = e.target.dataset.id;
-          const item = cart.find(p => p.id === id);
-          if (item.quantity > 1) {
-            item.quantity -= 1;
-          } else {
-            cart = cart.filter(p => p.id !== id);
-          }
-          localStorage.setItem('cart', JSON.stringify(cart));
-          renderCart();
-          updateCartCount();
-        }
-
-        if (e.target.classList.contains('increase')) {
-          const id = e.target.dataset.id;
-          const item = cart.find(p => p.id === id);
-          item.quantity += 1;
-          localStorage.setItem('cart', JSON.stringify(cart));
-          renderCart();
-          updateCartCount();
-        }
-
-        if (e.target.classList.contains('remove')) {
-          const id = e.target.dataset.id;
-          cart = cart.filter(p => p.id !== id);
-          localStorage.setItem('cart', JSON.stringify(cart));
-          renderCart();
-          updateCartCount();
-        }
-
-        if (e.target.id === 'checkoutBtn') {
-          if (cart.length === 0) return;
-          const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-          const options = {
-            key: 'rzp_test_1DP5mmOlF5G5ag', // Razorpay Test Key
-            amount: total * 100, // in paise
-            currency: 'INR',
-            name: 'Misha',
-            description: 'Silver Jewelry Order',
-            image: 'https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=100',
-            handler: function (response) {
-              alert('✅ Payment successful!\nPayment ID: ' + response.razorpay_payment_id);
-              cart = [];
-              localStorage.setItem('cart', JSON.stringify(cart));
-              updateCartCount();
-              cartModal.style.display = 'none';
-            },
-            prefill: { contact: '', email: '' },
-            theme: { color: '#c0c0c0' }
-          };
-          const rzp = new Razorpay(options);
-          rzp.open();
-        }
-      });
-
-      // Cart modal controls
-      cartIcon.addEventListener('click', () => {
-        renderCart();
-        cartModal.style.display = 'flex';
-      });
-
-      closeCart.addEventListener('click', () => {
-        cartModal.style.display = 'none';
-      });
-
-      window.addEventListener('click', (e) => {
-        if (e.target === cartModal) cartModal.style.display = 'none';
-      });
-
-      // Initialize
-      updateCartCount();
-    });
-  </script>
-</body>
-  </html>
+     

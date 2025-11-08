@@ -3,116 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Silver Heritage – Pure Silver Jewelry</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <title>Silver Heritage – Timeless Silver Jewelry</title>
+  <meta name="description" content="Authentic 925 Sterling Silver Jewelry – Handcrafted with love in India. Free shipping, secure payments.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0DARpiFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     :root {
       --primary: #2c3e50;
-      --secondary: #c0c0c0;
-      --accent: #e74c3c;
-      --light: #f9f9f9;
-      --dark: #333;
-      --success: #27ae60;
-      --razorpay-blue: #3395FF;
+      --gold: #b8860b;
+      --light-gold: #d4af37;
+      --rose: #fdf4f0;
+      --light: #ffffff;
+      --text: #333333;
+      --gray: #f5f5f5;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: var(--light);
       line-height: 1.6;
-      background: #fafafa;
-      color: var(--dark);
-    }
-    header {
-      background: var(--primary);
-      color: white;
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
+    /* Header */
+    header {
+      background: var(--light);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
     .header-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 1rem 0;
     }
     .logo {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-weight: bold;
-    }
-    .logo i { color: var(--secondary); margin-right: 8px; }
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 1.2rem;
-    }
-    .cart-icon {
-      position: relative;
-      cursor: pointer;
-      font-size: 1.4rem;
-    }
-    .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: var(--accent);
-      color: white;
-      font-size: 0.65rem;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .hero {
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1200');
-      background-size: cover;
-      color: white;
-      text-align: center;
-      padding: 4rem 1rem;
-      margin-bottom: 2rem;
-    }
-    .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
-    .btn {
-      display: inline-block;
-      background: var(--razorpay-blue);
-      color: white;
-      padding: 0.8rem 1.8rem;
-      margin-top: 1rem;
-      text-decoration: none;
-      border-radius: 4px;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .btn:hover { background: #2874cc; }
-    .section-title {
-      text-align: center;
-      margin: 2rem 0 1.5rem;
-      font-size: 1.8rem;
       color: var(--primary);
     }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 2rem;
+    .logo span { color: var(--gold); }
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: var(--gold);
+    }
+    /* Hero */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1400') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 6rem 1rem;
       margin-bottom: 3rem;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 1.5rem;
+      opacity: 0.95;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--gold);
+      color: white;
+      padding: 0.8rem 2rem;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      background: #a67c00;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    /* Sections */
+    .section {
+      padding: 4rem 0;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .subtitle {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 2.5rem;
+      color: #666;
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+    .about-text {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    .about-text strong {
+      color: var(--primary);
+    }
+    /* Products */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2.5rem;
+      margin-top: 2rem;
     }
     .product-card {
       background: white;
-      border-radius: 8px;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .product-card:hover { transform: translateY(-5px); }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
     .product-img {
-      height: 200px;
-      background: #f0f0f0;
+      height: 280px;
+      background: var(--rose);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -123,232 +156,302 @@
       object-fit: contain;
     }
     .product-info {
-      padding: 1.2rem;
+      padding: 1.5rem;
+      text-align: center;
     }
-    .product-info h3 { margin-bottom: 0.5rem; color: var(--primary); }
-    .price { font-size: 1.3rem; color: var(--accent); margin: 0.5rem 0; }
+    .product-info h3 {
+      margin-bottom: 0.8rem;
+      color: var(--primary);
+    }
+    .price {
+      color: var(--gold);
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
     .add-to-cart {
-      width: 100%;
-      padding: 0.7rem;
-      background: var(--success);
+      background: var(--primary);
       color: white;
       border: none;
-      border-radius: 4px;
+      padding: 0.65rem 1.6rem;
+      border-radius: 30px;
+      margin-top: 1rem;
       cursor: pointer;
       font-weight: bold;
-      margin-top: 0.8rem;
+      transition: background 0.3s;
     }
-    .add-to-cart:hover { background: #219653; }
+    .add-to-cart:hover {
+      background: #1a252f;
+    }
+    /* Features */
+    .features {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .feature {
+      text-align: center;
+      max-width: 200px;
+    }
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(184, 134, 11, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      color: var(--gold);
+      font-size: 1.4rem;
+    }
+    .feature h4 {
+      margin-top: 0.5rem;
+      color: var(--primary);
+    }
+    /* Footer */
     footer {
       background: var(--primary);
       color: white;
       text-align: center;
-      padding: 2rem 0;
-      margin-top: 3rem;
+      padding: 2.5rem 0;
     }
-    @media (max-width: 600px) {
-      .header-content { flex-direction: column; gap: 1rem; }
-      nav { display: flex; gap: 1rem; }
+    .social-links {
+      margin: 1.2rem 0;
+    }
+    .social-links a {
+      display: inline-block;
+      color: white;
+      margin: 0 12px;
+      font-size: 1.3rem;
+      transition: transform 0.3s;
+    }
+    .social-links a:hover {
+      transform: translateY(-3px);
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .hero h1 { font-size: 2.2rem; }
+      .products-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div class="container header-content">
-      <div class="logo"><i class="fas fa-gem"></i> Silver Heritage</div>
+      <div class="logo">Silver <span>Heritage</span></div>
       <nav>
         <a href="#">Home</a>
-        <a href="#">Collection</a>
-        <a href="#">About</a>
+        <a href="#collection">Collection</a>
+        <a href="#about">About</a>
         <a href="#">Contact</a>
       </nav>
-      <div class="cart-icon" id="cartIcon">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-count" id="cartCount">0</span>
-      </div>
     </div>
   </header>
 
+  <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <h1>Handcrafted Pure Silver Jewelry</h1>
-      <p>925 Sterling Silver • Ethically Made • Free Shipping</p>
-      <a href="#products" class="btn">Shop Now</a>
+      <h1>Timeless Silver Jewelry</h1>
+      <p>Crafted with love, purity, and tradition. Perfect for every moment that matters.</p>
+      <a href="#collection" class="btn">Explore Collection</a>
     </div>
   </section>
 
-  <main class="container">
-    <h2 class="section-title" id="products">Our Collection</h2>
-    <div class="products">
-      <!-- Product 1 -->
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://cdn-icons-png.flaticon.com/512/2314/2314141.png" alt="Anklet">
-        </div>
-        <div class="product-info">
-          <h3>Silver Anklet</h3>
-          <p>Traditional design, perfect for daily wear.</p>
-          <div class="price">₹2,500</div>
-          <button class="add-to-cart"
-            data-id="anklet-001"
-            data-name="Silver Anklet"
-            data-price="2500"
-            data-image="https://cdn-icons-png.flaticon.com/512/2314/2314141.png"
-            data-weight="12g">
-            Add to Cart
-          </button>
-        </div>
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">Our Story</h2>
+      <p class="subtitle">Pure 925 Sterling Silver • Handcrafted in India • Ethically Made</p>
+      <div class="about-text">
+        At <strong>Silver Heritage</strong>, we create jewelry that blends elegance, purity, and trust. 
+        Every piece is crafted from authentic 925 Sterling Silver with attention to detail, 
+        combining timeless beauty with modern grace to suit both everyday wear and special celebrations. 
+        <strong>Our mission is to make you feel confident, radiant, and cherished</strong> 
+        while enjoying the charm of honest, affordable luxury.
       </div>
+    </div>
+  </section>
 
-      <!-- Product 2 -->
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://cdn-icons-png.flaticon.com/512/2665/2665811.png" alt="Bracelet">
+  <!-- Collection -->
+  <section id="collection" class="section" style="background: var(--gray);">
+    <div class="container">
+      <h2 class="section-title">Our Collection</h2>
+      <p class="subtitle">Explore timeless treasures crafted to perfection.</p>
+      
+      <div class="products-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+          <div class="product-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/2314/2314141.png" alt="Silver Anklet">
+          </div>
+          <div class="product-info">
+            <h3>Silver Anklet – Traditional</h3>
+            <p>Pure 925 silver with intricate detailing. Perfect for daily grace.</p>
+            <div class="price">₹2,500</div>
+            <button class="add-to-cart"
+              data-id="anklet-001"
+              data-name="Silver Anklet – Traditional"
+              data-price="2500"
+              data-image="https://cdn-icons-png.flaticon.com/512/2314/2314141.png">
+              Add to Cart
+            </button>
+          </div>
         </div>
-        <div class="product-info">
-          <h3>Silver Bracelet</h3>
-          <p>Elegant floral motif, lightweight and stylish.</p>
-          <div class="price">₹3,200</div>
-          <button class="add-to-cart"
-            data-id="bracelet-001"
-            data-name="Silver Bracelet"
-            data-price="3200"
-            data-image="https://cdn-icons-png.flaticon.com/512/2665/2665811.png"
-            data-weight="18g">
-            Add to Cart
-          </button>
-        </div>
-      </div>
 
-      <!-- Product 3 -->
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://cdn-icons-png.flaticon.com/512/3339/3339631.png" alt="Necklace">
+        <!-- Product 2 -->
+        <div class="product-card">
+          <div class="product-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/3339/3339631.png" alt="Necklace">
+          </div>
+          <div class="product-info">
+            <h3>Heritage Pendant Necklace</h3>
+            <p>Elegant pendant with delicate chain. Lightweight and versatile.</p>
+            <div class="price">₹4,200</div>
+            <button class="add-to-cart"
+              data-id="necklace-001"
+              data-name="Heritage Pendant Necklace"
+              data-price="4200"
+              data-image="https://cdn-icons-png.flaticon.com/512/3339/3339631.png">
+              Add to Cart
+            </button>
+          </div>
         </div>
-        <div class="product-info">
-          <h3>Silver Necklace</h3>
-          <p>Heritage pendant with delicate chain.</p>
-          <div class="price">₹4,500</div>
-          <button class="add-to-cart"
-            data-id="necklace-001"
-            data-name="Silver Necklace"
-            data-price="4500"
-            data-image="https://cdn-icons-png.flaticon.com/512/3339/3339631.png"
-            data-weight="22g">
-            Add to Cart
-          </button>
-        </div>
-      </div>
 
-      <!-- Product 4 -->
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://cdn-icons-png.flaticon.com/512/2592/2592744.png" alt="Earrings">
+        <!-- Product 3 -->
+        <div class="product-card">
+          <div class="product-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/2592/2592744.png" alt="Earrings">
+          </div>
+          <div class="product-info">
+            <h3>Drop Earrings – Elegant</h3>
+            <p>Sparkling drops with handcrafted filigree. For every celebration.</p>
+            <div class="price">₹1,900</div>
+            <button class="add-to-cart"
+              data-id="earrings-001"
+              data-name="Drop Earrings – Elegant"
+              data-price="1900"
+              data-image="https://cdn-icons-png.flaticon.com/512/2592/2592744.png">
+              Add to Cart
+            </button>
+          </div>
         </div>
-        <div class="product-info">
-          <h3>Silver Earrings</h3>
-          <p>Drop style with intricate detailing.</p>
-          <div class="price">₹1,800</div>
-          <button class="add-to-cart"
-            data-id="earrings-001"
-            data-name="Silver Earrings"
-            data-price="1800"
-            data-image="https://cdn-icons-png.flaticon.com/512/2592/2592744.png"
-            data-weight="8g">
-            Add to Cart
-          </button>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+          <div class="product-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/2665/2665811.png" alt="Bracelet">
+          </div>
+          <div class="product-info">
+            <h3>Silver Bracelet – Classic</h3>
+            <p>Floral motifs with smooth finish. Comfortable for all-day wear.</p>
+            <div class="price">₹3,200</div>
+            <button class="add-to-cart"
+              data-id="bracelet-001"
+              data-name="Silver Bracelet – Classic"
+              data-price="3200"
+              data-image="https://cdn-icons-png.flaticon.com/512/2665/2665811.png">
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </main>
+  </section>
 
+  <!-- Trust Badges -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Why Choose Us?</h2>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h4>Authentic 925 Silver</h4>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h4>Secure Payments</h4>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-shipping-fast"></i>
+          </div>
+          <h4>Free Shipping</h4>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h4>24/7 Support</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer>
     <div class="container">
       <p>© 2025 Silver Heritage. All rights reserved.</p>
-      <p>Payments powered by <strong>Razorpay</strong></p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+      </div>
+      <p style="margin-top: 0.8rem; font-size: 0.9rem;">Payments powered by <strong>Razorpay</strong></p>
     </div>
   </footer>
 
-  <!-- Razorpay Checkout -->
+  <!-- Razorpay SDK -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <!-- Cart & Payment Logic -->
   <script>
-    // Wait for DOM
     document.addEventListener('DOMContentLoaded', () => {
-      // Load cart from localStorage
+      // Load cart
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-      // Update cart count
-      function updateCartCount() {
-        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-        document.getElementById('cartCount').textContent = count;
-      }
-
       // Add to cart
-      function addToCart(product) {
-        const existing = cart.find(p => p.id === product.id);
-        if (existing) {
-          existing.quantity += 1;
-        } else {
-          cart.push({ ...product, quantity: 1 });
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
-        alert('✅ Added to cart!');
-      }
-
-      // Click delegation for "Add to Cart" buttons
-      document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('add-to-cart')) {
-          const btn = e.target;
+      document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', () => {
           const product = {
-            id: btn.dataset.id,
-            name: btn.dataset.name,
-            price: parseFloat(btn.dataset.price),
-            image: btn.dataset.image,
-            weight: btn.dataset.weight
+            id: button.dataset.id,
+            name: button.dataset.name,
+            price: parseFloat(button.dataset.price),
+            image: button.dataset.image,
+            quantity: 1
           };
-          addToCart(product);
-        }
+
+          const existing = cart.find(p => p.id === product.id);
+          if (existing) {
+            existing.quantity++;
+          } else {
+            cart.push(product);
+          }
+
+          localStorage.setItem('cart', JSON.stringify(cart));
+          alert('✅ Added to cart!');
+        });
       });
 
-      // Optional: Open cart modal (for demo, we just alert)
-      document.getElementById('cartIcon').addEventListener('click', () => {
-        if (cart.length === 0) {
-          alert('Your cart is empty.');
-          return;
-        }
-        const items = cart.map(i => `${i.name} (x${i.quantity})`).join('\n');
-        const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-        alert(`🛒 Your Cart:\n\n${items}\n\nTotal: ₹${total}\n\n✅ Proceed to payment on live site.`);
-        
-        // In full version, this would open checkout
-        // For now, simulate Razorpay flow
-        if (confirm('Proceed to payment?')) {
-          const options = {
-            key: 'rzp_test_1DP5mmOlF5G5ag', // Razorpay Test Key
-            amount: total * 100, // in paise
-            currency: 'INR',
-            name: 'Silver Heritage',
-            description: 'Jewelry Order',
-            handler: function (response) {
-              alert('✅ Payment successful!\nPayment ID: ' + response.razorpay_payment_id);
-              cart = [];
-              localStorage.setItem('cart', JSON.stringify(cart));
-              updateCartCount();
-            },
-            prefill: { contact: '', email: '' },
-            theme: { color: '#c0c0c0' }
-          };
-          const rzp = new Razorpay(options);
-          rzp.open();
-        }
-      });
-
-      // Initialize count
-      updateCartCount();
+      // Optional: Simulate checkout when cart icon clicked (not shown in UI)
+      // For full cart modal, extend this logic
     });
   </script>
 </body>
-          </html>
+</html>

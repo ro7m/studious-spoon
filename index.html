@@ -7,6 +7,7 @@
   <meta name="description" content="Handcrafted 925 Sterling Silver Jewelry by Misha. Ethically made in India. Free shipping on prepaid orders.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --primary: #1a1a1a;
@@ -41,6 +42,8 @@
       font-weight: 400;
       letter-spacing: 1px;
     }
+
+    .hidden { display: none !important; }
     
     /* Header */
     header {
@@ -84,16 +87,47 @@
       text-decoration: none;
       letter-spacing: 3px;
       text-transform: uppercase;
+      cursor: pointer;
     }
     
     .logo span { 
       color: var(--secondary);
       font-weight: 600;
     }
+
+    .search-bar {
+      flex: 1;
+      max-width: 500px;
+      margin: 0 2rem;
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.7rem 2.5rem 0.7rem 1rem;
+      border: 2px solid var(--border);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--secondary);
+    }
+
+    .search-bar i {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+    }
     
     nav {
       display: flex;
       gap: 2.5rem;
+      align-items: center;
     }
     
     nav a {
@@ -105,6 +139,7 @@
       text-transform: uppercase;
       position: relative;
       transition: color 0.3s ease;
+      cursor: pointer;
     }
     
     nav a:hover {
@@ -244,12 +279,53 @@
       text-transform: uppercase;
       font-size: 0.8rem;
       transition: all 0.4s ease;
+      cursor: pointer;
     }
     
     .btn:hover { 
       background: transparent;
       color: var(--white);
       border-color: var(--white);
+    }
+
+    /* Categories */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0 4rem;
+    }
+
+    .category-card {
+      text-align: center;
+      padding: 2rem 1rem;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--white);
+    }
+
+    .category-card:hover {
+      border-color: var(--secondary);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+
+    .category-card i {
+      font-size: 3rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+    }
+
+    .category-card h3 {
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .category-card p {
+      font-size: 0.85rem;
+      color: var(--text-light);
     }
     
     /* Section Title */
@@ -272,13 +348,29 @@
       font-weight: 300;
       letter-spacing: 1px;
     }
+
+    .breadcrumb {
+      margin: 2rem 0 1rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .breadcrumb a {
+      color: var(--secondary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
     
     /* Products Grid */
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 2rem;
-      margin-bottom: 5rem;
+      margin-bottom: 3rem;
     }
     
     .product-card {
@@ -287,6 +379,7 @@
       overflow: hidden;
       transition: all 0.4s ease;
       position: relative;
+      cursor: pointer;
     }
     
     .product-card:hover { 
@@ -365,6 +458,144 @@
     .add-to-cart:hover {
       background: transparent;
       color: var(--primary);
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 3rem 0;
+    }
+
+    .pagination button {
+      padding: 0.7rem 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--white);
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .pagination button:hover:not(:disabled) {
+      background: var(--secondary);
+      color: var(--white);
+      border-color: var(--secondary);
+    }
+
+    .pagination button.active {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Product Detail Page */
+    .product-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin: 3rem 0;
+    }
+
+    .product-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 500px;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+    }
+
+    .main-image img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+
+    .thumbnail-images {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .thumbnail {
+      width: 100px;
+      height: 100px;
+      background: var(--light);
+      border: 2px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .thumbnail:hover, .thumbnail.active {
+      border-color: var(--secondary);
+    }
+
+    .thumbnail img {
+      max-width: 80%;
+      max-height: 80%;
+      object-fit: contain;
+    }
+
+    .product-details-info h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .product-details-info .price {
+      font-size: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .product-description {
+      margin: 2rem 0;
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .quantity-selector button {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .quantity-selector button:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .quantity-selector span {
+      min-width: 50px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 500;
     }
     
     /* Cart Modal */
@@ -502,6 +733,125 @@
       font-weight: 300;
       letter-spacing: 0.5px;
     }
+
+    /* Order Confirmation Page */
+    .order-confirmation {
+      max-width: 700px;
+      margin: 4rem auto;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--light);
+      border: 2px solid var(--secondary);
+    }
+
+    .order-confirmation i {
+      font-size: 4rem;
+      color: #27ae60;
+      margin-bottom: 1.5rem;
+    }
+
+    .order-confirmation h2 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .order-details {
+      margin: 2rem 0;
+      text-align: left;
+      background: var(--white);
+      padding: 2rem;
+    }
+
+    .order-details p {
+      margin: 0.8rem 0;
+      font-size: 0.95rem;
+    }
+
+    .order-details strong {
+      color: var(--primary);
+    }
+
+    /* Policy Page */
+    .policy-content {
+      max-width: 900px;
+      margin: 3rem auto;
+      line-height: 1.8;
+    }
+
+    .policy-content h2 {
+      font-size: 2rem;
+      margin: 2rem 0 1rem;
+      color: var(--primary);
+    }
+
+    .policy-content h3 {
+      font-size: 1.4rem;
+      margin: 1.5rem 0 0.8rem;
+      color: var(--secondary);
+    }
+
+    .policy-content ul {
+      margin-left: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .policy-content li {
+      margin: 0.5rem 0;
+    }
+
+    /* Admin Dashboard */
+    .admin-dashboard {
+      max-width: 1200px;
+      margin: 3rem auto;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .orders-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+
+    .orders-table th {
+      background: var(--primary);
+      color: var(--white);
+      padding: 1rem;
+      text-align: left;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .orders-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .orders-table tr:hover {
+      background: var(--light);
+    }
+
+    .whatsapp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #25d366;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .whatsapp-link:hover {
+      text-decoration: underline;
+    }
     
     /* Footer */
     footer {
@@ -536,6 +886,7 @@
       margin-bottom: 0.6rem;
       font-weight: 300;
       transition: color 0.3s ease;
+      cursor: pointer;
     }
     
     .footer-section a:hover {
@@ -627,6 +978,29 @@
     .mobile-nav .cart-icon-mobile {
       position: relative;
     }
+
+    /* Loading Spinner */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      font-size: 1.2rem;
+      color: var(--text-light);
+    }
+
+    .spinner {
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--secondary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
     
     /* Responsive */
     @media (max-width: 768px) {
@@ -639,17 +1013,24 @@
       }
       
       .header-content {
-        flex-direction: column;
+        flex-wrap: wrap;
         gap: 1rem;
         padding: 1rem 0;
       }
+
+      .search-bar {
+        order: 3;
+        flex-basis: 100%;
+        margin: 0;
+      }
       
       nav {
-        gap: 1.5rem;
+        gap: 1rem;
+        font-size: 0.75rem;
       }
       
       nav a {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
       }
       
       .logo {
@@ -671,6 +1052,23 @@
       .products {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 1.5rem;
+      }
+
+      .product-detail {
+        grid-template-columns: 1fr;
+      }
+
+      .main-image {
+        height: 400px;
+      }
+
+      .orders-table {
+        font-size: 0.85rem;
+      }
+
+      .orders-table th,
+      .orders-table td {
+        padding: 0.5rem;
       }
       
       .footer-content {
@@ -710,12 +1108,19 @@
 
   <header>
     <div class="container header-content">
-      <a href="/" class="logo">Misha<span>.</span></a>
+      <a class="logo" onclick="app.showHome()">Misha<span>.</span></a>
+      
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for jewelry..." />
+        <i class="fas fa-search"></i>
+      </div>
+
       <nav>
-        <a href="#">About</a>
-        <a href="#">Care Guide</a>
-        <a href="#">Contact</a>
+        <a onclick="app.showHome()">Home</a>
+        <a onclick="app.showPolicy()">Returns</a>
+        <a onclick="app.showOrders()">Orders</a>
       </nav>
+
       <div class="header-icons">
         <div class="cart-icon cart-icon-desktop" id="cartIcon">
           <i class="fas fa-shopping-bag"></i>
@@ -725,184 +1130,230 @@
     </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-subtitle">Timeless Elegance</div>
-      <h1>Jewelry That Speaks Softly, Shines Boldly</h1>
-      <p>Handcrafted 925 Sterling Silver • Ethically Sourced • Designed for the Modern Woman</p>
-      <a href="#products" class="btn">Explore Collection</a>
-    </div>
-  </section>
+  <!-- Main Content Area -->
+  <div id="mainContent">
+    <!-- Home Page -->
+    <div id="homePage">
+      <section class="hero">
+        <div class="hero-content">
+          <div class="hero-subtitle">Timeless Elegance</div>
+          <h1>Jewelry That Speaks Softly, Shines Boldly</h1>
+          <p>Handcrafted 925 Sterling Silver • Ethically Sourced • Designed for the Modern Woman</p>
+          <a href="#categories" class="btn">Explore Collection</a>
+        </div>
+      </section>
 
-  <main class="container">
-    <div class="section-header" id="products">
-      <h2 class="section-title">Our Signature Pieces</h2>
-      <p class="section-subtitle">Minimal. Meaningful. Timeless.</p>
-    </div>
-    
-    <div class="products">
-      <!-- Product 1 -->
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1607082350899-7e105aa886ae?auto=format&fit=crop&w=600" alt="Silver Anklet">
+      <main class="container">
+        <div class="section-header" id="categories">
+          <h2 class="section-title">Shop by Category</h2>
+          <p class="section-subtitle">Discover our curated collections</p>
         </div>
-        <div class="product-info">
-          <h3>Lotus Anklet</h3>
-          <p>Handcrafted with delicate lotus motifs</p>
-          <div class="price">₹2,450</div>
-          <button class="add-to-cart"
-            data-id="anklet-01"
-            data-name="Lotus Anklet"
-            data-price="2450"
-            data-image="https://images.unsplash.com/photo-1607082350899-7e105aa886ae?auto=format&fit=crop&w=600">
-            Add to Cart
-          </button>
-        </div>
-      </div>
+        
+        <div class="categories" id="categoriesGrid"></div>
 
-      <!-- Product 2 -->
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1580805026712-2920a23d2e33?auto=format&fit=crop&w=600" alt="Silver Bracelet">
+        <div class="section-header">
+          <h2 class="section-title">Featured Products</h2>
+          <p class="section-subtitle">Handpicked favorites just for you</p>
         </div>
-        <div class="product-info">
-          <h3>Temple Bracelet</h3>
-          <p>Inspired by South Indian temple architecture</p>
-          <div class="price">₹3,200</div>
-          <button class="add-to-cart"
-            data-id="bracelet-01"
-            data-name="Temple Bracelet"
-            data-price="3200"
-            data-image="https://images.unsplash.com/photo-1580805026712-2920a23d2e33?auto=format&fit=crop&w=600">
-            Add to Cart
-          </button>
-        </div>
-      </div>
+        
+        <div class="products" id="featuredProducts"></div>
 
-      <!-- Product 3 -->
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600" alt="Silver Necklace">
+        <div class="section-header">
+          <h2 class="section-title">Why Choose Misha</h2>
+          <p class="section-subtitle">Excellence in every detail</p>
         </div>
-        <div class="product-info">
-          <h3>Heritage Necklace</h3>
-          <p>Timeless design with intricate detailing</p>
-          <div class="price">₹4,800</div>
-          <button class="add-to-cart"
-            data-id="necklace-01"
-            data-name="Heritage Necklace"
-            data-price="4800"
-            data-image="https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600">
-            Add to Cart
-          </button>
-        </div>
-      </div>
 
-      <!-- Product 4 -->
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1618312900238-2f3a4e5e3e1d?auto=format&fit=crop&w=600" alt="Silver Earrings">
+        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:2.5rem; margin-bottom:4rem;">
+          <div style="text-align:center; max-width:220px;">
+            <i class="fas fa-gem" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
+            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">HIGH QUALITY</h4>
+            <p style="font-size:0.85rem; color:var(--text-light);">925 Sterling Silver authenticity guaranteed</p>
+          </div>
+          <div style="text-align:center; max-width:220px;">
+            <i class="fas fa-headset" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
+            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">24/7 SUPPORT</h4>
+            <p style="font-size:0.85rem; color:var(--text-light);">Real-time chat & email support</p>
+          </div>
+          <div style="text-align:center; max-width:220px;">
+            <i class="fas fa-shipping-fast" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
+            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">FREE SHIPPING</h4>
+            <p style="font-size:0.85rem; color:var(--text-light);">On all prepaid orders above ₹999</p>
+          </div>
+          <div style="text-align:center; max-width:220px;">
+            <i class="fas fa-shield-alt" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
+            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">SECURE PAYMENTS</h4>
+            <p style="font-size:0.85rem; color:var(--text-light);">All major cards & UPI accepted</p>
+          </div>
         </div>
-        <div class="product-info">
-          <h3>Jhumka Earrings</h3>
-          <p>Traditional jhumkas with modern flair</p>
-          <div class="price">₹1,950</div>
-          <button class="add-to-cart"
-            data-id="earrings-01"
-            data-name="Jhumka Earrings"
-            data-price="1950"
-            data-image="https://images.unsplash.com/photo-1618312900238-2f3a4e5e3e1d?auto=format&fit=crop&w=600">
-            Add to Cart
-          </button>
-        </div>
-      </div>
+      </main>
     </div>
 
-    <!-- OUR BESTSELLER -->
-    <div class="section-header">
-      <h2 class="section-title">Our Bestseller</h2>
-    </div>
-    <p style="text-align:center; max-width:800px; margin:0 auto 4rem; font-style:italic; line-height:1.8; color: var(--text-light);">
-      At <strong style="color: var(--primary);">Misha</strong>, we create jewelry that blends elegance, purity, and trust. 
-      Every piece is crafted from authentic 925 Sterling Silver with attention to detail, 
-      combining timeless beauty with modern grace to suit both everyday wear and special celebrations. 
-      <strong style="color: var(--secondary);">Our mission is to make you feel confident, radiant, and cherished</strong> 
-      while enjoying the charm of honest, affordable luxury.
-    </p>
-
-    <!-- THE GIFTING EDIT -->
-    <div class="section-header">
-      <h2 class="section-title">The Gifting Edit</h2>
-      <p class="section-subtitle">Explore timeless treasures crafted to perfection.</p>
-    </div>
-
-    <div class="products">
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600" alt="Golden Grace Pendant">
+    <!-- Category Page -->
+    <div id="categoryPage" class="hidden">
+      <main class="container">
+        <div class="breadcrumb">
+          <a onclick="app.showHome()">Home</a> / <span id="categoryBreadcrumb"></span>
         </div>
-        <div class="product-info">
-          <h3>Golden Grace Pendant</h3>
-          <p>Reflects sophistication with a modern twist.</p>
-          <div class="price">₹3,800</div>
-          <button class="add-to-cart"
-            data-id="pendant-01"
-            data-name="Golden Grace Pendant"
-            data-price="3800"
-            data-image="https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600">
-            Add to Cart
-          </button>
-        </div>
-      </div>
 
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1618312900238-2f3a4e5e3e1d?auto=format&fit=crop&w=600" alt="Starlight Shine Ring">
+        <div class="section-header">
+          <h2 class="section-title" id="categoryTitle"></h2>
+          <p class="section-subtitle" id="categorySubtitle"></p>
         </div>
-        <div class="product-info">
-          <h3>Starlight Shine Ring</h3>
-          <p>Bold, chic, and timeless.</p>
-          <div class="price">₹2,200</div>
-          <button class="add-to-cart"
-            data-id="ring-01"
-            data-name="Starlight Shine Ring"
-            data-price="2200"
-            data-image="https://images.unsplash.com/photo-1618312900238-2f3a4e5e3e1d?auto=format&fit=crop&w=600">
-            Add to Cart
-          </button>
-        </div>
-      </div>
+
+        <div class="products" id="categoryProducts"></div>
+
+        <div class="pagination" id="pagination"></div>
+      </main>
     </div>
 
-    <!-- INSTAGRAM SHOP -->
-    <div class="section-header">
-      <h2 class="section-title">Why Choose Misha</h2>
-      <p class="section-subtitle">Add a touch of charm to every outfit!</p>
+    <!-- Product Detail Page -->
+    <div id="productDetailPage" class="hidden">
+      <main class="container">
+        <div class="breadcrumb">
+          <a onclick="app.showHome()">Home</a> / 
+          <a onclick="app.showCategory(app.currentProduct?.category)"><span id="productCategoryBreadcrumb"></span></a> / 
+          <span id="productNameBreadcrumb"></span>
+        </div>
+
+        <div class="product-detail">
+          <div class="product-gallery">
+            <div class="main-image" id="mainImage">
+              <img src="" alt="Product" />
+            </div>
+            <div class="thumbnail-images" id="thumbnails"></div>
+          </div>
+
+          <div class="product-details-info">
+            <h1 id="productDetailTitle"></h1>
+            <div class="price" id="productDetailPrice"></div>
+            <div class="product-description" id="productDetailDescription"></div>
+
+            <div class="quantity-selector">
+              <button onclick="app.decreaseQuantity()">−</button>
+              <span id="productQuantity">1</span>
+              <button onclick="app.increaseQuantity()">+</button>
+            </div>
+
+            <button class="add-to-cart" onclick="app.addToCartFromDetail()" style="width:auto; padding:1rem 3rem;">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </main>
     </div>
 
-    <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:2.5rem; margin-bottom:4rem;">
-      <div style="text-align:center; max-width:220px;">
-        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T165035.213_200x.png?v=1757348835" alt="Quality" style="width:70px; margin-bottom:1rem;">
-        <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">HIGH QUALITY BRAND</h4>
-        <p style="font-size:0.85rem; color:var(--text-light);">Curated for style, quality and durability.</p>
-      </div>
-      <div style="text-align:center; max-width:220px;">
-        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T164844.161_200x.png?v=1757348836" alt="Support" style="width:70px; margin-bottom:1rem;">
-        <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">24/7 SUPPORT</h4>
-        <p style="font-size:0.85rem; color:var(--text-light);">Real-time chat & email support</p>
-      </div>
-      <div style="text-align:center; max-width:220px;">
-        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T165018.296_200x.png?v=1757348836" alt="Shipping" style="width:70px; margin-bottom:1rem;">
-        <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">FREE SHIPPING</h4>
-        <p style="font-size:0.85rem; color:var(--text-light);">On all prepaid orders above ₹999</p>
-      </div>
-      <div style="text-align:center; max-width:220px;">
-        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T165001.497_200x.png?v=1757348836" alt="Payments" style="width:70px; margin-bottom:1rem;">
-        <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">SECURE PAYMENTS</h4>
-        <p style="font-size:0.85rem; color:var(--text-light);">All major cards & UPI accepted</p>
-      </div>
+    <!-- Order Confirmation Page -->
+    <div id="orderConfirmationPage" class="hidden">
+      <main class="container">
+        <div class="order-confirmation">
+          <i class="fas fa-check-circle"></i>
+          <h2>Order Placed Successfully!</h2>
+          <p style="margin: 1rem 0;">Thank you for your purchase. We've sent a confirmation email with your order details.</p>
+          
+          <div class="order-details" id="orderDetailsContent"></div>
+
+          <div style="background: #fff3cd; padding: 1rem; margin: 2rem 0; border-left: 4px solid var(--secondary);">
+            <p style="margin: 0; color: #856404; font-size: 0.9rem;">
+              <i class="fas fa-info-circle"></i> We'll contact you on WhatsApp shortly to confirm your order details and delivery.
+            </p>
+          </div>
+
+          <button class="btn" onclick="app.showHome()" style="margin-top: 2rem;">Continue Shopping</button>
+        </div>
+      </main>
     </div>
-  </main>
+
+    <!-- Orders Dashboard Page -->
+    <div id="ordersPage" class="hidden">
+      <main class="container admin-dashboard">
+        <div class="admin-header">
+          <h1 style="font-size: 2.5rem; color: var(--primary);">Order Management</h1>
+          <button class="btn" onclick="app.showHome()">Back to Store</button>
+        </div>
+
+        <div id="ordersTableContainer"></div>
+      </main>
+    </div>
+
+    <!-- Policy Page -->
+    <div id="policyPage" class="hidden">
+      <main class="container">
+        <div class="policy-content">
+          <h1 style="font-size: 3rem; text-align: center; margin-bottom: 2rem; color: var(--primary);">Returns & Cancellation Policy</h1>
+
+          <h2>Returns Policy</h2>
+          <p>At Misha, we want you to be completely satisfied with your purchase. If you're not happy with your jewelry, we offer a hassle-free return policy.</p>
+
+          <h3>Return Window</h3>
+          <ul>
+            <li><strong>7 Days</strong> from the date of delivery to initiate a return</li>
+            <li>Products must be unused, unworn, and in original packaging</li>
+            <li>All tags and certificates must be intact</li>
+          </ul>
+
+          <h3>Return Process</h3>
+          <ul>
+            <li>Contact us via WhatsApp or email with your order number</li>
+            <li>Share photos of the product you wish to return</li>
+            <li>Our team will provide return instructions within 24 hours</li>
+            <li>Pack the item securely and ship it back to us</li>
+            <li>Refund will be processed within 5-7 business days after we receive the item</li>
+          </ul>
+
+          <h3>Non-Returnable Items</h3>
+          <ul>
+            <li>Customized or personalized jewelry</li>
+            <li>Items purchased during sale/clearance (unless defective)</li>
+            <li>Products without original packaging or tags</li>
+          </ul>
+
+          <h2>Cancellation Policy</h2>
+          
+          <h3>Before Dispatch</h3>
+          <ul>
+            <li>Orders can be cancelled free of charge before dispatch</li>
+            <li>Full refund will be processed to the original payment method</li>
+            <li>Contact us immediately via WhatsApp at +91 88715 42203</li>
+          </ul>
+
+          <h3>After Dispatch</h3>
+          <ul>
+            <li>Once dispatched, orders cannot be cancelled</li>
+            <li>You may refuse delivery and initiate a return</li>
+            <li>Return shipping charges may apply</li>
+          </ul>
+
+          <h2>Refund Policy</h2>
+          <ul>
+            <li>Refunds are processed within 5-7 business days</li>
+            <li>Original payment method will be credited</li>
+            <li>Shipping charges are non-refundable (except for defective items)</li>
+            <li>You'll receive an email confirmation once refund is initiated</li>
+          </ul>
+
+          <h2>Exchange Policy</h2>
+          <ul>
+            <li>We offer one-time exchange for size or design</li>
+            <li>Exchange must be requested within 7 days of delivery</li>
+            <li>Product must be unused and in original condition</li>
+            <li>Subject to availability of requested item</li>
+          </ul>
+
+          <h2>Damaged or Defective Items</h2>
+          <ul>
+            <li>Contact us within 48 hours of delivery with photos</li>
+            <li>We'll arrange free pickup and replacement</li>
+            <li>No questions asked - your satisfaction is our priority</li>
+          </ul>
+
+          <h2>Contact Us</h2>
+          <p><strong>WhatsApp:</strong> +91 88715 42203</p>
+          <p><strong>Email:</strong> hello@misha.com</p>
+          <p><strong>Hours:</strong> Monday - Saturday, 10 AM - 6 PM</p>
+        </div>
+      </main>
+    </div>
+  </div>
 
   <!-- WhatsApp Float Button -->
   <a href="https://wa.me/918871542203" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
@@ -912,8 +1363,8 @@
   <!-- Mobile Bottom Nav -->
   <nav class="mobile-nav">
     <ul>
-      <li><a href="#"><i class="fas fa-home"></i><span>Home</span></a></li>
-      <li><a href="#"><i class="fas fa-user"></i><span>Account</span></a></li>
+      <li><a onclick="app.showHome()"><i class="fas fa-home"></i><span>Home</span></a></li>
+      <li><a onclick="app.showOrders()"><i class="fas fa-box"></i><span>Orders</span></a></li>
       <li>
         <a href="#" id="mobileCart">
           <div class="cart-icon-mobile">
@@ -953,7 +1404,7 @@
         
         <div class="footer-section">
           <h3>Customer Care</h3>
-          <a href="#">Shipping & Returns</a>
+          <a onclick="app.showPolicy()">Returns & Cancellation</a>
           <a href="#">Size Guide</a>
           <a href="#">Care Instructions</a>
           <a href="#">FAQs</a>
@@ -977,26 +1428,458 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-      const cartIcon = document.getElementById('cartIcon');
-      const cartCount = document.getElementById('cartCount');
-      const mobileCart = document.getElementById('mobileCart');
-      const mobileCartCount = document.getElementById('mobileCartCount');
-      const cartModal = document.getElementById('cartModal');
-      const closeCart = document.getElementById('closeCart');
-      const cartItems = document.getElementById('cartItems');
-      const cartFooter = document.getElementById('cartFooter');
-
-      function updateCartCount() {
-        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCount.textContent = count;
-        mobileCartCount.textContent = count;
+    // ==================== CONFIGURATION ====================
+    // REPLACE THESE WITH YOUR ACTUAL KEYS
+    const CONFIG = {
+      supabase: {
+        url: 'https://kplmeebifsuziytppwzb.supabase.co', // e.g., https://xxxxx.supabase.co
+        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbG1lZWJpZnN1eml5dHBwd3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODU1NTcsImV4cCI6MjA3ODI2MTU1N30.lzfjMdr5hD7FWcVu-0dHbj7ZgXrttlfxHsaO6_vyAHw'
+      },
+      resend: {
+        apiKey: 're_UcrNLQ85_NPGnSG4Je94LXVF8fBY52Grq'
+      },
+      razorpay: {
+        key: 'rzp_test_1DP5mmOlF5G5ag'
+      },
+      store: {
+        email: 'hello.mishajwellery@gmail.com',
+        phone: '+918871542203'
       }
+    };
 
-      function renderCart() {
-        if (cart.length === 0) {
+    // ==================== SUPABASE INITIALIZATION ====================
+    const supabase = window.supabase.createClient(CONFIG.supabase.url, CONFIG.supabase.key);
+
+    // ==================== APP STATE ====================
+    const app = {
+      cart: JSON.parse(localStorage.getItem('cart')) || [],
+      currentCategory: null,
+      currentProduct: null,
+      currentPage: 1,
+      itemsPerPage: 10,
+      productQuantity: 1,
+      categories: [
+        { id: 'rings', name: 'Rings', icon: 'fa-ring', description: 'Elegant rings for every occasion' },
+        { id: 'necklaces', name: 'Necklaces', icon: 'fa-gem', description: 'Beautiful necklaces and pendants' },
+        { id: 'earrings', name: 'Earrings', icon: 'fa-star', description: 'Stunning earrings collection' },
+        { id: 'bracelets', name: 'Bracelets', icon: 'fa-circle', description: 'Charming bracelets and bangles' },
+        { id: 'anklets', name: 'Anklets', icon: 'fa-heart', description: 'Delicate anklets' }
+      ],
+
+      // ==================== INITIALIZATION ====================
+      async init() {
+        await this.loadProducts();
+        this.renderCategories();
+        this.renderFeaturedProducts();
+        this.updateCartCount();
+        this.setupEventListeners();
+        this.setupSearch();
+      },
+
+      // ==================== PRODUCTS ====================
+      async loadProducts() {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('active', true);
+        
+        if (error) {
+          console.error('Error loading products:', error);
+          // Fallback to sample data if DB not set up yet
+          this.products = this.getSampleProducts();
+        } else {
+          this.products = data;
+        }
+      },
+
+      getSampleProducts() {
+        return [
+          {
+            id: 'ring-1',
+            name: 'Diamond Solitaire Ring',
+            category: 'rings',
+            price: 5999,
+            description: 'Elegant solitaire ring with cubic zirconia stone. Perfect for engagements or special occasions.',
+            images: ['https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'necklace-1',
+            name: 'Heritage Necklace',
+            category: 'necklaces',
+            price: 4800,
+            description: 'Timeless design with intricate detailing inspired by traditional Indian craftsmanship.',
+            images: ['https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'earring-1',
+            name: 'Jhumka Earrings',
+            category: 'earrings',
+            price: 1950,
+            description: 'Traditional jhumkas with modern flair. Lightweight and comfortable for all-day wear.',
+            images: ['https://images.unsplash.com/photo-1618312900238-2f3a4e5e3e1d?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'bracelet-1',
+            name: 'Temple Bracelet',
+            category: 'bracelets',
+            price: 3200,
+            description: 'Inspired by South Indian temple architecture. A statement piece for any outfit.',
+            images: ['https://images.unsplash.com/photo-1580805026712-2920a23d2e33?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'anklet-1',
+            name: 'Lotus Anklet',
+            category: 'anklets',
+            price: 2450,
+            description: 'Handcrafted with delicate lotus motifs. Elegant and comfortable.',
+            images: ['https://images.unsplash.com/photo-1607082350899-7e105aa886ae?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'ring-2',
+            name: 'Floral Band Ring',
+            category: 'rings',
+            price: 3499,
+            description: 'Delicate floral pattern band ring. Perfect for daily wear.',
+            images: ['https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'necklace-2',
+            name: 'Pearl Pendant',
+            category: 'necklaces',
+            price: 2999,
+            description: 'Elegant pearl pendant on sterling silver chain.',
+            images: ['https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600'],
+            active: true
+          }
+        ];
+      },
+
+      // ==================== RENDERING ====================
+      renderCategories() {
+        const grid = document.getElementById('categoriesGrid');
+        grid.innerHTML = this.categories.map(cat => `
+          <div class="category-card" onclick="app.showCategory('${cat.id}')">
+            <i class="fas ${cat.icon}"></i>
+            <h3>${cat.name}</h3>
+            <p>${cat.description}</p>
+          </div>
+        `).join('');
+      },
+
+      renderFeaturedProducts() {
+        const grid = document.getElementById('featuredProducts');
+        const featured = this.products.slice(0, 4);
+        grid.innerHTML = featured.map(p => this.renderProductCard(p)).join('');
+      },
+
+      renderProductCard(product) {
+        return `
+          <div class="product-card" onclick="app.showProductDetail('${product.id}')">
+            <div class="product-img">
+              <img src="${product.images[0]}" alt="${product.name}">
+            </div>
+            <div class="product-info">
+              <h3>${product.name}</h3>
+              <p>${product.description.substring(0, 60)}...</p>
+              <div class="price">₹${product.price.toLocaleString()}</div>
+              <button class="add-to-cart" onclick="event.stopPropagation(); app.addToCart('${product.id}')">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        `;
+      },
+
+      // ==================== NAVIGATION ====================
+      showHome() {
+        document.getElementById('homePage').classList.remove('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('ordersPage').classList.add('hidden');
+        window.scrollTo(0, 0);
+      },
+
+      showCategory(categoryId) {
+        this.currentCategory = categoryId;
+        this.currentPage = 1;
+        const category = this.categories.find(c => c.id === categoryId);
+        
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.remove('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('ordersPage').classList.add('hidden');
+        
+        document.getElementById('categoryBreadcrumb').textContent = category.name;
+        document.getElementById('categoryTitle').textContent = category.name;
+        document.getElementById('categorySubtitle').textContent = category.description;
+        
+        this.renderCategoryProducts();
+        window.scrollTo(0, 0);
+      },
+
+      renderCategoryProducts() {
+        const products = this.products.filter(p => p.category === this.currentCategory);
+        const startIdx = (this.currentPage - 1) * this.itemsPerPage;
+        const endIdx = startIdx + this.itemsPerPage;
+        const pageProducts = products.slice(startIdx, endIdx);
+        
+        const grid = document.getElementById('categoryProducts');
+        grid.innerHTML = pageProducts.map(p => this.renderProductCard(p)).join('');
+        
+        this.renderPagination(products.length);
+      },
+
+      renderPagination(totalItems) {
+        const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+        const pagination = document.getElementById('pagination');
+        
+        if (totalPages <= 1) {
+          pagination.innerHTML = '';
+          return;
+        }
+        
+        let html = `
+          <button ${this.currentPage === 1 ? 'disabled' : ''} onclick="app.changePage(${this.currentPage - 1})">
+            Previous
+          </button>
+        `;
+        
+        for (let i = 1; i <= totalPages; i++) {
+          html += `
+            <button class="${i === this.currentPage ? 'active' : ''}" onclick="app.changePage(${i})">
+              ${i}
+            </button>
+          `;
+        }
+        
+        html += `
+          <button ${this.currentPage === totalPages ? 'disabled' : ''} onclick="app.changePage(${this.currentPage + 1})">
+            Next
+          </button>
+        `;
+        
+        pagination.innerHTML = html;
+      },
+
+      changePage(page) {
+        this.currentPage = page;
+        this.renderCategoryProducts();
+        window.scrollTo(0, 0);
+      },
+
+      showProductDetail(productId) {
+        const product = this.products.find(p => p.id === productId);
+        if (!product) return;
+        
+        this.currentProduct = product;
+        this.productQuantity = 1;
+        
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.remove('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('ordersPage').classList.add('hidden');
+        
+        const category = this.categories.find(c => c.id === product.category);
+        document.getElementById('productCategoryBreadcrumb').textContent = category?.name || '';
+        document.getElementById('productNameBreadcrumb').textContent = product.name;
+        document.getElementById('productDetailTitle').textContent = product.name;
+        document.getElementById('productDetailPrice').textContent = `₹${product.price.toLocaleString()}`;
+        document.getElementById('productDetailDescription').textContent = product.description;
+        document.getElementById('productQuantity').textContent = this.productQuantity;
+        
+        // Main image
+        document.querySelector('#mainImage img').src = product.images[0];
+        
+        // Thumbnails
+        const thumbnails = document.getElementById('thumbnails');
+        thumbnails.innerHTML = product.images.map((img, idx) => `
+          <div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="app.changeMainImage('${img}', ${idx})">
+            <img src="${img}" alt="Thumbnail ${idx + 1}">
+          </div>
+        `).join('');
+        
+        window.scrollTo(0, 0);
+      },
+
+      changeMainImage(imgSrc, idx) {
+        document.querySelector('#mainImage img').src = imgSrc;
+        document.querySelectorAll('.thumbnail').forEach((t, i) => {
+          t.classList.toggle('active', i === idx);
+        });
+      },
+
+      increaseQuantity() {
+        this.productQuantity++;
+        document.getElementById('productQuantity').textContent = this.productQuantity;
+      },
+
+      decreaseQuantity() {
+        if (this.productQuantity > 1) {
+          this.productQuantity--;
+          document.getElementById('productQuantity').textContent = this.productQuantity;
+        }
+      },
+
+      showPolicy() {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.remove('hidden');
+        document.getElementById('ordersPage').classList.add('hidden');
+        window.scrollTo(0, 0);
+      },
+
+      async showOrders() {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('ordersPage').classList.remove('hidden');
+        
+        await this.loadOrders();
+        window.scrollTo(0, 0);
+      },
+
+      async loadOrders() {
+        const container = document.getElementById('ordersTableContainer');
+        container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading orders...</p></div>';
+
+        const { data, error } = await supabase
+          .from('orders')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          container.innerHTML = '<p style="text-align:center; padding:3rem; color:var(--text-light);">Error loading orders. Please check your database setup.</p>';
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          container.innerHTML = '<p style="text-align:center; padding:3rem; color:var(--text-light);">No orders yet.</p>';
+          return;
+        }
+
+        let tableHtml = `
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>WhatsApp</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        data.forEach(order => {
+          const date = new Date(order.created_at).toLocaleDateString('en-IN');
+          const itemsCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
+          const phone = order.user_phone || 'N/A';
+          const whatsappMsg = encodeURIComponent(`Hi ${order.user_name}, your order ${order.order_id} has been confirmed! We'll dispatch it within 2-3 days. Thank you for shopping with Misha! 💎`);
+          
+          tableHtml += `
+            <tr>
+              <td><strong>${order.order_id}</strong></td>
+              <td>${order.user_name}</td>
+              <td>${phone}</td>
+              <td>${order.user_email}</td>
+              <td>${itemsCount} item(s)</td>
+              <td><strong>₹${order.total.toLocaleString()}</strong></td>
+              <td>${date}</td>
+              <td>
+                ${phone !== 'N/A' ? `
+                  <a href="https://wa.me/${phone.replace(/\D/g, '')}?text=${whatsappMsg}" 
+                     target="_blank" 
+                     class="whatsapp-link">
+                    <i class="fab fa-whatsapp"></i> Message
+                  </a>
+                ` : '-'}
+              </td>
+            </tr>
+          `;
+        });
+
+        tableHtml += '</tbody></table>';
+        container.innerHTML = tableHtml;
+      },
+
+      // ==================== CART ====================
+      addToCart(productId) {
+        const product = this.products.find(p => p.id === productId);
+        if (!product) return;
+        
+        const existing = this.cart.find(item => item.id === productId);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          this.cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.images[0],
+            quantity: 1
+          });
+        }
+        
+        this.saveCart();
+        this.updateCartCount();
+      },
+
+      addToCartFromDetail() {
+        if (!this.currentProduct) return;
+        
+        const existing = this.cart.find(item => item.id === this.currentProduct.id);
+        if (existing) {
+          existing.quantity += this.productQuantity;
+        } else {
+          this.cart.push({
+            id: this.currentProduct.id,
+            name: this.currentProduct.name,
+            price: this.currentProduct.price,
+            image: this.currentProduct.images[0],
+            quantity: this.productQuantity
+          });
+        }
+        
+        this.saveCart();
+        this.updateCartCount();
+        alert(`Added ${this.productQuantity} item(s) to cart!`);
+      },
+
+      saveCart() {
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+      },
+
+      updateCartCount() {
+        const count = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById('cartCount').textContent = count;
+        document.getElementById('mobileCartCount').textContent = count;
+      },
+
+      renderCart() {
+        const cartItems = document.getElementById('cartItems');
+        const cartFooter = document.getElementById('cartFooter');
+        
+        if (this.cart.length === 0) {
           cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
           cartFooter.innerHTML = '';
           return;
@@ -1005,7 +1888,7 @@
         let itemsHtml = '';
         let total = 0;
 
-        cart.forEach(item => {
+        this.cart.forEach(item => {
           const itemTotal = item.price * item.quantity;
           total += itemTotal;
           itemsHtml += `
@@ -1013,12 +1896,12 @@
               <img src="${item.image}" alt="${item.name}">
               <div style="flex:1;">
                 <h4 style="margin-bottom:0.5rem; font-size:1.1rem;">${item.name}</h4>
-                <p style="color:var(--text-light); font-size:0.9rem;">₹${item.price} × ${item.quantity}</p>
+                <p style="color:var(--text-light); font-size:0.9rem;">₹${item.price.toLocaleString()} × ${item.quantity}</p>
                 <div class="cart-actions">
-                  <button class="decrease" data-id="${item.id}">−</button>
+                  <button onclick="app.decreaseCartItem('${item.id}')">−</button>
                   <span style="min-width:30px; text-align:center; font-weight:500;">${item.quantity}</span>
-                  <button class="increase" data-id="${item.id}">+</button>
-                  <button class="remove" data-id="${item.id}" style="margin-left: 10px; color: #e74c3c;">Remove</button>
+                  <button onclick="app.increaseCartItem('${item.id}')">+</button>
+                  <button onclick="app.removeCartItem('${item.id}')" style="margin-left: 10px; color: #e74c3c;">Remove</button>
                 </div>
               </div>
             </div>
@@ -1031,108 +1914,338 @@
             <span>Total:</span>
             <span>₹${total.toLocaleString()}</span>
           </div>
-          <button class="checkout-btn" id="checkoutBtn">Proceed to Payment</button>
+          <button class="checkout-btn" onclick="app.checkout()">Proceed to Payment</button>
         `;
-      }
+      },
 
-      function addToCart(product) {
-        const existing = cart.find(p => p.id === product.id);
-        if (existing) {
-          existing.quantity += 1;
+      decreaseCartItem(productId) {
+        const item = this.cart.find(i => i.id === productId);
+        if (item.quantity > 1) {
+          item.quantity--;
         } else {
-          cart.push({ ...product, quantity: 1 });
+          this.cart = this.cart.filter(i => i.id !== productId);
         }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
-      }
+        this.saveCart();
+        this.updateCartCount();
+        this.renderCart();
+      },
 
-      document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('add-to-cart')) {
-          const btn = e.target;
-          const product = {
-            id: btn.dataset.id.trim(),
-            name: btn.dataset.name.trim(),
-            price: parseFloat(btn.dataset.price),
-            image: btn.dataset.image.trim()
-          };
-          addToCart(product);
-        }
+      increaseCartItem(productId) {
+        const item = this.cart.find(i => i.id === productId);
+        item.quantity++;
+        this.saveCart();
+        this.updateCartCount();
+        this.renderCart();
+      },
 
-        if (e.target.classList.contains('decrease')) {
-          const id = e.target.dataset.id;
-          const item = cart.find(p => p.id === id);
-          if (item.quantity > 1) {
-            item.quantity -= 1;
-          } else {
-            cart = cart.filter(p => p.id !== id);
+      removeCartItem(productId) {
+        this.cart = this.cart.filter(i => i.id !== productId);
+        this.saveCart();
+        this.updateCartCount();
+        this.renderCart();
+      },
+
+      // ==================== CHECKOUT ====================
+      async checkout() {
+        if (this.cart.length === 0) return;
+
+        const total = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        
+        const options = {
+          key: CONFIG.razorpay.key,
+          amount: total * 100,
+          currency: 'INR',
+          name: 'Misha',
+          description: 'Silver Jewelry Order',
+          image: 'https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=100',
+          handler: async (response) => {
+            await this.handlePaymentSuccess(response, total);
+          },
+          prefill: {
+            name: '',
+            email: '',
+            contact: ''
+          },
+          theme: { color: '#c9a961' },
+          modal: {
+            ondismiss: function() {
+              console.log('Payment cancelled');
+            }
           }
-          localStorage.setItem('cart', JSON.stringify(cart));
-          renderCart();
-          updateCartCount();
+        };
+        
+        const rzp = new Razorpay(options);
+        rzp.open();
+      },
+
+      async handlePaymentSuccess(paymentResponse, total) {
+        const orderId = 'ORD' + Date.now();
+        
+        // Get customer details from Razorpay
+        const customerName = document.querySelector('input[name="contact[name]"]')?.value || 'Customer';
+        const customerEmail = document.querySelector('input[name="contact[email]"]')?.value || '';
+        const customerPhone = document.querySelector('input[name="contact[contact]"]')?.value || '';
+        
+        const orderData = {
+          order_id: orderId,
+          user_name: customerName,
+          user_email: customerEmail,
+          user_phone: customerPhone,
+          items: this.cart,
+          total: total,
+          payment_id: paymentResponse.razorpay_payment_id,
+          status: 'confirmed',
+          created_at: new Date().toISOString()
+        };
+
+        // Save to Supabase
+        const { error } = await supabase
+          .from('orders')
+          .insert([orderData]);
+
+        if (error) {
+          console.error('Error saving order:', error);
+          // Continue anyway - order was paid
         }
 
-        if (e.target.classList.contains('increase')) {
-          const id = e.target.dataset.id;
-          const item = cart.find(p => p.id === id);
-          item.quantity += 1;
-          localStorage.setItem('cart', JSON.stringify(cart));
-          renderCart();
-          updateCartCount();
-        }
+        // Send emails
+        await this.sendOrderEmails(orderData);
 
-        if (e.target.classList.contains('remove')) {
-          const id = e.target.dataset.id;
-          cart = cart.filter(p => p.id !== id);
-          localStorage.setItem('cart', JSON.stringify(cart));
-          renderCart();
-          updateCartCount();
-        }
+        // Clear cart
+        this.cart = [];
+        this.saveCart();
+        this.updateCartCount();
+        document.getElementById('cartModal').style.display = 'none';
 
-        if (e.target.id === 'checkoutBtn') {
-          if (cart.length === 0) return;
-          const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-          const options = {
-            key: 'rzp_test_1DP5mmOlF5G5ag',
-            amount: total * 100,
-            currency: 'INR',
-            name: 'Misha •',
-            description: 'Silver Jewelry Order',
-            image: 'https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=100',
-            handler: function (response) {
-              alert('✅ Payment successful!\nPayment ID: ' + response.razorpay_payment_id);
-              cart = [];
-              localStorage.setItem('cart', JSON.stringify(cart));
-              updateCartCount();
-              cartModal.style.display = 'none';
+        // Show confirmation
+        this.showOrderConfirmation(orderData);
+      },
+
+      async sendOrderEmails(orderData) {
+        try {
+          // Customer Email
+          const customerEmailHtml = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f8f6f3;">
+              <div style="background: white; padding: 30px; border: 2px solid #c9a961;">
+                <h1 style="color: #1a1a1a; text-align: center; margin-bottom: 20px;">Order Confirmed! 🎉</h1>
+                <p style="font-size: 16px; color: #2d2d2d;">Dear ${orderData.user_name},</p>
+                <p style="font-size: 16px; color: #2d2d2d;">Thank you for your purchase at Misha! Your order has been confirmed.</p>
+                
+                <div style="background: #f8f6f3; padding: 20px; margin: 20px 0;">
+                  <h2 style="color: #c9a961; margin-bottom: 15px;">Order Details</h2>
+                  <p><strong>Order ID:</strong> ${orderData.order_id}</p>
+                  <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
+                  <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                  <p><strong>Phone:</strong> ${orderData.user_phone}</p>
+                </div>
+
+                <h3 style="color: #1a1a1a; margin-top: 30px;">Items Ordered</h3>
+                ${orderData.items.map(item => `
+                  <div style="border-bottom: 1px solid #d4d4d4; padding: 15px 0;">
+                    <p style="margin: 5px 0;"><strong>${item.name}</strong></p>
+                    <p style="margin: 5px 0; color: #666;">Quantity: ${item.quantity} × ₹${item.price.toLocaleString()}</p>
+                  </div>
+                `).join('')}
+
+                <div style="text-align: right; margin-top: 20px; padding-top: 20px; border-top: 2px solid #c9a961;">
+                  <p style="font-size: 20px; color: #c9a961;"><strong>Total: ₹${orderData.total.toLocaleString()}</strong></p>
+                </div>
+
+                <div style="background: #fff3cd; padding: 15px; margin: 30px 0; border-left: 4px solid #c9a961;">
+                  <p style="margin: 0; color: #856404;">Your order will be dispatched within 2-3 business days. We'll contact you on WhatsApp shortly to confirm delivery details.</p>
+                </div>
+
+                <p style="text-align: center; margin-top: 30px;">
+                  <a href="https://wa.me/${CONFIG.store.phone.replace(/\D/g, '')}" style="background: #25d366; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Contact Us on WhatsApp</a>
+                </p>
+
+                <p style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
+                  Thank you for shopping with Misha!<br>
+                  Pure Silver • Handmade with Love
+                </p>
+              </div>
+            </div>
+          `;
+
+          // Store Email
+          const storeEmailHtml = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+              <h1 style="color: #1a1a1a;">New Order Received! 🛍️</h1>
+              <div style="background: #f8f6f3; padding: 20px; margin: 20px 0;">
+                <h2>Order Details</h2>
+                <p><strong>Order ID:</strong> ${orderData.order_id}</p>
+                <p><strong>Customer:</strong> ${orderData.user_name}</p>
+                <p><strong>Email:</strong> ${orderData.user_email}</p>
+                <p><strong>Phone:</strong> ${orderData.user_phone}</p>
+                <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
+                <p><strong>Amount:</strong> ₹${orderData.total.toLocaleString()}</p>
+              </div>
+              <h3>Items</h3>
+              ${orderData.items.map(item => `
+                <div style="border-bottom: 1px solid #ddd; padding: 10px 0;">
+                  <p><strong>${item.name}</strong></p>
+                  <p>Quantity: ${item.quantity} × ₹${item.price.toLocaleString()}</p>
+                </div>
+              `).join('')}
+              <p style="margin-top: 20px; padding: 15px; background: #fff3cd; border-left: 4px solid #c9a961;">
+                <strong>Action Required:</strong> WhatsApp the customer at ${orderData.user_phone} to confirm order and delivery details.
+              </p>
+              <p style="text-align: center; margin-top: 20px;">
+                <a href="https://wa.me/${orderData.user_phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${orderData.user_name}, your order ${orderData.order_id} has been confirmed! We'll dispatch it within 2-3 days. Thank you for shopping with Misha! 💎`)}" 
+                   style="background: #25d366; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                  WhatsApp Customer
+                </a>
+              </p>
+            </div>
+          `;
+
+          // Send via Resend API
+          if (orderData.user_email) {
+            await fetch('https://api.resend.com/emails', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${CONFIG.resend.apiKey}`
+              },
+              body: JSON.stringify({
+                from: 'Misha Jewelry <orders@resend.dev>',
+                to: orderData.user_email,
+                subject: `Order Confirmed - ${orderData.order_id}`,
+                html: customerEmailHtml
+              })
+            });
+          }
+
+          await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${CONFIG.resend.apiKey}`
             },
-            prefill: { contact: '', email: '' },
-            theme: { color: '#c9a961' }
-          };
-          const rzp = new Razorpay(options);
-          rzp.open();
+            body: JSON.stringify({
+              from: 'Misha Store <orders@resend.dev>',
+              to: CONFIG.store.email,
+              subject: `New Order - ${orderData.order_id} - ${orderData.user_name}`,
+              html: storeEmailHtml
+            })
+          });
+
+          console.log('Emails sent successfully');
+        } catch (error) {
+          console.error('Error sending emails:', error);
         }
-      });
+      },
 
-      cartIcon.addEventListener('click', () => {
-        renderCart();
-        cartModal.style.display = 'flex';
-      });
+      showOrderConfirmation(orderData) {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.remove('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('ordersPage').classList.add('hidden');
 
-      mobileCart.addEventListener('click', (e) => {
-        e.preventDefault();
-        renderCart();
-        cartModal.style.display = 'flex';
-      });
+        const orderDetails = document.getElementById('orderDetailsContent');
+        orderDetails.innerHTML = `
+          <p><strong>Order ID:</strong> ${orderData.order_id}</p>
+          <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
+          <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+          <p><strong>Email:</strong> ${orderData.user_email}</p>
+          <p><strong>Phone:</strong> ${orderData.user_phone}</p>
+          <p><strong>Total Amount:</strong> ₹${orderData.total.toLocaleString()}</p>
+          <hr style="margin: 1.5rem 0;">
+          <h3 style="margin-bottom: 1rem;">Items Ordered</h3>
+          ${orderData.items.map(item => `
+            <p style="margin: 0.5rem 0;">${item.name} - Qty: ${item.quantity} × ₹${item.price.toLocaleString()}</p>
+          `).join('')}
+        `;
 
-      closeCart.addEventListener('click', () => {
-        cartModal.style.display = 'none';
-      });
+        window.scrollTo(0, 0);
+      },
 
-      window.addEventListener('click', (e) => {
-        if (e.target === cartModal) cartModal.style.display = 'none';
-      });
+      // ==================== SEARCH ====================
+      setupSearch() {
+        const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
 
-      updateCartCount();
+        searchInput.addEventListener('input', (e) => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            this.performSearch(e.target.value);
+          }, 300);
+        });
+      },
+
+      performSearch(query) {
+        if (!query.trim()) {
+          this.showHome();
+          return;
+        }
+
+        const results = this.products.filter(p => 
+          p.name.toLowerCase().includes(query.toLowerCase()) ||
+          p.description.toLowerCase().includes(query.toLowerCase()) ||
+          p.category.toLowerCase().includes(query.toLowerCase())
+        );
+
+        this.showSearchResults(query, results);
+      },
+
+      showSearchResults(query, results) {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.remove('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('ordersPage').classList.add('hidden');
+
+        document.getElementById('categoryBreadcrumb').textContent = 'Search Results';
+        document.getElementById('categoryTitle').textContent = `Search Results for "${query}"`;
+        document.getElementById('categorySubtitle').textContent = `Found ${results.length} product(s)`;
+
+        const grid = document.getElementById('categoryProducts');
+        if (results.length === 0) {
+          grid.innerHTML = '<div class="empty-cart">No products found matching your search.</div>';
+        } else {
+          grid.innerHTML = results.map(p => this.renderProductCard(p)).join('');
+        }
+
+        document.getElementById('pagination').innerHTML = '';
+        window.scrollTo(0, 0);
+      },
+
+      // ==================== EVENT LISTENERS ====================
+      setupEventListeners() {
+        const cartIcon = document.getElementById('cartIcon');
+        const mobileCart = document.getElementById('mobileCart');
+        const cartModal = document.getElementById('cartModal');
+        const closeCart = document.getElementById('closeCart');
+
+        cartIcon.addEventListener('click', () => {
+          this.renderCart();
+          cartModal.style.display = 'flex';
+        });
+
+        mobileCart.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.renderCart();
+          cartModal.style.display = 'flex';
+        });
+
+        closeCart.addEventListener('click', () => {
+          cartModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+          if (e.target === cartModal) {
+            cartModal.style.display = 'none';
+          }
+        });
+      }
+    };
+
+    // Initialize app when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      app.init();
     });
   </script>
 </body>

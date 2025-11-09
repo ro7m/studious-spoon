@@ -9,14 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #2c2c2c;
-      --secondary: #8b7355;
+      --primary: #1a1a1a;
+      --secondary: #c9a961;
       --accent: #d4af37;
-      --light: #fafafa;
+      --dark: #0d0d0d;
+      --light: #f8f6f3;
       --white: #ffffff;
-      --text: #4a4a4a;
-      --text-light: #757575;
-      --border: #e8e8e8;
+      --text: #2d2d2d;
+      --text-light: #666666;
+      --border: #d4d4d4;
+      --shadow: rgba(0,0,0,0.1);
     }
     
     * { 
@@ -31,7 +33,7 @@
       color: var(--text);
       line-height: 1.7;
       letter-spacing: 0.3px;
-      padding-bottom: 70px;
+      padding-bottom: 0;
     }
     
     h1, h2, h3, h4 {
@@ -47,17 +49,18 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: 0 2px 10px var(--shadow);
     }
     
     .top-banner {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
       color: var(--white);
       text-align: center;
-      padding: 8px 0;
+      padding: 10px 0;
       font-size: 0.75rem;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      font-weight: 300;
+      font-weight: 400;
     }
     
     .container {
@@ -76,7 +79,7 @@
     .logo {
       font-family: 'Cormorant Garamond', serif;
       font-size: 2rem;
-      font-weight: 300;
+      font-weight: 500;
       color: var(--primary);
       text-decoration: none;
       letter-spacing: 3px;
@@ -84,8 +87,8 @@
     }
     
     .logo span { 
-      color: var(--accent);
-      font-weight: 500;
+      color: var(--secondary);
+      font-weight: 600;
     }
     
     nav {
@@ -97,7 +100,7 @@
       text-decoration: none;
       color: var(--text);
       font-size: 0.85rem;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: 1.2px;
       text-transform: uppercase;
       position: relative;
@@ -114,7 +117,7 @@
       bottom: -5px;
       left: 0;
       width: 0;
-      height: 1px;
+      height: 2px;
       background: var(--secondary);
       transition: width 0.3s ease;
     }
@@ -132,7 +135,7 @@
     .cart-icon {
       position: relative;
       cursor: pointer;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: var(--text);
       transition: color 0.3s ease;
     }
@@ -145,11 +148,11 @@
       position: absolute;
       top: -8px;
       right: -10px;
-      background: var(--accent);
+      background: var(--secondary);
       color: var(--white);
       font-size: 0.6rem;
-      width: 17px;
-      height: 17px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -163,14 +166,14 @@
       position: fixed;
       width: 60px;
       height: 60px;
-      bottom: 90px;
-      right: 40px;
+      bottom: 25px;
+      right: 25px;
       background-color: #25d366;
       color: #FFF;
       border-radius: 50px;
       text-align: center;
-      font-size: 30px;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+      font-size: 32px;
+      box-shadow: 0 4px 15px rgba(37,211,102,0.4);
       z-index: 100;
       display: flex;
       align-items: center;
@@ -182,17 +185,18 @@
     .whatsapp-float:hover {
       background-color: #20ba5a;
       transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(37,211,102,0.6);
     }
     
     /* Hero Section */
     .hero {
       position: relative;
-      background: linear-gradient(rgba(44,44,44,0.3), rgba(44,44,44,0.3)), url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1400');
+      background: linear-gradient(rgba(10,10,10,0.5), rgba(10,10,10,0.5)), url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1400');
       background-size: cover;
       background-position: center;
       color: var(--white);
       text-align: center;
-      padding: 8rem 1rem;
+      padding: 9rem 1rem;
       margin-bottom: 4rem;
     }
     
@@ -202,47 +206,50 @@
     }
     
     .hero-subtitle {
-      font-size: 0.85rem;
-      letter-spacing: 3px;
+      font-size: 0.9rem;
+      letter-spacing: 4px;
       text-transform: uppercase;
       margin-bottom: 1rem;
-      font-weight: 300;
-      opacity: 0.9;
+      font-weight: 400;
+      opacity: 0.95;
+      color: var(--secondary);
     }
     
     .hero h1 { 
-      font-size: 3.5rem; 
+      font-size: 3.8rem; 
       margin-bottom: 1.5rem;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.2;
       letter-spacing: 2px;
     }
     
     .hero p { 
-      font-size: 1rem;
+      font-size: 1.05rem;
       margin: 0 auto 2.5rem;
       font-weight: 300;
       letter-spacing: 1px;
       line-height: 1.8;
+      opacity: 0.9;
     }
     
     .btn {
       display: inline-block;
-      background: transparent;
+      background: var(--secondary);
       color: var(--white);
       padding: 1rem 3rem;
       text-decoration: none;
-      font-weight: 400;
-      border: 1.5px solid var(--white);
+      font-weight: 500;
+      border: 2px solid var(--secondary);
       letter-spacing: 2px;
       text-transform: uppercase;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       transition: all 0.4s ease;
     }
     
     .btn:hover { 
-      background: var(--white);
-      color: var(--primary);
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white);
     }
     
     /* Section Title */
@@ -252,10 +259,10 @@
     }
     
     .section-title {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       color: var(--primary);
       margin-bottom: 1rem;
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: 2px;
     }
     
@@ -283,8 +290,9 @@
     }
     
     .product-card:hover { 
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      transform: translateY(-8px);
+      border-color: var(--secondary);
     }
     
     .product-img {
@@ -305,7 +313,7 @@
     }
     
     .product-card:hover .product-img img {
-      transform: scale(1.05);
+      transform: scale(1.08);
     }
     
     .product-info {
@@ -316,8 +324,8 @@
     .product-info h3 {
       margin-bottom: 0.8rem;
       color: var(--primary);
-      font-size: 1.4rem;
-      font-weight: 400;
+      font-size: 1.5rem;
+      font-weight: 500;
       letter-spacing: 1px;
     }
     
@@ -330,20 +338,20 @@
     }
     
     .price {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       color: var(--secondary);
       margin: 1rem 0;
-      font-weight: 500;
+      font-weight: 600;
       font-family: 'Cormorant Garamond', serif;
       letter-spacing: 1px;
     }
     
     .add-to-cart {
       width: 100%;
-      padding: 0.9rem;
-      background: transparent;
-      color: var(--primary);
-      border: 1.5px solid var(--primary);
+      padding: 1rem;
+      background: var(--primary);
+      color: var(--white);
+      border: 2px solid var(--primary);
       cursor: pointer;
       font-weight: 500;
       margin-top: 1rem;
@@ -355,8 +363,8 @@
     }
     
     .add-to-cart:hover {
-      background: var(--primary);
-      color: var(--white);
+      background: transparent;
+      color: var(--primary);
     }
     
     /* Cart Modal */
@@ -367,22 +375,22 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0,0,0,0.8);
       z-index: 1000;
       justify-content: center;
       align-items: center;
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(8px);
     }
     
     .cart-content {
       background: var(--white);
       width: 90%;
-      max-width: 480px;
+      max-width: 500px;
       border-radius: 0;
       padding: 2.5rem;
       max-height: 85vh;
       overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     }
     
     .cart-header {
@@ -391,18 +399,18 @@
       align-items: center;
       margin-bottom: 2rem;
       padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--border);
     }
     
     .cart-header h2 { 
       color: var(--primary);
-      font-size: 1.8rem;
-      font-weight: 300;
+      font-size: 2rem;
+      font-weight: 400;
       letter-spacing: 2px;
     }
     
     .close-cart { 
-      font-size: 1.8rem;
+      font-size: 2rem;
       background: none;
       border: none;
       cursor: pointer;
@@ -422,8 +430,8 @@
     }
     
     .cart-item img {
-      width: 70px;
-      height: 70px;
+      width: 80px;
+      height: 80px;
       object-fit: contain;
       background: var(--light);
       padding: 10px;
@@ -437,40 +445,42 @@
     }
     
     .cart-actions button {
-      padding: 5px 12px;
+      padding: 6px 14px;
       border: 1px solid var(--border);
       background: var(--white);
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       transition: all 0.3s ease;
       font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
     }
     
     .cart-actions button:hover {
-      background: var(--light);
-      border-color: var(--text);
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
     }
     
     .cart-total {
       display: flex;
       justify-content: space-between;
-      font-size: 1.4rem;
-      font-weight: 500;
+      font-size: 1.6rem;
+      font-weight: 600;
       margin: 2rem 0 1.5rem;
       padding-top: 1.5rem;
-      border-top: 2px solid var(--border);
+      border-top: 2px solid var(--primary);
       font-family: 'Cormorant Garamond', serif;
       color: var(--primary);
     }
     
     .checkout-btn {
       width: 100%;
-      padding: 1.1rem;
-      background: var(--primary);
+      padding: 1.2rem;
+      background: var(--secondary);
       color: var(--white);
       border: none;
-      font-weight: 500;
-      font-size: 0.85rem;
+      font-weight: 600;
+      font-size: 0.9rem;
       cursor: pointer;
       margin-top: 1rem;
       letter-spacing: 2px;
@@ -480,7 +490,9 @@
     }
     
     .checkout-btn:hover {
-      background: var(--secondary);
+      background: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
     
     .empty-cart {
@@ -493,9 +505,9 @@
     
     /* Footer */
     footer {
-      background: var(--light);
-      border-top: 1px solid var(--border);
-      padding: 3rem 0;
+      background: var(--primary);
+      color: var(--white);
+      padding: 3.5rem 0 1.5rem;
       margin-top: 5rem;
     }
     
@@ -507,22 +519,23 @@
     }
     
     .footer-section h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-      font-weight: 400;
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+      color: var(--secondary);
+      font-weight: 500;
       letter-spacing: 1.5px;
     }
     
     .footer-section p,
     .footer-section a {
       font-size: 0.85rem;
-      color: var(--text-light);
-      line-height: 1.8;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.9;
       text-decoration: none;
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
       font-weight: 300;
+      transition: color 0.3s ease;
     }
     
     .footer-section a:hover {
@@ -532,8 +545,8 @@
     .footer-bottom {
       text-align: center;
       padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      color: var(--text-light);
+      border-top: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
       font-size: 0.8rem;
       font-weight: 300;
       letter-spacing: 0.5px;
@@ -546,20 +559,20 @@
     }
     
     .social-icons a {
-      width: 35px;
-      height: 35px;
-      border: 1px solid var(--border);
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255,255,255,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text);
+      color: rgba(255,255,255,0.8);
       transition: all 0.3s ease;
     }
     
     .social-icons a:hover {
-      background: var(--primary);
+      background: var(--secondary);
       color: var(--white);
-      border-color: var(--primary);
+      border-color: var(--secondary);
     }
     
     /* Mobile Bottom Nav */
@@ -569,17 +582,22 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background: white;
-      border-top: 1px solid var(--border);
+      background: var(--white);
+      border-top: 2px solid var(--border);
       z-index: 1000;
+      box-shadow: 0 -2px 10px var(--shadow);
     }
     
     .mobile-nav ul {
       display: flex;
       justify-content: space-around;
       list-style: none;
-      padding: 12px 0;
+      padding: 0;
       margin: 0;
+    }
+    
+    .mobile-nav li {
+      flex: 1;
     }
     
     .mobile-nav a {
@@ -588,16 +606,34 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 12px;
-      gap: 4px;
+      justify-content: center;
+      font-size: 11px;
+      gap: 6px;
+      padding: 12px 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+    
+    .mobile-nav a:active {
+      background: var(--light);
     }
     
     .mobile-nav i {
-      font-size: 20px;
+      font-size: 22px;
+    }
+    
+    .mobile-nav .cart-icon-mobile {
+      position: relative;
     }
     
     /* Responsive */
     @media (max-width: 768px) {
+      body {
+        padding-bottom: 65px;
+      }
+      
       .container {
         padding: 0 1rem;
       }
@@ -643,20 +679,26 @@
       }
       
       .whatsapp-float {
-        width: 50px;
-        height: 50px;
-        bottom: 85px;
+        width: 55px;
+        height: 55px;
+        bottom: 80px;
         right: 20px;
-        font-size: 25px;
+        font-size: 28px;
       }
       
-      .mobile-nav { display: flex; }
-      body { padding-bottom: 70px; }
-      .cart-icon-desktop { display: none; }
+      .mobile-nav { 
+        display: block; 
+      }
+      
+      .cart-icon-desktop { 
+        display: none; 
+      }
     }
     
     @media (min-width: 769px) {
-      .mobile-nav { display: none !important; }
+      .mobile-nav { 
+        display: none !important; 
+      }
     }
   </style>
 </head>
@@ -780,314 +822,6 @@
     <div class="section-header">
       <h2 class="section-title">Our Bestseller</h2>
     </div>
-    <p style="text-align:center; max-width:800px; margin:0 auto 4rem; font-style:italic; line-height:1.8;">
-      At <strong>Misha</strong>, we create jewelry that blends elegance, purity, and trust. 
-      Every piece is crafted from authentic 925 Sterling Silver with attention to detail, 
-      combining timeless beauty with modern grace to suit both everyday wear and special celebrations. 
-      <strong>Our mission is to make you feel confident, radiant, and cherished</strong> 
-      while enjoying the charm of honest, affordable luxury.
-    </p>
-
-    <!-- THE GIFTING EDIT -->
-    <div class="section-header">
-      <h2 class="section-title">The Gifting Edit</h2>
-      <p class="section-subtitle">Explore timeless treasures crafted to perfection.</p>
-    </div>
-
-    <div class="products">
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600" alt="Golden Grace Pendant">
-        </div>
-        <div class="product-info">
-          <h3>Golden Grace Pendant</h3>
-          <p>Reflects sophistication with a modern twist.</p>
-          <div class="price">₹3,800</div>
-          <button class="add-to-cart"
-            data-id="pendant-01"
-            data-name="Golden Grace Pendant"
-            data-price="3800"
-            data-image="https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600">
-            Add to Cart
-          </button>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-img">
-          <img src="https://images.unsplash.com/photo-1618312900238-2f3a4e5e3e1d?auto=format&fit=crop&w=600" alt="Starlight Shine Ring">
-        </div>
-        <div class="product-info">
-          <h3>Starlight Shine Ring</h3>
-          <p>Bold, chic, and timeless.</p>
-          <div class="price">₹2,200</div>
-          <button class="add-to-cart"
-            data-id="ring-01"
-            data-name="Starlight Shine Ring"
-            data-price="2200"
-            data-image="https://images.unsplash.com/photo-1618312900238-2f3a4e5e3e1d?auto=format&fit=crop&w=600">
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- INSTAGRAM SHOP -->
-    <div class="section-header">
-      <h2 class="section-title">Instagram Shop</h2>
-      <p class="section-subtitle">Add a touch of charm to every outfit!</p>
-    </div>
-
-    <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:2rem; margin-bottom:4rem;">
-      <div style="text-align:center; max-width:200px;">
-        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T165035.213_200x.png?v=1757348835" alt="Quality" style="width:60px; margin-bottom:0.8rem;">
-        <p>HIGH QUALITY BRAND<br>Curated for style, quality and durability.</p>
-      </div>
-      <div style="text-align:center; max-width:200px;">
-        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T164844.161_200x.png?v=1757348836" alt="Support" style="width:60px; margin-bottom:0.8rem;">
-        <p>24/7 SUPPORT<br>Real-time chat & email support</p>
-      </div>
-      <div style="text-align:center; max-width:200px;">
-        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T165018.296_200x.png?v=1757348836" alt="Shipping" style="width:60px; margin-bottom:0.8rem;">
-        <p>FREE SHIPPING<br>On all prepaid orders above ₹999</p>
-      </div>
-      <div style="text-align:center; max-width:200px;">
-        <img src="https://deepikasdazzle.co.in/cdn/shop/files/Untitled_design_-_2025-01-15T165001.497_200x.png?v=1757348836" alt="Payments" style="width:60px; margin-bottom:0.8rem;">
-        <p>SECURE PAYMENTS<br>All major cards & UPI accepted</p>
-      </div>
-    </div>
-  </main>
-
-  <!-- WhatsApp Float Button -->
-  <a href="https://wa.me/918871542203" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-  </a>
-
-  <!-- Mobile Bottom Nav -->
-  <nav class="mobile-nav">
-    <ul>
-      <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-      <li><a href="#"><i class="fas fa-user"></i> Account</a></li>
-      <li>
-        <a href="#" id="mobileCart">
-          <div style="position: relative;">
-            <i class="fas fa-shopping-bag"></i>
-            <span class="cart-count" id="mobileCartCount">0</span>
-          </div>
-          Cart
-        </a>
-      </li>
-    </ul>
-  </nav>
-
-  <!-- Cart Modal -->
-  <div class="cart-modal" id="cartModal">
-    <div class="cart-content">
-      <div class="cart-header">
-        <h2>Your Cart</h2>
-        <button class="close-cart" id="closeCart">&times;</button>
-      </div>
-      <div id="cartItems"></div>
-      <div id="cartFooter"></div>
-    </div>
-  </div>
-
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>About Misha</h3>
-          <p>Handcrafted 925 Sterling Silver jewelry, ethically sourced and designed with love in India.</p>
-          <div class="social-icons">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-pinterest"></i></a>
-          </div>
-        </div>
-        
-        <div class="footer-section">
-          <h3>Customer Care</h3>
-          <a href="#">Shipping & Returns</a>
-          <a href="#">Size Guide</a>
-          <a href="#">Care Instructions</a>
-          <a href="#">FAQs</a>
-        </div>
-        
-        <div class="footer-section">
-          <h3>Contact</h3>
-          <p>Email: hello@misha.com</p>
-          <p>Phone: +91 88715 42203</p>
-          <p>Mon-Sat: 10 AM - 6 PM</p>
-        </div>
-      </div>
-      
-      <div class="footer-bottom">
-        <p>© 2025 Misha. All Rights Reserved. | Pure Silver • Handmade with Love</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Razorpay -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-      const cartIcon = document.getElementById('cartIcon');
-      const cartCount = document.getElementById('cartCount');
-      const mobileCart = document.getElementById('mobileCart');
-      const mobileCartCount = document.getElementById('mobileCartCount');
-      const cartModal = document.getElementById('cartModal');
-      const closeCart = document.getElementById('closeCart');
-      const cartItems = document.getElementById('cartItems');
-      const cartFooter = document.getElementById('cartFooter');
-
-      function updateCartCount() {
-        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCount.textContent = count;
-        mobileCartCount.textContent = count;
-      }
-
-      function renderCart() {
-        if (cart.length === 0) {
-          cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
-          cartFooter.innerHTML = '';
-          return;
-        }
-
-        let itemsHtml = '';
-        let total = 0;
-
-        cart.forEach(item => {
-          const itemTotal = item.price * item.quantity;
-          total += itemTotal;
-          itemsHtml += `
-            <div class="cart-item">
-              <img src="${item.image}" alt="${item.name}">
-              <div>
-                <h4>${item.name}</h4>
-                <p>₹${item.price} × ${item.quantity}</p>
-                <div class="cart-actions">
-                  <button class="decrease" data-id="${item.id}">−</button>
-                  <span>${item.quantity}</span>
-                  <button class="increase" data-id="${item.id}">+</button>
-                  <button class="remove" data-id="${item.id}" style="margin-left: 10px; color: #e74c3c;">Remove</button>
-                </div>
-              </div>
-            </div>
-          `;
-        });
-
-        cartItems.innerHTML = itemsHtml;
-        cartFooter.innerHTML = `
-          <div class="cart-total">
-            <span>Total:</span>
-            <span>₹${total}</span>
-          </div>
-          <button class="checkout-btn" id="checkoutBtn">Proceed to Payment</button>
-        `;
-      }
-
-      function addToCart(product) {
-        const existing = cart.find(p => p.id === product.id);
-        if (existing) {
-          existing.quantity += 1;
-        } else {
-          cart.push({ ...product, quantity: 1 });
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
-      }
-
-      document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('add-to-cart')) {
-          const btn = e.target;
-          const product = {
-            id: btn.dataset.id.trim(),
-            name: btn.dataset.name.trim(),
-            price: parseFloat(btn.dataset.price),
-            image: btn.dataset.image.trim()
-          };
-          addToCart(product);
-        }
-
-        if (e.target.classList.contains('decrease')) {
-          const id = e.target.dataset.id;
-          const item = cart.find(p => p.id === id);
-          if (item.quantity > 1) {
-            item.quantity -= 1;
-          } else {
-            cart = cart.filter(p => p.id !== id);
-          }
-          localStorage.setItem('cart', JSON.stringify(cart));
-          renderCart();
-          updateCartCount();
-        }
-
-        if (e.target.classList.contains('increase')) {
-          const id = e.target.dataset.id;
-          const item = cart.find(p => p.id === id);
-          item.quantity += 1;
-          localStorage.setItem('cart', JSON.stringify(cart));
-          renderCart();
-          updateCartCount();
-        }
-
-        if (e.target.classList.contains('remove')) {
-          const id = e.target.dataset.id;
-          cart = cart.filter(p => p.id !== id);
-          localStorage.setItem('cart', JSON.stringify(cart));
-          renderCart();
-          updateCartCount();
-        }
-
-        if (e.target.id === 'checkoutBtn') {
-          if (cart.length === 0) return;
-          const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-          const options = {
-            key: 'rzp_test_1DP5mmOlF5G5ag',
-            amount: total * 100,
-            currency: 'INR',
-            name: 'Misha •',
-            description: 'Silver Jewelry Order',
-            image: 'https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=100',
-            handler: function (response) {
-              alert('✅ Payment successful!\nPayment ID: ' + response.razorpay_payment_id);
-              cart = [];
-              localStorage.setItem('cart', JSON.stringify(cart));
-              updateCartCount();
-              cartModal.style.display = 'none';
-            },
-            prefill: { contact: '', email: '' },
-            theme: { color: '#8b7355' }
-          };
-          const rzp = new Razorpay(options);
-          rzp.open();
-        }
-      });
-
-      cartIcon.addEventListener('click', () => {
-        renderCart();
-        cartModal.style.display = 'flex';
-      });
-
-      mobileCart.addEventListener('click', (e) => {
-        e.preventDefault();
-        renderCart();
-        cartModal.style.display = 'flex';
-      });
-
-      closeCart.addEventListener('click', () => {
-        cartModal.style.display = 'none';
-      });
-
-      window.addEventListener('click', (e) => {
-        if (e.target === cartModal) cartModal.style.display = 'none';
-      });
-
-      updateCartCount();
-    });
-  </script>
-</body>
-</html>
+    <p style="text-align:center; max-width:800px; margin:0 auto 4rem; font-style:italic; line-height:1.8; color: var(--text-light);">
+      At <strong style="color: var(--primary);">Misha</strong>, we create jewelry that blends elegance, purity, and trust. 
+      Every piece is crafted from authentic 925 Sterling Silver with att

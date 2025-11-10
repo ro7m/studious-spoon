@@ -248,7 +248,6 @@
       transform: scale(1.1);
     }
     
-    /* Hero Section */
     .hero {
       position: relative;
       background: linear-gradient(rgba(10,10,10,0.5), rgba(10,10,10,0.5)), url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1400');
@@ -1322,7 +1321,7 @@
           <div style="text-align:center; max-width:220px;">
             <i class="fas fa-shipping-fast" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
             <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">FREE SHIPPING</h4>
-            <p style="font-size:0.85rem; color:var(--text-light);">On all prepaid orders above ₹999</p>
+            <p style="font-size:0.85rem; color:var(--text-light);">On all prepaid orders above ₹2500</p>
           </div>
           <div style="text-align:center; max-width:220px;">
             <i class="fas fa-shield-alt" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
@@ -1408,18 +1407,6 @@
       </main>
     </div>
 
-    <!-- Orders Dashboard Page -->
-    <div id="ordersPage" class="hidden">
-      <main class="container admin-dashboard">
-        <div class="admin-header">
-          <h1 style="font-size: 2.5rem; color: var(--primary);">Order Management</h1>
-          <button class="btn" onclick="app.showHome()">Back to Store</button>
-        </div>
-
-        <div id="ordersTableContainer"></div>
-      </main>
-    </div>
-
     <!-- Policy Page -->
     <div id="policyPage" class="hidden">
       <main class="container">
@@ -1493,7 +1480,7 @@
 
           <h2>Contact Us</h2>
           <p><strong>WhatsApp:</strong> +91 88715 42203</p>
-          <p><strong>Email:</strong> hello@misha.com</p>
+          <p><strong>Email:</strong> hello.mishajwellery@gmail.com</p>
           <p><strong>Hours:</strong> Monday - Saturday, 10 AM - 6 PM</p>
         </div>
       </main>
@@ -1505,10 +1492,6 @@
     <i class="fab fa-whatsapp"></i>
   </a>
 
-  <!-- Admin Access Button (Hidden Lock Icon) -->
-  <div class="admin-link" onclick="app.showAdminLogin()" title="Admin Orders">
-    <i class="fas fa-lock"></i>
-  </div>
 
   <!-- Mobile Bottom Nav -->
   <nav class="mobile-nav">
@@ -1603,7 +1586,7 @@
         
         <div class="footer-section">
           <h3>Contact</h3>
-          <p>Email: hello@misha.com</p>
+          <p>Email: hello.mishajwellery@gmail.com</p>
           <p>Phone: +91 88715 42203</p>
           <p>Mon-Sat: 10 AM - 6 PM</p>
         </div>
@@ -1620,24 +1603,20 @@
 
   <script>
     // ==================== CONFIGURATION ====================
-    // REPLACE THESE WITH YOUR ACTUAL KEYS
+   
     const CONFIG = {
       supabase: {
         url: 'https://kplmeebifsuziytppwzb.supabase.co', 
-        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbG1lZWJpZnN1eml5dHBwd3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODU1NTcsImV4cCI6MjA3ODI2MTU1N30.lzfjMdr5hD7FWcVu-0dHbj7ZgXrttlfxHsaO6_vyAHw'
-      },
-      resend: {
-        apiKey: 're_UcrNLQ85_NPGnSG4Je94LXVF8fBY52Grq'
-      },
+        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbG1lZWJpZnN1eml5dHBwd3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODU1NTcsImV4cCI6MjA3ODI2MTU1N30.lzfjMdr5hD7FWcVu-0dHbj7ZgXrttlfxHsaO6_vyAHw',
+        emailFunctionUrl: 'https://kplmeebifsuziytppwzb.supabase.co/functions/v1/clever-responder' 
+    
+    },
       razorpay: {
         key: 'rzp_test_1DP5mmOlF5G5ag'
       },
       store: {
-        email: 'hello@misha.com',
+        email: 'hello.mishajwellery@gmail.com',
         phone: '+918871542203'
-      },
-      admin: {
-        password: 'misha2025'
       }
     };
 
@@ -1797,7 +1776,6 @@ showHome() {
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('ordersPage').classList.add('hidden');
         window.scrollTo(0, 0);
       },
 
@@ -1811,7 +1789,6 @@ showHome() {
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('ordersPage').classList.add('hidden');
         
         document.getElementById('categoryBreadcrumb').textContent = category.name;
         document.getElementById('categoryTitle').textContent = category.name;
@@ -1883,7 +1860,6 @@ showHome() {
         document.getElementById('productDetailPage').classList.remove('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('ordersPage').classList.add('hidden');
         
         const category = this.categories.find(c => c.id === product.category);
         document.getElementById('productCategoryBreadcrumb').textContent = category?.name || '';
@@ -1930,17 +1906,7 @@ showHome() {
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.remove('hidden');
-        document.getElementById('ordersPage').classList.add('hidden');
         window.scrollTo(0, 0);
-      },
-
-      showAdminLogin() {
-        const password = prompt('Enter admin password to access orders:');
-        if (password === CONFIG.admin.password) {
-          this.showOrders();
-        } else if (password !== null) {
-          alert('❌ Incorrect password!');
-        }
       },
 
       async showOrders() {
@@ -1949,78 +1915,9 @@ showHome() {
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('ordersPage').classList.remove('hidden');
         
         await this.loadOrders();
         window.scrollTo(0, 0);
-      },
-
-      async loadOrders() {
-        const container = document.getElementById('ordersTableContainer');
-        container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading orders...</p></div>';
-
-        const { data, error } = await supabase
-          .from('orders')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        if (error) {
-          container.innerHTML = '<p style="text-align:center; padding:3rem; color:var(--text-light);">Error loading orders. Please check your database setup.</p>';
-          return;
-        }
-
-        if (!data || data.length === 0) {
-          container.innerHTML = '<p style="text-align:center; padding:3rem; color:var(--text-light);">No orders yet.</p>';
-          return;
-        }
-
-        let tableHtml = `
-          <table class="orders-table">
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Items</th>
-                <th>Total</th>
-                <th>Date</th>
-                <th>WhatsApp</th>
-              </tr>
-            </thead>
-            <tbody>
-        `;
-
-        data.forEach(order => {
-          const date = new Date(order.created_at).toLocaleDateString('en-IN');
-          const itemsCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
-          const phone = order.user_phone || 'N/A';
-          const whatsappMsg = encodeURIComponent(`Hi ${order.user_name}, your order ${order.order_id} has been confirmed! We'll dispatch it within 2-3 days. Thank you for shopping with Misha! 💎`);
-          
-          tableHtml += `
-            <tr>
-              <td><strong>${order.order_id}</strong></td>
-              <td>${order.user_name}</td>
-              <td>${phone}</td>
-              <td style="word-break: break-all;">${order.user_email}</td>
-              <td>${itemsCount} item(s)</td>
-              <td><strong>₹${order.total.toLocaleString()}</strong></td>
-              <td>${date}</td>
-              <td>
-                ${phone !== 'N/A' ? `
-                  <a href="https://wa.me/${phone.replace(/\D/g, '')}?text=${whatsappMsg}" 
-                     target="_blank" 
-                     class="whatsapp-link">
-                    <i class="fab fa-whatsapp"></i> Message
-                  </a>
-                ` : '-'}
-              </td>
-            </tr>
-          `;
-        });
-
-        tableHtml += '</tbody></table>';
-        container.innerHTML = tableHtml;
       },
 
       // ==================== CART ====================
@@ -2268,13 +2165,13 @@ showHome() {
           .from('orders')
           .insert([orderData]);
 
-        if (error) {
-          console.error('❌ Error saving order to Supabase:', error);
-        } else {
-          console.log('✅ Order saved to Supabase successfully');
-        }
+        // if (error) {
+        //   //console.error('❌ Error saving order to Supabase:', error);
+        // } else {
+        //   //console.log('✅ Order saved to Supabase successfully');
+        // }
 
-        console.log('=== SENDING EMAILS ===');
+        //console.log('=== SENDING EMAILS ===');
         await this.sendOrderEmails(orderData);
 
         this.cart = [];
@@ -2287,141 +2184,36 @@ showHome() {
       },
 
       async sendOrderEmails(orderData) {
-        try {
-          console.log('Resend API Key:', CONFIG.resend.apiKey.substring(0, 15) + '...');
-          console.log('Customer Email:', orderData.user_email);
-          console.log('Store Email:', CONFIG.store.email);
-          
-          const customerEmailHtml = `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f8f6f3;">
-              <div style="background: white; padding: 30px; border: 2px solid #c9a961;">
-                <h1 style="color: #1a1a1a; text-align: center; margin-bottom: 20px;">Order Confirmed! 🎉</h1>
-                <p style="font-size: 16px; color: #2d2d2d;">Dear ${orderData.user_name},</p>
-                <p style="font-size: 16px; color: #2d2d2d;">Thank you for your purchase at Misha! Your order has been confirmed.</p>
-                
-                <div style="background: #f8f6f3; padding: 20px; margin: 20px 0;">
-                  <h2 style="color: #c9a961; margin-bottom: 15px;">Order Details</h2>
-                  <p><strong>Order ID:</strong> ${orderData.order_id}</p>
-                  <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
-                  <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-                  <p><strong>Phone:</strong> ${orderData.user_phone}</p>
-                  <p><strong>Delivery Address:</strong><br>${orderData.user_address}</p>
-                </div>
+      try {
+        //console.log('📧 Sending order emails via Supabase Edge Function...');
 
-                <h3 style="color: #1a1a1a; margin-top: 30px;">Items Ordered</h3>
-                ${orderData.items.map(item => `
-                  <div style="border-bottom: 1px solid #d4d4d4; padding: 15px 0;">
-                    <p style="margin: 5px 0;"><strong>${item.name}</strong></p>
-                    <p style="margin: 5px 0; color: #666;">Quantity: ${item.quantity} × ₹${item.price.toLocaleString()}</p>
-                  </div>
-                `).join('')}
+        // Call Supabase Edge Function for sending email
+        const response = await fetch(`${CONFIG.supabase.emailFunctionUrl}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${CONFIG.supabase.key}`
+          },
+          body: JSON.stringify({
+            orderData: orderData
+          })
+        });
 
-                <div style="text-align: right; margin-top: 20px; padding-top: 20px; border-top: 2px solid #c9a961;">
-                  <p style="font-size: 20px; color: #c9a961;"><strong>Total: ₹${orderData.total.toLocaleString()}</strong></p>
-                </div>
-
-                <div style="background: #fff3cd; padding: 15px; margin: 30px 0; border-left: 4px solid #c9a961;">
-                  <p style="margin: 0; color: #856404;">Your order will be dispatched within 2-3 business days. We'll contact you on WhatsApp shortly.</p>
-                </div>
-
-                <p style="text-align: center; margin-top: 30px;">
-                  <a href="https://wa.me/${CONFIG.store.phone.replace(/\D/g, '')}" style="background: #25d366; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Contact Us on WhatsApp</a>
-                </p>
-
-                <p style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
-                  Thank you for shopping with Misha!<br>
-                  Pure Silver • Handmade with Love
-                </p>
-              </div>
-            </div>
-          `;
-
-          const storeEmailHtml = `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-              <h1 style="color: #1a1a1a;">New Order Received! 🛍️</h1>
-              <div style="background: #f8f6f3; padding: 20px; margin: 20px 0;">
-                <h2>Order Details</h2>
-                <p><strong>Order ID:</strong> ${orderData.order_id}</p>
-                <p><strong>Customer:</strong> ${orderData.user_name}</p>
-                <p><strong>Email:</strong> ${orderData.user_email}</p>
-                <p><strong>Phone:</strong> ${orderData.user_phone}</p>
-                <p><strong>Address:</strong><br>${orderData.user_address}</p>
-                <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
-                <p><strong>Amount:</strong> ₹${orderData.total.toLocaleString()}</p>
-              </div>
-              <h3>Items</h3>
-              ${orderData.items.map(item => `
-                <div style="border-bottom: 1px solid #ddd; padding: 10px 0;">
-                  <p><strong>${item.name}</strong></p>
-                  <p>Quantity: ${item.quantity} × ₹${item.price.toLocaleString()}</p>
-                </div>
-              `).join('')}
-              <p style="margin-top: 20px; padding: 15px; background: #fff3cd; border-left: 4px solid #c9a961;">
-                <strong>Action Required:</strong> WhatsApp the customer at ${orderData.user_phone}
-              </p>
-              <p style="text-align: center; margin-top: 20px;">
-                <a href="https://wa.me/${orderData.user_phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${orderData.user_name}, your order ${orderData.order_id} has been confirmed! We'll dispatch it within 2-3 days. Thank you for shopping with Misha! 💎`)}" 
-                   style="background: #25d366; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
-                  WhatsApp Customer Now
-                </a>
-              </p>
-            </div>
-          `;
-
-          if (orderData.user_email) {
-            console.log('📧 Sending customer email...');
-            const customerResponse = await fetch('https://api.resend.com/emails', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${CONFIG.resend.apiKey}`
-              },
-              body: JSON.stringify({
-                from: 'Misha Jewelry <onboarding@resend.dev>',
-                to: orderData.user_email,
-                subject: `Order Confirmed - ${orderData.order_id}`,
-                html: customerEmailHtml
-              })
-            });
-
-            const customerResult = await customerResponse.json();
-            console.log('Customer email response:', customerResult);
-            
-            if (!customerResponse.ok) {
-              console.error('❌ Customer email failed:', customerResult);
-            } else {
-              console.log('✅ Customer email sent successfully!');
-            }
-          }
-
-          console.log('📧 Sending store email...');
-          const storeResponse = await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${CONFIG.resend.apiKey}`
-            },
-            body: JSON.stringify({
-              from: 'Misha Store <onboarding@resend.dev>',
-              to: CONFIG.store.email,
-              subject: `New Order - ${orderData.order_id} - ${orderData.user_name}`,
-              html: storeEmailHtml
-            })
-          });
-
-          const storeResult = await storeResponse.json();
-          console.log('Store email response:', storeResult);
-          
-          if (!storeResponse.ok) {
-            console.error('❌ Store email failed:', storeResult);
-          } else {
-            console.log('✅ Store email sent successfully!');
-          }
-
-        } catch (error) {
-          console.error('❌ Error sending emails:', error);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to send email');
         }
-      },
+
+        const result = await response.json();
+        //console.log('✅ Emails sent successfully:', result);
+        return { success: true, data: result };
+
+      } catch (error) {
+        //console.error('❌ Error sending emails:', error);
+        // Don't throw - we don't want to block order completion if email fails
+        return { success: false, error: error.message };
+      }
+    },
 
       showOrderConfirmation(orderData) {
         document.getElementById('homePage').classList.add('hidden');
@@ -2429,7 +2221,6 @@ showHome() {
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.remove('hidden');
         document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('ordersPage').classList.add('hidden');
 
         const orderDetails = document.getElementById('orderDetailsContent');
         orderDetails.innerHTML = `
@@ -2484,7 +2275,6 @@ showHome() {
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('ordersPage').classList.add('hidden');
 
         document.getElementById('categoryBreadcrumb').textContent = 'Search Results';
         document.getElementById('categoryTitle').textContent = `Search Results for "${query}"`;

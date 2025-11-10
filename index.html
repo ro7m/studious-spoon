@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -220,6 +221,31 @@
       background-color: #20ba5a;
       transform: scale(1.1);
       box-shadow: 0 6px 20px rgba(37,211,102,0.6);
+    }
+
+    /* Admin Access Button */
+    .admin-link {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      background: var(--primary);
+      color: var(--white);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      z-index: 99;
+    }
+
+    .admin-link:hover {
+      background: var(--secondary);
+      transform: scale(1.1);
     }
     
     /* Hero Section */
@@ -596,6 +622,115 @@
       font-size: 1.2rem;
       font-weight: 500;
     }
+
+    /* Customer Info Modal */
+    .customer-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .customer-form {
+      background: var(--white);
+      width: 90%;
+      max-width: 500px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .customer-form h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid var(--border);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--secondary);
+    }
+
+    .form-group input.error {
+      border-color: #e74c3c;
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      display: block;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .form-buttons button {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit {
+      background: var(--secondary);
+      color: var(--white);
+    }
+
+    .btn-submit:hover {
+      background: var(--primary);
+    }
+
+    .btn-cancel {
+      background: var(--light);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-cancel:hover {
+      background: var(--border);
+    }
     
     /* Cart Modal */
     .cart-modal {
@@ -828,11 +963,13 @@
       text-align: left;
       font-weight: 500;
       letter-spacing: 1px;
+      font-size: 0.85rem;
     }
 
     .orders-table td {
       padding: 1rem;
       border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
     }
 
     .orders-table tr:hover {
@@ -846,6 +983,7 @@
       color: #25d366;
       text-decoration: none;
       font-weight: 500;
+      font-size: 0.85rem;
     }
 
     .whatsapp-link:hover {
@@ -1062,7 +1200,7 @@
       }
 
       .orders-table {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
       }
 
       .orders-table th,
@@ -1081,6 +1219,14 @@
         bottom: 80px;
         right: 20px;
         font-size: 28px;
+      }
+
+      .admin-link {
+        width: 45px;
+        height: 45px;
+        bottom: 145px;
+        right: 20px;
+        font-size: 18px;
       }
       
       .mobile-nav { 
@@ -1117,7 +1263,7 @@
       <nav>
         <a onclick="app.showHome()">Home</a>
         <a onclick="app.showPolicy()">Returns</a>
-        <a onclick="app.showContact()">Contact</a>
+        <a onclick="window.open('https://wa.me/918871542203', '_blank')">Contact</a>
       </nav>
 
       <div class="header-icons">
@@ -1359,11 +1505,16 @@
     <i class="fab fa-whatsapp"></i>
   </a>
 
+  <!-- Admin Access Button (Hidden Lock Icon) -->
+  <div class="admin-link" onclick="app.showAdminLogin()" title="Admin Orders">
+    <i class="fas fa-lock"></i>
+  </div>
+
   <!-- Mobile Bottom Nav -->
   <nav class="mobile-nav">
     <ul>
       <li><a onclick="app.showHome()"><i class="fas fa-home"></i><span>Home</span></a></li>
-      <li><a onclick="app.showOrders()"><i class="fas fa-box"></i><span>Orders</span></a></li>
+      <li><a onclick="window.open('https://wa.me/918871542203', '_blank')"><i class="fas fa-phone"></i><span>Contact</span></a></li>
       <li>
         <a href="#" id="mobileCart">
           <div class="cart-icon-mobile">
@@ -1375,6 +1526,47 @@
       </li>
     </ul>
   </nav>
+
+  <!-- Customer Info Modal -->
+  <div class="customer-modal" id="customerModal">
+    <div class="customer-form">
+      <h2>Complete Your Order</h2>
+      <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem; font-size: 0.9rem;">
+        Please provide your details to complete the purchase
+      </p>
+      
+      <form id="customerForm" onsubmit="return false;">
+        <div class="form-group">
+          <label for="customerName">Full Name *</label>
+          <input type="text" id="customerName" required placeholder="Enter your full name">
+          <span class="error-message" id="nameError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="customerEmail">Email Address *</label>
+          <input type="email" id="customerEmail" required placeholder="your.email@example.com">
+          <span class="error-message" id="emailError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="customerPhone">Phone Number *</label>
+          <input type="tel" id="customerPhone" required placeholder="+91 98765 43210">
+          <span class="error-message" id="phoneError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="customerAddress">Delivery Address *</label>
+          <textarea id="customerAddress" rows="3" required placeholder="House No, Street, Area, City, State, PIN"></textarea>
+          <span class="error-message" id="addressError"></span>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" class="btn-cancel" onclick="app.closeCustomerForm()">Cancel</button>
+          <button type="button" class="btn-submit" onclick="app.submitCustomerForm()">Proceed to Payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Cart Modal -->
   <div class="cart-modal" id="cartModal">
@@ -1431,7 +1623,7 @@
     // REPLACE THESE WITH YOUR ACTUAL KEYS
     const CONFIG = {
       supabase: {
-        url: 'https://kplmeebifsuziytppwzb.supabase.co', // e.g., https://xxxxx.supabase.co
+        url: 'https://kplmeebifsuziytppwzb.supabase.co', 
         key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbG1lZWJpZnN1eml5dHBwd3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODU1NTcsImV4cCI6MjA3ODI2MTU1N30.lzfjMdr5hD7FWcVu-0dHbj7ZgXrttlfxHsaO6_vyAHw'
       },
       resend: {
@@ -1443,6 +1635,9 @@
       store: {
         email: 'hello@misha.com',
         phone: '+918871542203'
+      },
+      admin: {
+        password: 'misha2025'
       }
     };
 
@@ -1457,6 +1652,7 @@
       currentPage: 1,
       itemsPerPage: 10,
       productQuantity: 1,
+      customerInfo: null,
       categories: [
         { id: 'rings', name: 'Rings', icon: 'fa-ring', description: 'Elegant rings for every occasion' },
         { id: 'necklaces', name: 'Necklaces', icon: 'fa-gem', description: 'Beautiful necklaces and pendants' },
@@ -1484,7 +1680,6 @@
         
         if (error) {
           console.error('Error loading products:', error);
-          // Fallback to sample data if DB not set up yet
           this.products = this.getSampleProducts();
         } else {
           this.products = data;
@@ -1596,7 +1791,7 @@
       },
 
       // ==================== NAVIGATION ====================
-      showHome() {
+showHome() {
         document.getElementById('homePage').classList.remove('hidden');
         document.getElementById('categoryPage').classList.add('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
@@ -1698,10 +1893,8 @@
         document.getElementById('productDetailDescription').textContent = product.description;
         document.getElementById('productQuantity').textContent = this.productQuantity;
         
-        // Main image
         document.querySelector('#mainImage img').src = product.images[0];
         
-        // Thumbnails
         const thumbnails = document.getElementById('thumbnails');
         thumbnails.innerHTML = product.images.map((img, idx) => `
           <div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="app.changeMainImage('${img}', ${idx})">
@@ -1739,6 +1932,15 @@
         document.getElementById('policyPage').classList.remove('hidden');
         document.getElementById('ordersPage').classList.add('hidden');
         window.scrollTo(0, 0);
+      },
+
+      showAdminLogin() {
+        const password = prompt('Enter admin password to access orders:');
+        if (password === CONFIG.admin.password) {
+          this.showOrders();
+        } else if (password !== null) {
+          alert('❌ Incorrect password!');
+        }
       },
 
       async showOrders() {
@@ -1800,7 +2002,7 @@
               <td><strong>${order.order_id}</strong></td>
               <td>${order.user_name}</td>
               <td>${phone}</td>
-              <td>${order.user_email}</td>
+              <td style="word-break: break-all;">${order.user_email}</td>
               <td>${itemsCount} item(s)</td>
               <td><strong>₹${order.total.toLocaleString()}</strong></td>
               <td>${date}</td>
@@ -1913,7 +2115,7 @@
             <span>Total:</span>
             <span>₹${total.toLocaleString()}</span>
           </div>
-          <button class="checkout-btn" onclick="app.checkout()">Proceed to Payment</button>
+          <button class="checkout-btn" onclick="app.checkout()">Proceed to Checkout</button>
         `;
       },
 
@@ -1944,10 +2146,76 @@
         this.renderCart();
       },
 
-      // ==================== CHECKOUT ====================
-      async checkout() {
+      // ==================== CUSTOMER FORM ====================
+      checkout() {
         if (this.cart.length === 0) return;
+        document.getElementById('customerModal').style.display = 'flex';
+      },
 
+      closeCustomerForm() {
+        document.getElementById('customerModal').style.display = 'none';
+        document.getElementById('customerForm').reset();
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('error'));
+      },
+
+      validateCustomerForm() {
+        let isValid = true;
+        
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('error'));
+
+        const name = document.getElementById('customerName').value.trim();
+        if (!name || name.length < 2) {
+          document.getElementById('nameError').textContent = 'Please enter a valid name';
+          document.getElementById('customerName').classList.add('error');
+          isValid = false;
+        }
+
+        const email = document.getElementById('customerEmail').value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+          document.getElementById('emailError').textContent = 'Please enter a valid email';
+          document.getElementById('customerEmail').classList.add('error');
+          isValid = false;
+        }
+
+        const phone = document.getElementById('customerPhone').value.trim();
+        const phoneDigits = phone.replace(/\D/g, '');
+        if (!phone || phoneDigits.length < 10) {
+          document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number';
+          document.getElementById('customerPhone').classList.add('error');
+          isValid = false;
+        }
+
+        const address = document.getElementById('customerAddress').value.trim();
+        if (!address || address.length < 10) {
+          document.getElementById('addressError').textContent = 'Please enter a complete delivery address';
+          document.getElementById('customerAddress').classList.add('error');
+          isValid = false;
+        }
+
+        return isValid;
+      },
+
+      submitCustomerForm() {
+        if (!this.validateCustomerForm()) {
+          return;
+        }
+
+        this.customerInfo = {
+          name: document.getElementById('customerName').value.trim(),
+          email: document.getElementById('customerEmail').value.trim(),
+          phone: document.getElementById('customerPhone').value.trim(),
+          address: document.getElementById('customerAddress').value.trim()
+        };
+
+        this.closeCustomerForm();
+        this.processPayment();
+      },
+
+      // ==================== PAYMENT ====================
+      processPayment() {
         const total = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         
         const options = {
@@ -1961,14 +2229,14 @@
             await this.handlePaymentSuccess(response, total);
           },
           prefill: {
-            name: '',
-            email: '',
-            contact: ''
+            name: this.customerInfo.name,
+            email: this.customerInfo.email,
+            contact: this.customerInfo.phone
           },
           theme: { color: '#c9a961' },
           modal: {
-            ondismiss: function() {
-              console.log('Payment cancelled');
+            ondismiss: () => {
+              console.log('Payment cancelled by user');
             }
           }
         };
@@ -1980,16 +2248,12 @@
       async handlePaymentSuccess(paymentResponse, total) {
         const orderId = 'ORD' + Date.now();
         
-        // Get customer details from Razorpay
-        const customerName = document.querySelector('input[name="contact[name]"]')?.value || 'Customer';
-        const customerEmail = document.querySelector('input[name="contact[email]"]')?.value || '';
-        const customerPhone = document.querySelector('input[name="contact[contact]"]')?.value || '';
-        
         const orderData = {
           order_id: orderId,
-          user_name: customerName,
-          user_email: customerEmail,
-          user_phone: customerPhone,
+          user_name: this.customerInfo.name,
+          user_email: this.customerInfo.email,
+          user_phone: this.customerInfo.phone,
+          user_address: this.customerInfo.address,
           items: this.cart,
           total: total,
           payment_id: paymentResponse.razorpay_payment_id,
@@ -1997,32 +2261,37 @@
           created_at: new Date().toISOString()
         };
 
-        // Save to Supabase
+        console.log('=== ORDER CREATED ===');
+        console.log('Order Data:', orderData);
+
         const { error } = await supabase
           .from('orders')
           .insert([orderData]);
 
         if (error) {
-          console.error('Error saving order:', error);
-          // Continue anyway - order was paid
+          console.error('❌ Error saving order to Supabase:', error);
+        } else {
+          console.log('✅ Order saved to Supabase successfully');
         }
 
-        // Send emails
+        console.log('=== SENDING EMAILS ===');
         await this.sendOrderEmails(orderData);
 
-        // Clear cart
         this.cart = [];
+        this.customerInfo = null;
         this.saveCart();
         this.updateCartCount();
         document.getElementById('cartModal').style.display = 'none';
 
-        // Show confirmation
         this.showOrderConfirmation(orderData);
       },
 
       async sendOrderEmails(orderData) {
         try {
-          // Customer Email
+          console.log('Resend API Key:', CONFIG.resend.apiKey.substring(0, 15) + '...');
+          console.log('Customer Email:', orderData.user_email);
+          console.log('Store Email:', CONFIG.store.email);
+          
           const customerEmailHtml = `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f8f6f3;">
               <div style="background: white; padding: 30px; border: 2px solid #c9a961;">
@@ -2036,6 +2305,7 @@
                   <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
                   <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
                   <p><strong>Phone:</strong> ${orderData.user_phone}</p>
+                  <p><strong>Delivery Address:</strong><br>${orderData.user_address}</p>
                 </div>
 
                 <h3 style="color: #1a1a1a; margin-top: 30px;">Items Ordered</h3>
@@ -2051,7 +2321,7 @@
                 </div>
 
                 <div style="background: #fff3cd; padding: 15px; margin: 30px 0; border-left: 4px solid #c9a961;">
-                  <p style="margin: 0; color: #856404;">Your order will be dispatched within 2-3 business days. We'll contact you on WhatsApp shortly to confirm delivery details.</p>
+                  <p style="margin: 0; color: #856404;">Your order will be dispatched within 2-3 business days. We'll contact you on WhatsApp shortly.</p>
                 </div>
 
                 <p style="text-align: center; margin-top: 30px;">
@@ -2066,7 +2336,6 @@
             </div>
           `;
 
-          // Store Email
           const storeEmailHtml = `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
               <h1 style="color: #1a1a1a;">New Order Received! 🛍️</h1>
@@ -2076,6 +2345,7 @@
                 <p><strong>Customer:</strong> ${orderData.user_name}</p>
                 <p><strong>Email:</strong> ${orderData.user_email}</p>
                 <p><strong>Phone:</strong> ${orderData.user_phone}</p>
+                <p><strong>Address:</strong><br>${orderData.user_address}</p>
                 <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
                 <p><strong>Amount:</strong> ₹${orderData.total.toLocaleString()}</p>
               </div>
@@ -2087,51 +2357,69 @@
                 </div>
               `).join('')}
               <p style="margin-top: 20px; padding: 15px; background: #fff3cd; border-left: 4px solid #c9a961;">
-                <strong>Action Required:</strong> WhatsApp the customer at ${orderData.user_phone} to confirm order and delivery details.
+                <strong>Action Required:</strong> WhatsApp the customer at ${orderData.user_phone}
               </p>
               <p style="text-align: center; margin-top: 20px;">
                 <a href="https://wa.me/${orderData.user_phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${orderData.user_name}, your order ${orderData.order_id} has been confirmed! We'll dispatch it within 2-3 days. Thank you for shopping with Misha! 💎`)}" 
                    style="background: #25d366; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
-                  WhatsApp Customer
+                  WhatsApp Customer Now
                 </a>
               </p>
             </div>
           `;
 
-          // Send via Resend API
           if (orderData.user_email) {
-            await fetch('https://api.resend.com/emails', {
+            console.log('📧 Sending customer email...');
+            const customerResponse = await fetch('https://api.resend.com/emails', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${CONFIG.resend.apiKey}`
               },
               body: JSON.stringify({
-                from: 'Misha Jewelry <orders@resend.dev>',
+                from: 'Misha Jewelry <onboarding@resend.dev>',
                 to: orderData.user_email,
                 subject: `Order Confirmed - ${orderData.order_id}`,
                 html: customerEmailHtml
               })
             });
+
+            const customerResult = await customerResponse.json();
+            console.log('Customer email response:', customerResult);
+            
+            if (!customerResponse.ok) {
+              console.error('❌ Customer email failed:', customerResult);
+            } else {
+              console.log('✅ Customer email sent successfully!');
+            }
           }
 
-          await fetch('https://api.resend.com/emails', {
+          console.log('📧 Sending store email...');
+          const storeResponse = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${CONFIG.resend.apiKey}`
             },
             body: JSON.stringify({
-              from: 'Misha Store <orders@resend.dev>',
+              from: 'Misha Store <onboarding@resend.dev>',
               to: CONFIG.store.email,
               subject: `New Order - ${orderData.order_id} - ${orderData.user_name}`,
               html: storeEmailHtml
             })
           });
 
-          console.log('Emails sent successfully');
+          const storeResult = await storeResponse.json();
+          console.log('Store email response:', storeResult);
+          
+          if (!storeResponse.ok) {
+            console.error('❌ Store email failed:', storeResult);
+          } else {
+            console.log('✅ Store email sent successfully!');
+          }
+
         } catch (error) {
-          console.error('Error sending emails:', error);
+          console.error('❌ Error sending emails:', error);
         }
       },
 
@@ -2150,6 +2438,7 @@
           <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
           <p><strong>Email:</strong> ${orderData.user_email}</p>
           <p><strong>Phone:</strong> ${orderData.user_phone}</p>
+          <p><strong>Delivery Address:</strong><br>${orderData.user_address}</p>
           <p><strong>Total Amount:</strong> ₹${orderData.total.toLocaleString()}</p>
           <hr style="margin: 1.5rem 0;">
           <h3 style="margin-bottom: 1rem;">Items Ordered</h3>
@@ -2237,6 +2526,9 @@
         window.addEventListener('click', (e) => {
           if (e.target === cartModal) {
             cartModal.style.display = 'none';
+          }
+          if (e.target === document.getElementById('customerModal')) {
+            this.closeCustomerForm();
           }
         });
       }

@@ -1608,17 +1608,16 @@
     const CONFIG = {
       supabase: {
         url: 'https://kplmeebifsuziytppwzb.supabase.co', 
-        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbG1lZWJpZnN1eml5dHBwd3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODU1NTcsImV4cCI6MjA3ODI2MTU1N30.lzfjMdr5hD7FWcVu-0dHbj7ZgXrttlfxHsaO6_vyAHw'
-      },
+        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbG1lZWJpZnN1eml5dHBwd3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODU1NTcsImV4cCI6MjA3ODI2MTU1N30.lzfjMdr5hD7FWcVu-0dHbj7ZgXrttlfxHsaO6_vyAHw',
+        emailFunctionUrl: 'https://kplmeebifsuziytppwzb.supabase.co/functions/v1/clever-responder' 
+    
+    },
       razorpay: {
         key: 'rzp_test_1DP5mmOlF5G5ag'
       },
       store: {
-        email: 'hello@misha.com',
+        email: 'hello.mishajwellery@gmail.com',
         phone: '+918871542203'
-      },
-      admin: {
-        password: 'misha2025'
       }
     };
 
@@ -2190,7 +2189,7 @@ showHome() {
         console.log('📧 Sending order emails via Supabase Edge Function...');
 
         // Call Supabase Edge Function for sending email
-        const response = await fetch(`${CONFIG.supabase.url}/functions/v1/send-email`, {
+        const response = await fetch(`${CONFIG.supabase.emailFunctionUrl}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

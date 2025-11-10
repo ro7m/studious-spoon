@@ -1,0 +1,514 @@
+showHome() {
+        document.getElementById('homePage').classList.remove('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('ordersPage').classList.add('hidden');
+        window.scrollTo(0, 0);
+      },
+
+      showCategory(categoryId) {
+        this.currentCategory = categoryId;
+        this.currentPage = 1;
+        const category = this.categories.find(c => c.id === categoryId);
+        
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.remove('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('ordersPage').classList.add('hidden');
+        
+        document.getElementById('categoryBreadcrumb').textContent = category.name;
+        document.getElementById('categoryTitle').textContent = category.name;
+        document.getElementById('categorySubtitle').textContent = category.description;
+        
+        this.renderCategoryProducts();
+        window.scrollTo(0, 0);
+      },
+
+      renderCategoryProducts() {
+        const products = this.products.filter(p => p.category === this.currentCategory);
+        const startIdx = (this.currentPage - 1) * this.itemsPerPage;
+        const endIdx = startIdx + this.itemsPerPage;
+        const pageProducts = products.slice(startIdx, endIdx);
+        
+        const grid = document.getElementById('categoryProducts');
+        grid.innerHTML = pageProducts.map(p => this.renderProductCard(p)).join('');
+        
+        this.renderPagination(products.length);
+      },
+
+      renderPagination(totalItems) {
+        const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+        const pagination = document.getElementById('pagination');
+        
+        if (totalPages <= 1) {
+          pagination.innerHTML = '';
+          return;
+        }
+        
+        let html = `
+          <button ${this.currentPage === 1 ? 'disabled' : ''} onclick="app.changePage(${this.currentPage - 1})">
+            Previous
+          </button>
+        `;
+        
+        for (let i = 1; i <= totalPages; i++) {
+          html += `
+            <button class="${i === this.currentPage ? 'active' : ''}" onclick="app.changePage(${i})">
+              ${i}
+            </button>
+          `;
+        }
+        
+        html += `
+          <button ${this.currentPage === totalPages ? 'disabled' : ''} onclick="app.changePage(${this.currentPage + 1})">
+            Next
+          </button>
+        `;
+        
+        pagination.innerHTML = html;
+      },
+
+      changePage(page) {
+        this.currentPage = page;
+        this.renderCategoryProducts();
+        window.scrollTo(0, 0);
+      },
+
+      showProductDetail(productId) {
+        const product = this.products.find(p => p.id === productId);
+        if (!product) return;
+        
+        this.currentProduct = product;
+        this.productQuantity = 1;
+        
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.remove('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('ordersPage').classList.add('hidden');
+        
+        const category = this.categories.find(c => c.id === product.category);
+        document.getElementById('productCategoryBreadcrumb').textContent = category?.name || '';
+        document.getElementById('productNameBreadcrumb').textContent = product.name;
+        document.getElementById('productDetailTitle').textContent = product.name;
+        document.getElementById('productDetailPrice').textContent = `₹${product.price.toLocaleString()}`;
+        document.getElementById('productDetailDescription').textContent = product.description;
+        document.getElementById('productQuantity').textContent = this.productQuantity;
+        
+        document.querySelector('#mainImage img').src = product.images[0];
+        
+        const thumbnails = document.getElementById('thumbnails');
+        thumbnails.innerHTML = product.images.map((img, idx) => `
+          <div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="app.changeMainImage('${img}', ${idx})">
+            <img src="${img}" alt="Thumbnail ${idx + 1}">
+          </div>
+        `).join('');
+        
+        window.scrollTo(0, 0);
+      },
+
+      changeMainImage(imgSrc, idx) {
+        document.querySelector('#mainImage img').src = imgSrc;
+        document.querySelectorAll('.thumbnail').forEach((t, i) => {
+          t.classList.toggle('active', i === idx);
+        });
+      },
+
+      increaseQuantity() {
+        this.productQuantity++;
+        document.getElementById('productQuantity').textContent = this.productQuantity;
+      },
+
+      decreaseQuantity() {
+        if (this.productQuantity > 1) {
+          this.productQuantity--;
+          document.getElementById('productQuantity').textContent = this.productQuantity;
+        }
+      },
+
+      showPolicy() {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.remove('hidden');
+        document.getElementById('ordersPage').classList.add('hidden');
+        window.scrollTo(0, 0);
+      },
+
+      showAdminLogin() {
+        const password = prompt('Enter admin password to access orders:');
+        if (password === CONFIG.admin.password) {
+          this.showOrders();
+        } else if (password !== null) {
+          alert('❌ Incorrect password!');
+        }
+      },
+
+      async showOrders() {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('ordersPage').classList.remove('hidden');
+        
+        await this.loadOrders();
+        window.scrollTo(0, 0);
+      },
+
+      async loadOrders() {
+        const container = document.getElementById('ordersTableContainer');
+        container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading orders...</p></div>';
+
+        const { data, error } = await supabase
+          .from('orders')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          container.innerHTML = '<p style="text-align:center; padding:3rem; color:var(--text-light);">Error loading orders. Please check your database setup.</p>';
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          container.innerHTML = '<p style="text-align:center; padding:3rem; color:var(--text-light);">No orders yet.</p>';
+          return;
+        }
+
+        let tableHtml = `
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>WhatsApp</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        data.forEach(order => {
+          const date = new Date(order.created_at).toLocaleDateString('en-IN');
+          const itemsCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
+          const phone = order.user_phone || 'N/A';
+          const whatsappMsg = encodeURIComponent(`Hi ${order.user_name}, your order ${order.order_id} has been confirmed! We'll dispatch it within 2-3 days. Thank you for shopping with Misha! 💎`);
+          
+          tableHtml += `
+            <tr>
+              <td><strong>${order.order_id}</strong></td>
+              <td>${order.user_name}</td>
+              <td>${phone}</td>
+              <td style="word-break: break-all;">${order.user_email}</td>
+              <td>${itemsCount} item(s)</td>
+              <td><strong>₹${order.total.toLocaleString()}</strong></td>
+              <td>${date}</td>
+              <td>
+                ${phone !== 'N/A' ? `
+                  <a href="https://wa.me/${phone.replace(/\D/g, '')}?text=${whatsappMsg}" 
+                     target="_blank" 
+                     class="whatsapp-link">
+                    <i class="fab fa-whatsapp"></i> Message
+                  </a>
+                ` : '-'}
+              </td>
+            </tr>
+          `;
+        });
+
+        tableHtml += '</tbody></table>';
+        container.innerHTML = tableHtml;
+      },
+
+      // ==================== CART ====================
+      addToCart(productId) {
+        const product = this.products.find(p => p.id === productId);
+        if (!product) return;
+        
+        const existing = this.cart.find(item => item.id === productId);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          this.cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.images[0],
+            quantity: 1
+          });
+        }
+        
+        this.saveCart();
+        this.updateCartCount();
+      },
+
+      addToCartFromDetail() {
+        if (!this.currentProduct) return;
+        
+        const existing = this.cart.find(item => item.id === this.currentProduct.id);
+        if (existing) {
+          existing.quantity += this.productQuantity;
+        } else {
+          this.cart.push({
+            id: this.currentProduct.id,
+            name: this.currentProduct.name,
+            price: this.currentProduct.price,
+            image: this.currentProduct.images[0],
+            quantity: this.productQuantity
+          });
+        }
+        
+        this.saveCart();
+        this.updateCartCount();
+        alert(`Added ${this.productQuantity} item(s) to cart!`);
+      },
+
+      saveCart() {
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+      },
+
+      updateCartCount() {
+        const count = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById('cartCount').textContent = count;
+        document.getElementById('mobileCartCount').textContent = count;
+      },
+
+      renderCart() {
+        const cartItems = document.getElementById('cartItems');
+        const cartFooter = document.getElementById('cartFooter');
+        
+        if (this.cart.length === 0) {
+          cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
+          cartFooter.innerHTML = '';
+          return;
+        }
+
+        let itemsHtml = '';
+        let total = 0;
+
+        this.cart.forEach(item => {
+          const itemTotal = item.price * item.quantity;
+          total += itemTotal;
+          itemsHtml += `
+            <div class="cart-item">
+              <img src="${item.image}" alt="${item.name}">
+              <div style="flex:1;">
+                <h4 style="margin-bottom:0.5rem; font-size:1.1rem;">${item.name}</h4>
+                <p style="color:var(--text-light); font-size:0.9rem;">₹${item.price.toLocaleString()} × ${item.quantity}</p>
+                <div class="cart-actions">
+                  <button onclick="app.decreaseCartItem('${item.id}')">−</button>
+                  <span style="min-width:30px; text-align:center; font-weight:500;">${item.quantity}</span>
+                  <button onclick="app.increaseCartItem('${item.id}')">+</button>
+                  <button onclick="app.removeCartItem('${item.id}')" style="margin-left: 10px; color: #e74c3c;">Remove</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        cartItems.innerHTML = itemsHtml;
+        cartFooter.innerHTML = `
+          <div class="cart-total">
+            <span>Total:</span>
+            <span>₹${total.toLocaleString()}</span>
+          </div>
+          <button class="checkout-btn" onclick="app.checkout()">Proceed to Checkout</button>
+        `;
+      },
+
+      decreaseCartItem(productId) {
+        const item = this.cart.find(i => i.id === productId);
+        if (item.quantity > 1) {
+          item.quantity--;
+        } else {
+          this.cart = this.cart.filter(i => i.id !== productId);
+        }
+        this.saveCart();
+        this.updateCartCount();
+        this.renderCart();
+      },
+
+      increaseCartItem(productId) {
+        const item = this.cart.find(i => i.id === productId);
+        item.quantity++;
+        this.saveCart();
+        this.updateCartCount();
+        this.renderCart();
+      },
+
+      removeCartItem(productId) {
+        this.cart = this.cart.filter(i => i.id !== productId);
+        this.saveCart();
+        this.updateCartCount();
+        this.renderCart();
+      },
+
+      // ==================== CUSTOMER FORM ====================
+      checkout() {
+        if (this.cart.length === 0) return;
+        document.getElementById('customerModal').style.display = 'flex';
+      },
+
+      closeCustomerForm() {
+        document.getElementById('customerModal').style.display = 'none';
+        document.getElementById('customerForm').reset();
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('error'));
+      },
+
+      validateCustomerForm() {
+        let isValid = true;
+        
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('error'));
+
+        const name = document.getElementById('customerName').value.trim();
+        if (!name || name.length < 2) {
+          document.getElementById('nameError').textContent = 'Please enter a valid name';
+          document.getElementById('customerName').classList.add('error');
+          isValid = false;
+        }
+
+        const email = document.getElementById('customerEmail').value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+          document.getElementById('emailError').textContent = 'Please enter a valid email';
+          document.getElementById('customerEmail').classList.add('error');
+          isValid = false;
+        }
+
+        const phone = document.getElementById('customerPhone').value.trim();
+        const phoneDigits = phone.replace(/\D/g, '');
+        if (!phone || phoneDigits.length < 10) {
+          document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number';
+          document.getElementById('customerPhone').classList.add('error');
+          isValid = false;
+        }
+
+        const address = document.getElementById('customerAddress').value.trim();
+        if (!address || address.length < 10) {
+          document.getElementById('addressError').textContent = 'Please enter a complete delivery address';
+          document.getElementById('customerAddress').classList.add('error');
+          isValid = false;
+        }
+
+        return isValid;
+      },
+
+      submitCustomerForm() {
+        if (!this.validateCustomerForm()) {
+          return;
+        }
+
+        this.customerInfo = {
+          name: document.getElementById('customerName').value.trim(),
+          email: document.getElementById('customerEmail').value.trim(),
+          phone: document.getElementById('customerPhone').value.trim(),
+          address: document.getElementById('customerAddress').value.trim()
+        };
+
+        this.closeCustomerForm();
+        this.processPayment();
+      },
+
+      // ==================== PAYMENT ====================
+      processPayment() {
+        const total = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        
+        const options = {
+          key: CONFIG.razorpay.key,
+          amount: total * 100,
+          currency: 'INR',
+          name: 'Misha',
+          description: 'Silver Jewelry Order',
+          image: 'https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=100',
+          handler: async (response) => {
+            await this.handlePaymentSuccess(response, total);
+          },
+          prefill: {
+            name: this.customerInfo.name,
+            email: this.customerInfo.email,
+            contact: this.customerInfo.phone
+          },
+          theme: { color: '#c9a961' },
+          modal: {
+            ondismiss: () => {
+              console.log('Payment cancelled by user');
+            }
+          }
+        };
+        
+        const rzp = new Razorpay(options);
+        rzp.open();
+      },
+
+      async handlePaymentSuccess(paymentResponse, total) {
+        const orderId = 'ORD' + Date.now();
+        
+        const orderData = {
+          order_id: orderId,
+          user_name: this.customerInfo.name,
+          user_email: this.customerInfo.email,
+          user_phone: this.customerInfo.phone,
+          user_address: this.customerInfo.address,
+          items: this.cart,
+          total: total,
+          payment_id: paymentResponse.razorpay_payment_id,
+          status: 'confirmed',
+          created_at: new Date().toISOString()
+        };
+
+        console.log('=== ORDER CREATED ===');
+        console.log('Order Data:', orderData);
+
+        const { error } = await supabase
+          .from('orders')
+          .insert([orderData]);
+
+        if (error) {
+          console.error('❌ Error saving order to Supabase:', error);
+        } else {
+          console.log('✅ Order saved to Supabase successfully');
+        }
+
+        console.log('=== SENDING EMAILS ===');
+        await this.sendOrderEmails(orderData);
+
+        this.cart = [];
+        this.customerInfo = null;
+        this.saveCart();
+        this.updateCartCount();
+        document.getElementById('cartModal').style.display = 'none';
+
+        this.showOrderConfirmation(orderData);
+      },
+
+      async sendOrderEmails(orderData) {
+        try {
+          console.log('Resend API Key:', CONFIG.resend.apiKey.substring(0, 15) + '...');
+          console.log('Customer Email:', orderData.user_email);
+          console.log('Store Email:', CONFIG.store.email);
+          
+          const customerEmailHtml = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f8f6f3;">
+              <div style="background: white; padding: 30px; border: 2px solid #c9a961;">
+                <h1 style="color: #1a1a1a; text-align: center; margin-bottom: 20px;">Order Confirmed! 🎉</h1>
+                <p style="font-size: 16px; color: #2d2d2d;">Dear ${orderData.user_name},</p>
+                <p style="font-size: 16px; color: #2d2d2d;">Thank you for your purchase at Misha! Your order has been confirmed.</p>
+                
+                <div style="background: #f8f6f3; padding: 20px; margin: 20px 0;">
+                  <h2 style="color: #c9a961; margin-bottom: 15px;">Order Details</h2>
+                  <p><strong>Order ID:</strong> ${orderData.order_id}</p>
+                  <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
+                  <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+              

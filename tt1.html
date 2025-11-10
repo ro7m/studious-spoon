@@ -141,9 +141,6 @@
       background: var(--primary);
       transition: width 0.3s ease;
     }
-    nav a:hover::after {
-      width: 100%;
-    }
     .header-icons {
       display: flex;
       gap: 1.5rem;
@@ -193,35 +190,6 @@
       transition: all 0.3s ease;
       text-decoration: none;
     }
-    .whatsapp-float:hover {
-      background-color: #128C7E;
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(37,211,102,0.6);
-    }
-
-    /* Admin Access Button */
-    .admin-link {
-      position: fixed;
-      bottom: 100px;
-      right: 25px;
-      background: var(--primary);
-      color: var(--white);
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
-      z-index: 99;
-    }
-    .admin-link:hover {
-      background: #0e1226;
-      transform: scale(1.1);
-    }
 
     .hero {
       position: relative;
@@ -232,34 +200,6 @@
       text-align: center;
       padding: 9rem 1rem;
       margin-bottom: 4rem;
-    }
-    .hero-content {
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .hero-subtitle {
-      font-size: 0.9rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      font-weight: 400;
-      opacity: 0.95;
-      color: var(--primary);
-    }
-    .hero h1 { 
-      font-size: 3.8rem; 
-      margin-bottom: 1.5rem;
-      font-weight: 400;
-      line-height: 1.2;
-      letter-spacing: 2px;
-    }
-    .hero p { 
-      font-size: 1.05rem;
-      margin: 0 auto 2.5rem;
-      font-weight: 300;
-      letter-spacing: 1px;
-      line-height: 1.8;
-      opacity: 0.9;
     }
     .btn {
       display: inline-block;
@@ -552,101 +492,6 @@
       font-weight: 500;
     }
 
-    /* Customer Info Modal */
-    .customer-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(8px);
-    }
-    .customer-form {
-      background: var(--white);
-      width: 90%;
-      max-width: 500px;
-      padding: 2.5rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .customer-form h2 {
-      color: var(--primary);
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: var(--text);
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.8rem;
-      border: 2px solid var(--border);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.9rem;
-      transition: border-color 0.3s ease;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-    .form-group input.error {
-      border-color: #e74c3c;
-    }
-    .error-message {
-      color: #e74c3c;
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
-      display: block;
-    }
-    .form-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-    .form-buttons button {
-      flex: 1;
-      padding: 1rem;
-      border: none;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .btn-submit {
-      background: var(--primary);
-      color: var(--white);
-    }
-    .btn-submit:hover {
-      background: #0e1226;
-    }
-    .btn-cancel {
-      background: #f8f6f3;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-cancel:hover {
-      background: var(--border);
-    }
-
     /* Cart Sidebar (from tt.txt) */
     .cart-sidebar {
       position: fixed;
@@ -761,6 +606,101 @@
       background: #0e1226;
     }
 
+    /* Customer Info Modal */
+    .customer-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+    .customer-form {
+      background: var(--white);
+      width: 90%;
+      max-width: 500px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .customer-form h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid var(--border);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .form-group input.error {
+      border-color: #e74c3c;
+    }
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      display: block;
+    }
+    .form-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .form-buttons button {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-submit {
+      background: var(--primary);
+      color: var(--white);
+    }
+    .btn-submit:hover {
+      background: #0e1226;
+    }
+    .btn-cancel {
+      background: #f8f6f3;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-cancel:hover {
+      background: var(--border);
+    }
+
     /* Order Confirmation Page */
     .order-confirmation {
       max-width: 700px;
@@ -816,55 +756,6 @@
     }
     .policy-content li {
       margin: 0.5rem 0;
-    }
-
-    /* Admin Dashboard */
-    .admin-dashboard {
-      max-width: 1200px;
-      margin: 3rem auto;
-    }
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid var(--border);
-    }
-    .orders-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--white);
-      box-shadow: 0 2px 10px var(--shadow);
-    }
-    .orders-table th {
-      background: var(--primary);
-      color: var(--white);
-      padding: 1rem;
-      text-align: left;
-      font-weight: 500;
-      letter-spacing: 1px;
-      font-size: 0.85rem;
-    }
-    .orders-table td {
-      padding: 1rem;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-    }
-    .orders-table tr:hover {
-      background: #f8f6f3;
-    }
-    .whatsapp-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #25d366;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.85rem;
-    }
-    .whatsapp-link:hover {
-      text-decoration: underline;
     }
 
     /* Footer */
@@ -979,27 +870,6 @@
       position: relative;
     }
 
-    /* Loading Spinner */
-    .loading {
-      text-align: center;
-      padding: 3rem;
-      font-size: 1.2rem;
-      color: var(--text-light);
-    }
-    .spinner {
-      border: 3px solid var(--border);
-      border-top: 3px solid var(--primary);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 2rem auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
     /* Responsive */
     @media (max-width: 768px) {
       body {
@@ -1047,13 +917,6 @@
       .main-image {
         height: 400px;
       }
-      .orders-table {
-        font-size: 0.75rem;
-      }
-      .orders-table th,
-      .orders-table td {
-        padding: 0.5rem;
-      }
       .footer-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -1064,13 +927,6 @@
         bottom: 80px;
         right: 20px;
         font-size: 28px;
-      }
-      .admin-link {
-        width: 45px;
-        height: 45px;
-        bottom: 145px;
-        right: 20px;
-        font-size: 18px;
       }
       .mobile-nav { 
         display: block; 
@@ -1764,7 +1620,7 @@
         this.updateCartCount();
         this.triggerCartShake();
         this.renderCartSidebar();
-        this.toggleCart();
+        this.toggleCart(); // Open cart after adding
       },
       addToCartFromDetail() {
         if (!this.currentProduct) return;
@@ -1808,11 +1664,12 @@
           cartFooter.innerHTML = '';
           return;
         }
+        let itemsHtml = '';
         let total = 0;
-        let itemsHtml = this.cart.map(item => {
+        this.cart.forEach(item => {
           const itemTotal = item.price * item.quantity;
           total += itemTotal;
-          return `
+          itemsHtml += `
             <div class="cart-item">
               <img src="${item.image}" alt="${item.name}">
               <div class="cart-item-info">
@@ -1829,7 +1686,7 @@
               </button>
             </div>
           `;
-        }).join('');
+        });
         cartItems.innerHTML = itemsHtml;
         cartFooter.innerHTML = `
           <div class="cart-total">
@@ -1873,6 +1730,8 @@
       // ==================== CUSTOMER FORM ====================
       checkout() {
         if (this.cart.length === 0) return;
+        // Ensure cart sidebar is closed before showing form
+        document.getElementById('cartSidebar').classList.remove('active');
         document.getElementById('customerModal').style.display = 'flex';
       },
       closeCustomerForm() {
@@ -2011,7 +1870,8 @@
         this.customerInfo = null;
         this.saveCart();
         this.updateCartCount();
-        this.toggleCart();
+        // Ensure cart is closed before showing confirmation
+        document.getElementById('cartSidebar').classList.remove('active');
         this.showOrderConfirmation(orderData);
       },
       async sendOrderEmails(orderData) {
@@ -2020,7 +1880,7 @@
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${CONFIG.supabase.key}`
+              'Authorization': `Bearer ${CONFIG.supabase.key}` // Auth header included
             },
             body: JSON.stringify({
               orderData: orderData
@@ -2033,15 +1893,19 @@
           const result = await response.json();
           return { success: true, data: result };
         } catch (error) {
+          console.error('❌ Error sending emails:', error);
           return { success: false, error: error.message };
         }
       },
       showOrderConfirmation(orderData) {
+        // Hide all pages including cart
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('categoryPage').classList.add('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.remove('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        // Ensure cart is not visible
+        document.getElementById('cartSidebar').classList.remove('active');
         const orderDetails = document.getElementById('orderDetailsContent');
         orderDetails.innerHTML = `
           <p><strong>Order ID:</strong> ${orderData.order_id}</p>

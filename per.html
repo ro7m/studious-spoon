@@ -1,1874 +1,2415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Misha - Luxury Sterling Silver Jewellery</title>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --navy: #1C214C;
-            --gold: #D4AF37;
-            --light-gold: #F4E4C1;
-            --white: #FFFFFF;
-            --off-white: #FAFAFA;
-            --navy-transparent: rgba(28, 33, 76, 0.95);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            color: var(--navy);
-            background: var(--white);
-            overflow-x: hidden;
-        }
-
-        /* Animated Background Pattern */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(28, 33, 76, 0.03) 0%, transparent 50%);
-            z-index: -1;
-            animation: subtleMove 20s ease-in-out infinite;
-        }
-
-        @keyframes subtleMove {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20px, 20px); }
-        }
-
-        /* Stunning Animated Header */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: all 0.4s ease;
-        }
-
-        .announcement-bar {
-            background: linear-gradient(90deg, var(--gold) 0%, #c49a2f 50%, var(--gold) 100%);
-            background-size: 200% 100%;
-            animation: shimmer 3s linear infinite;
-            color: var(--navy);
-            text-align: center;
-            padding: 12px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            box-shadow: 0 2px 15px rgba(212, 175, 55, 0.3);
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 200% center; }
-            100% { background-position: -200% center; }
-        }
-
-        .main-header {
-            background: var(--navy-transparent);
-            backdrop-filter: blur(20px);
-            padding: 1.2rem 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        header.scrolled .announcement-bar {
-            display: none;
-        }
-
-        header.scrolled {
-            box-shadow: 0 5px 30px rgba(28, 33, 76, 0.2);
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 4px;
-            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
-            cursor: pointer;
-            position: relative;
-            animation: logoGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes logoGlow {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.4)); }
-            50% { filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8)); }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            position: relative;
-            padding: 8px 0;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--gold);
-            transition: all 0.4s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: var(--gold);
-            transform: translateY(-2px);
-        }
-
-        .cart-btn {
-            background: linear-gradient(135deg, var(--gold), #c49a2f);
-            color: var(--navy);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .cart-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
-        }
-
-        .cart-count {
-            background: var(--navy);
-            color: var(--gold);
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        /* Breathtaking Hero Section */
-        .hero {
-            margin-top: 120px;
-            height: 90vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--navy) 0%, #2a3165 100%);
-        }
-
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.15;
-            background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(212, 175, 55, 0.1) 35px, rgba(212, 175, 55, 0.1) 70px);
-        }
-
-        .floating-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .floating-gem {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.3), transparent);
-            border-radius: 50%;
-            animation: float 15s ease-in-out infinite;
-        }
-
-        .floating-gem:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
-        .floating-gem:nth-child(2) { top: 60%; left: 80%; animation-delay: 3s; }
-        .floating-gem:nth-child(3) { top: 30%; left: 70%; animation-delay: 6s; }
-        .floating-gem:nth-child(4) { top: 70%; left: 20%; animation-delay: 9s; }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-            50% { transform: translate(30px, -30px) scale(1.2); opacity: 0.6; }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            color: var(--white);
-            max-width: 900px;
-            padding: 0 20px;
-        }
-
-        .hero h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 5.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--white) 0%, var(--gold) 50%, var(--white) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease;
-            letter-spacing: 3px;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-subtitle {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-weight: 300;
-            margin-bottom: 3rem;
-            opacity: 0.95;
-            animation: fadeInUp 1s ease 0.3s both;
-            letter-spacing: 2px;
-        }
-
-        .cta-primary {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--gold), #c49a2f);
-            color: var(--navy);
-            padding: 18px 50px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-decoration: none;
-            transition: all 0.4s ease;
-            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
-            animation: fadeInUp 1s ease 0.6s both;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .cta-primary:hover::before {
-            left: 100%;
-        }
-
-        .cta-primary:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.6);
-        }
-
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator span {
-            display: block;
-            width: 30px;
-            height: 50px;
-            border: 2px solid var(--gold);
-            border-radius: 25px;
-            position: relative;
-        }
-
-        .scroll-indicator span::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 10px;
-            background: var(--gold);
-            border-radius: 3px;
-            animation: scrollDown 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-15px); }
-            60% { transform: translateX(-50%) translateY(-7px); }
-        }
-
-        @keyframes scrollDown {
-            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-        }
-
-        /* Section Styling */
-        section {
-            padding: 8rem 6%;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 3.5rem;
-            color: var(--navy);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        }
-
-        .section-subtitle {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            color: rgba(28, 33, 76, 0.7);
-            margin-top: 1.5rem;
-            font-weight: 300;
-        }
-
-        /* Extraordinary Product Cards */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 3rem;
-        }
-
-        .product-card {
-            background: var(--white);
-            border-radius: 25px;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            box-shadow: 0 10px 40px rgba(28, 33, 76, 0.08);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-        }
-
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent 0%, rgba(212, 175, 55, 0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .product-card:hover::before {
-            opacity: 1;
-        }
-
-        .product-card:hover {
-            transform: translateY(-15px) rotateZ(1deg);
-            box-shadow: 0 20px 60px rgba(28, 33, 76, 0.15);
-        }
-
-        .product-image {
-            position: relative;
-            height: 400px;
-            overflow: hidden;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.15) rotate(3deg);
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, var(--gold), #c49a2f);
-            color: var(--navy);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.75rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-            z-index: 2;
-        }
-
-        .product-info {
-            padding: 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .product-category {
-            font-size: 0.85rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-name {
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem;
-            color: var(--navy);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .product-desc {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
-            color: rgba(28, 33, 76, 0.7);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-price {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            color: var(--navy);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn-add-cart,
-        .btn-view {
-            flex: 1;
-            padding: 14px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-        }
-
-        .btn-add-cart {
-            background: linear-gradient(135deg, var(--navy), #2a3165);
-            color: var(--white);
-            box-shadow: 0 5px 20px rgba(28, 33, 76, 0.3);
-        }
-
-        .btn-add-cart:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(28, 33, 76, 0.5);
-        }
-
-        .btn-view {
-            background: transparent;
-            color: var(--navy);
-            border: 2px solid var(--navy);
-        }
-
-        .btn-view:hover {
-            background: var(--navy);
-            color: var(--white);
-            transform: translateY(-3px);
-        }
-
-        /* Stunning Category Section */
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .category-card {
-            position: relative;
-            height: 400px;
-            border-radius: 20px;
-            overflow: hidden;
-            cursor: pointer;
-            box-shadow: 0 10px 40px rgba(28, 33, 76, 0.1);
-        }
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, transparent 0%, rgba(28, 33, 76, 0.9) 100%);
-            z-index: 1;
-            transition: all 0.5s ease;
-        }
-
-        .category-card:hover::before {
-            background: linear-gradient(180deg, transparent 0%, rgba(212, 175, 55, 0.9) 100%);
-        }
-
-        .category-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s ease;
-        }
-
-        .category-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .category-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 2.5rem;
-            z-index: 2;
-            color: var(--white);
-        }
-
-        .category-content h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            transform: translateY(0);
-            transition: transform 0.5s ease;
-        }
-
-        .category-card:hover .category-content h3 {
-            transform: translateY(-10px);
-        }
-
-        .category-content p {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        /* Extraordinary Cart Slider */
-        .cart-slider {
-            position: fixed;
-            top: 0;
-            right: -500px;
-            width: 500px;
-            height: 100vh;
-            background: var(--white);
-            box-shadow: -10px 0 50px rgba(28, 33, 76, 0.3);
-            z-index: 2000;
-            transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .cart-slider.active {
-            right: 0;
-        }
-
-        .cart-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(28, 33, 76, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 1999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .cart-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .cart-header {
-            background: linear-gradient(135deg, var(--navy), #2a3165);
-            color: var(--white);
-            padding: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-header h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            line-height: 1;
-            padding: 0;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-cart:hover {
-            color: var(--gold);
-            transform: rotate(90deg);
-        }
-
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            padding: 2rem;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 1.5rem;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
-            border-radius: 15px;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .cart-item:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 5px 20px rgba(28, 33, 76, 0.1);
-        }
-
-        .cart-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-name {
-            font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
-            color: var(--navy);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .cart-item-price {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            color: var(--navy);
-            font-weight: 700;
-            margin-top: 0.5rem;
-        }
-
-        .cart-item-qty {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 0.8rem;
-        }
-
-        .qty-btn {
-            background: var(--navy);
-            color: var(--white);
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .qty-btn:hover {
-            background: var(--gold);
-            color: var(--navy);
-            transform: scale(1.1);
-        }
-
-        .remove-item {
-            background: transparent;
-            color: #dc3545;
-            border: 2px solid #dc3545;
-            padding: 8px 15px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            margin-top: 0.8rem;
-        }
-
-        .remove-item:hover {
-            background: #dc3545;
-            color: var(--white);
-        }
-
-        .cart-empty {
-            text-align: center;
-            padding: 4rem 2rem;
-        }
-
-        .cart-empty-icon {
-            font-size: 5rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.3;
-        }
-
-        .cart-empty h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            color: var(--navy);
-            margin-bottom: 1rem;
-        }
-
-        .cart-footer {
-            border-top: 2px solid rgba(28, 33, 76, 0.1);
-            padding: 2rem;
-            background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--navy);
-        }
-
-        .checkout-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--gold), #c49a2f);
-            color: var(--navy);
-            border: none;
-            padding: 18px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-        }
-
-        .checkout-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
-        }
-
-        /* Features Section */
-        .features {
-            background: linear-gradient(135deg, var(--navy) 0%, #2a3165 100%);
-            color: var(--white);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-
-        .feature-item {
-            text-align: center;
-            padding: 2.5rem 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            transition: all 0.4s ease;
-        }
-
-        .feature-item:hover {
-            background: rgba(212, 175, 55, 0.1);
-            transform: translateY(-10px);
-            border-color: var(--gold);
-        }
-
-        .feature-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.5));
-        }
-
-        .feature-item h4 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-item p {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        /* WhatsApp Float */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
-            cursor: pointer;
-            z-index: 1500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .whatsapp-float:hover {
-            transform: scale(1.2);
-            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.7);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--navy) 0%, #1a1f45 100%);
-            color: var(--white);
-            padding: 5rem 6% 2rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem;
-            margin-bottom: 1.5rem;
-            color: var(--gold);
-        }
-
-        .footer-section p,
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.8rem;
-            transition: all 0.3s ease;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.05rem;
-        }
-
-        .footer-section a:hover {
-            color: var(--gold);
-            transform: translateX(5px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
-        }
-
-        /* Modal Styling */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(28, 33, 76, 0.92);
-            backdrop-filter: blur(10px);
-            z-index: 3000;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: var(--white);
-            max-width: 900px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 30px;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
-            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, var(--navy), #2a3165);
-            color: var(--white);
-            padding: 2.5rem 3rem;
-            position: relative;
-            border-radius: 30px 30px 0 0;
-        }
-
-        .modal-header h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 2rem;
-            right: 3rem;
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 2.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            line-height: 1;
-        }
-
-        .close-modal:hover {
-            color: var(--gold);
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            padding: 3rem;
-        }
-
-        .modal-body h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            color: var(--navy);
-            margin: 2rem 0 1rem;
-        }
-
-        .modal-body p,
-        .modal-body ul {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: rgba(28, 33, 76, 0.8);
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-body ul {
-            padding-left: 2rem;
-        }
-
-        .modal-body li {
-            margin-bottom: 0.8rem;
-        }
-
-        /* Checkout Form */
-        .checkout-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-weight: 700;
-            color: var(--navy);
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid rgba(28, 33, 76, 0.2);
-            border-radius: 15px;
-            font-size: 1rem;
-            font-family: 'Lato', sans-serif;
-            transition: all 0.3s ease;
-            background: var(--white);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: linear-gradient(135deg, var(--gold), #c49a2f);
-            color: var(--navy);
-            border: none;
-            padding: 18px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
-        }
-
-        /* Success Message */
-        .success-message {
-            text-align: center;
-            padding: 3rem;
-        }
-
-        .success-icon {
-            font-size: 6rem;
-            color: #28a745;
-            margin-bottom: 2rem;
-            animation: scaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes scaleIn {
-            from { transform: scale(0); }
-            to { transform: scale(1); }
-        }
-
-        .success-message h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: var(--navy);
-            margin-bottom: 1rem;
-        }
-
-        .success-message p {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            color: rgba(28, 33, 76, 0.8);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .main-header {
-                flex-direction: column;
-                gap: 1.5rem;
-                padding: 1rem 5%;
-            }
-
-            .logo {
-                font-size: 2rem;
-            }
-
-            .nav-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .hero {
-                margin-top: 140px;
-                height: 70vh;
-            }
-
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.3rem;
-            }
-
-            .section-title h2 {
-                font-size: 2.5rem;
-            }
-
-            .product-grid,
-            .category-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cart-slider {
-                width: 100%;
-                right: -100%;
-            }
-
-            .modal-content {
-                width: 95%;
-                border-radius: 20px;
-            }
-
-            .modal-header,
-            .modal-body {
-                padding: 2rem;
-            }
-
-            .close-modal {
-                top: 1.5rem;
-                right: 1.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Misha • Pure Silver Jewelry</title>
+  <meta name="description" content="Handcrafted 925 Sterling Silver Jewelry by Misha. Ethically made in India. Free shipping on prepaid orders.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <style>
+    :root {
+      --primary: #1c214c;
+      --secondary: #c9a961;
+      --accent: #d4af37;
+      --dark: #0d0d0d;
+      --light: #f8f6f3;
+      --white: #ffffff;
+      --text: #2d2d2d;
+      --text-light: #666666;
+      --border: #d4d4d4;
+      --shadow: rgba(0,0,0,0.1);
+      --success: #27ae60;
+      --error: #e74c3c;
+    }
+    
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.7;
+      letter-spacing: 0.3px;
+      padding-bottom: 0;
+    }
+    
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    .hidden { display: none !important; }
+    
+    /* Header */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+    
+    .top-banner {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+      color: var(--white);
+      text-align: center;
+      padding: 10px 0;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+    
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 0;
+    }
+    
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    
+    .logo span { 
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    .search-bar {
+      flex: 1;
+      max-width: 500px;
+      margin: 0 2rem;
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.7rem 2.5rem 0.7rem 1rem;
+      border: 2px solid var(--border);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--secondary);
+    }
+
+    .search-bar i {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+    }
+    
+    nav {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      position: relative;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+    
+    nav a:hover {
+      color: var(--secondary);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .header-icons {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.3rem;
+      color: var(--text);
+      transition: color 0.3s ease;
+    }
+    
+    .cart-icon:hover {
+      color: var(--secondary);
+    }
+    
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: var(--secondary);
+      color: var(--white);
+      font-size: 0.6rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    /* WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 25px;
+      right: 25px;
+      background-color: #25d366;
+      color: #FFF;
+      border-radius: 50px;
+      text-align: center;
+      font-size: 32px;
+      box-shadow: 0 4px 15px rgba(37,211,102,0.4);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .whatsapp-float:hover {
+      background-color: #20ba5a;
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(37,211,102,0.6);
+    }
+
+    /* Admin Access Button */
+    .admin-link {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      background: var(--primary);
+      color: var(--white);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      z-index: 99;
+    }
+
+    .admin-link:hover {
+      background: var(--secondary);
+      transform: scale(1.1);
+    }
+    
+    .hero {
+      position: relative;
+      background: linear-gradient(rgba(10,10,10,0.5), rgba(10,10,10,0.5)), url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1400');
+      background-size: cover;
+      background-position: center;
+      color: var(--white);
+      text-align: center;
+      padding: 9rem 1rem;
+      margin-bottom: 4rem;
+    }
+    
+    .hero-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .hero-subtitle {
+      font-size: 0.9rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 400;
+      opacity: 0.95;
+      color: var(--secondary);
+    }
+    
+    .hero h1 { 
+      font-size: 3.8rem; 
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 2px;
+    }
+    
+    .hero p { 
+      font-size: 1.05rem;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+      line-height: 1.8;
+      opacity: 0.9;
+    }
+    
+    .btn {
+      display: inline-block;
+      background: var(--secondary);
+      color: var(--white);
+      padding: 1rem 3rem;
+      text-decoration: none;
+      font-weight: 500;
+      border: 2px solid var(--secondary);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+    
+    .btn:hover { 
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    /* Categories */
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0 4rem;
+    }
+
+    .category-card {
+      text-align: center;
+      padding: 2rem 1rem;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--white);
+    }
+
+    .category-card:hover {
+      border-color: var(--secondary);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+
+    .category-card i {
+      font-size: 3rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+    }
+
+    .category-card h3 {
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .category-card p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    
+    /* Section Title */
+    .section-header {
+      text-align: center;
+      margin: 4rem 0 3rem;
+    }
+    
+    .section-title {
+      font-size: 2.8rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+    
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .breadcrumb {
+      margin: 2rem 0 1rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .breadcrumb a {
+      color: var(--secondary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Products Grid */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .product-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.4s ease;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .product-card:hover { 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      transform: translateY(-8px);
+      border-color: var(--secondary);
+    }
+    
+    .product-img {
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--light);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .product-img img {
+      max-width: 85%;
+      max-height: 85%;
+      object-fit: contain;
+      transition: transform 0.5s ease;
+    }
+    
+    .product-card:hover .product-img img {
+      transform: scale(1.08);
+    }
+    
+    .product-info {
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    
+    .product-info h3 {
+      margin-bottom: 0.8rem;
+      color: var(--primary);
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+    
+    .product-info p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+    
+    .price {
+      font-size: 1.4rem;
+      color: var(--secondary);
+      margin: 1rem 0;
+      font-weight: 600;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 1px;
+    }
+    
+    .add-to-cart {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: var(--white);
+      border: 2px solid var(--primary);
+      cursor: pointer;
+      font-weight: 500;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .add-to-cart:hover {
+      background: transparent;
+      color: var(--primary);
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 3rem 0;
+    }
+
+    .pagination button {
+      padding: 0.7rem 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--white);
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .pagination button:hover:not(:disabled) {
+      background: var(--secondary);
+      color: var(--white);
+      border-color: var(--secondary);
+    }
+
+    .pagination button.active {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Product Detail Page */
+    .product-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin: 3rem 0;
+    }
+
+    .product-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 500px;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+    }
+
+    .main-image img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+
+    .thumbnail-images {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .thumbnail {
+      width: 100px;
+      height: 100px;
+      background: var(--light);
+      border: 2px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .thumbnail:hover, .thumbnail.active {
+      border-color: var(--secondary);
+    }
+
+    .thumbnail img {
+      max-width: 80%;
+      max-height: 80%;
+      object-fit: contain;
+    }
+
+    .product-details-info h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .product-details-info .price {
+      font-size: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .product-description {
+      margin: 2rem 0;
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .quantity-selector button {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .quantity-selector button:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .quantity-selector span {
+      min-width: 50px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* Cart Sidebar - New Style from tt.txt */
+    .cart-sidebar {
+      position: fixed;
+      right: -400px;
+      top: 0;
+      width: 400px;
+      height: 100vh;
+      background: var(--white);
+      box-shadow: -5px 0 15px var(--shadow);
+      transition: right 0.3s ease;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-sidebar.active {
+      right: 0;
+    }
+
+    .cart-header {
+      background: var(--primary);
+      color: var(--white);
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-header h2 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    .close-cart {
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close-cart:hover {
+      color: var(--secondary);
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      background: var(--light);
+      padding: 5px;
+      border-radius: 8px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-info h4 {
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .cart-item-price {
+      color: var(--secondary);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .quantity-btn {
+      background: var(--light);
+      border: 1px solid var(--border);
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .quantity-btn:hover {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+
+    .remove-item {
+      background: none;
+      border: none;
+      color: var(--error);
+      cursor: pointer;
+      font-size: 1.2rem;
+      margin-left: auto;
+      transition: color 0.3s ease;
+    }
+
+    .remove-item:hover {
+      color: #c0392b;
+    }
+
+    .cart-footer {
+      border-top: 2px solid var(--border);
+      padding: 1.5rem;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: var(--secondary);
+      color: var(--white);
+      padding: 1.2rem;
+      border: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .checkout-btn:hover {
+      background: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-light);
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Order Confirmation Page */
+    .order-confirmation {
+      max-width: 700px;
+      margin: 4rem auto;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--light);
+      border: 2px solid var(--secondary);
+    }
+
+    .order-confirmation i {
+      font-size: 4rem;
+      color: var(--success);
+      margin-bottom: 1.5rem;
+    }
+
+    .order-confirmation h2 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .order-details {
+      margin: 2rem 0;
+      text-align: left;
+      background: var(--white);
+      padding: 2rem;
+    }
+
+    .order-details p {
+      margin: 0.8rem 0;
+      font-size: 0.95rem;
+    }
+
+    .order-details strong {
+      color: var(--primary);
+    }
+    
+    /* Policy Page */
+    .policy-content {
+      max-width: 900px;
+      margin: 3rem auto;
+      line-height: 1.8;
+    }
+
+    .policy-content h2 {
+      font-size: 2rem;
+      margin: 2rem 0 1rem;
+      color: var(--primary);
+    }
+
+    .policy-content h3 {
+      font-size: 1.4rem;
+      margin: 1.5rem 0 0.8rem;
+      color: var(--secondary);
+    }
+
+    .policy-content ul {
+      margin-left: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .policy-content li {
+      margin: 0.5rem 0;
+    }
+    
+    /* Admin Dashboard */
+    .admin-dashboard {
+      max-width: 1200px;
+      margin: 3rem auto;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .orders-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+
+    .orders-table th {
+      background: var(--primary);
+      color: var(--white);
+      padding: 1rem;
+      text-align: left;
+      font-weight: 500;
+      letter-spacing: 1px;
+      font-size: 0.85rem;
+    }
+
+    .orders-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+
+    .orders-table tr:hover {
+      background: var(--light);
+    }
+
+    .whatsapp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #25d366;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    .whatsapp-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--primary);
+      color: var(--white);
+      padding: 3.5rem 0 1.5rem;
+      margin-top: 5rem;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 2rem;
+    }
+    
+    .footer-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+      color: var(--secondary);
+      font-weight: 500;
+      letter-spacing: 1.5px;
+    }
+    
+    .footer-section p,
+    .footer-section a {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.9;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 0.6rem;
+      font-weight: 300;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .footer-section a:hover {
+      color: var(--secondary);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-icons a {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.8);
+      transition: all 0.3s ease;
+    }
+    
+    .social-icons a:hover {
+      background: var(--secondary);
+      color: var(--white);
+      border-color: var(--secondary);
+    }
+    
+    /* Mobile Bottom Nav */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: var(--white);
+      border-top: 2px solid var(--border);
+      z-index: 1000;
+      box-shadow: 0 -2px 10px var(--shadow);
+    }
+    
+    .mobile-nav ul {
+      display: flex;
+      justify-content: space-around;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .mobile-nav li {
+      flex: 1;
+    }
+    
+    .mobile-nav a {
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      gap: 6px;
+      padding: 12px 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+    
+    .mobile-nav a:active {
+      background: var(--light);
+    }
+    
+    .mobile-nav i {
+      font-size: 22px;
+    }
+    
+    .mobile-nav .cart-icon-mobile {
+      position: relative;
+    }
+
+    .mobile-nav a.active {
+      color: var(--primary);
+    }
+
+    .mobile-nav a.active::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--primary);
+    }
+    
+    /* Loading Spinner */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      font-size: 1.2rem;
+      color: var(--text-light);
+    }
+
+    .spinner {
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--secondary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* PIN Code Auto-populate Styles */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-info {
+      background: #fff3cd;
+      padding: 1rem;
+      border-left: 4px solid var(--secondary);
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      color: #856404;
+    }
+
+    .form-info i {
+      color: var(--secondary);
+      margin-right: 0.5rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 65px;
+      }
+      
+      .container {
+        padding: 0 1rem;
+      }
+      
+      .header-content {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1rem 0;
+      }
+
+      .search-bar {
+        order: 3;
+        flex-basis: 100%;
+        margin: 0;
+      }
+      
+      nav {
+        gap: 1rem;
+        font-size: 0.75rem;
+      }
+      
+      nav a {
+        font-size: 0.7rem;
+      }
+      
+      .logo {
+        font-size: 1.6rem;
+      }
+      
+      .hero {
+        padding: 5rem 1rem;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .products {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .product-detail {
+        grid-template-columns: 1fr;
+      }
+
+      .main-image {
+        height: 400px;
+      }
+
+      .orders-table {
+        font-size: 0.75rem;
+      }
+
+      .orders-table th,
+      .orders-table td {
+        padding: 0.5rem;
+      }
+
+      .cart-sidebar {
+        width: 100%;
+        right: -100%;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .whatsapp-float {
+        width: 55px;
+        height: 55px;
+        bottom: 80px;
+        right: 20px;
+        font-size: 28px;
+      }
+
+      .admin-link {
+        width: 45px;
+        height: 45px;
+        bottom: 145px;
+        right: 20px;
+        font-size: 18px;
+      }
+      
+      .mobile-nav { 
+        display: block; 
+      }
+      
+      .cart-icon-desktop { 
+        display: none; 
+      }
+
+      /* Mobile nav only home and cart */
+      .mobile-nav ul li:not(:first-child):not(:last-child) {
+        display: none;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      .mobile-nav { 
+        display: none !important; 
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header id="header">
-        <div class="announcement-bar">
-            ✨ FREE SHIPPING ON ALL PREPAID ORDERS | AUTHENTIC 925 STERLING SILVER ✨
-        </div>
-        <div class="main-header">
-            <div class="logo-container">
-                <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">MISHA</div>
-            </div>
-            <nav class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about" onclick="openModal('about-modal')">About</a>
-                <a href="#care-guide" onclick="openModal('care-modal')">Care Guide</a>
-                <a href="#contact" onclick="openModal('contact-modal')">Contact</a>
-            </nav>
-            <button class="cart-btn" onclick="toggleCart()">
-                <span>🛍️ Cart</span>
-                <span class="cart-count" id="cart-count">0</span>
-            </button>
-        </div>
-    </header>
+  <!-- Top Banner -->
+  <div class="top-banner">
+    Free Shipping on Orders Above ₹2,500 • Handcrafted in India
+  </div>
 
-    <!-- Cart Overlay -->
-    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+  <header>
+    <div class="container header-content">
+      <a class="logo" onclick="app.showHome()">Misha<span>.</span></a>
+      
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for jewelry..." />
+        <i class="fas fa-search"></i>
+      </div>
 
-    <!-- Cart Slider -->
-    <div class="cart-slider" id="cart-slider">
-        <div class="cart-header">
-            <h2>Shopping Cart</h2>
-            <button class="close-cart" onclick="toggleCart()">×</button>
+      <nav>
+        <a onclick="app.showHome()">Home</a>
+        <a onclick="app.showPolicy()">Returns</a>
+        <!-- Contact link removed as requested -->
+      </nav>
+
+      <div class="header-icons">
+        <div class="cart-icon cart-icon-desktop" id="cartIcon">
+          <i class="fas fa-shopping-cart"></i> <!-- Changed from bag to cart -->
+          <span class="cart-count" id="cartCount">0</span>
         </div>
-        <div class="cart-items" id="cart-items-container">
-            <div class="cart-empty" id="cart-empty">
-                <div class="cart-empty-icon">🛍️</div>
-                <h3>Your cart is empty</h3>
-                <p>Explore our exquisite collection</p>
-            </div>
-        </div>
-        <div class="cart-footer" id="cart-footer" style="display: none;">
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cart-total-amount">₹0</span>
-            </div>
-            <button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
-        </div>
+      </div>
     </div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-background"></div>
-        <div class="floating-elements">
-            <div class="floating-gem"></div>
-            <div class="floating-gem"></div>
-            <div class="floating-gem"></div>
-            <div class="floating-gem"></div>
-        </div>
+  <!-- Main Content Area -->
+  <div id="mainContent">
+    <!-- Home Page -->
+    <div id="homePage">
+      <section class="hero">
         <div class="hero-content">
-            <h1>Timeless Elegance</h1>
-            <p class="hero-subtitle">Exquisite Sterling Silver Jewellery Crafted for Eternity</p>
-            <a href="#featured-products" class="cta-primary">Explore Collection</a>
+          <div class="hero-subtitle">Timeless Elegance</div>
+          <h1>Jewelry That Speaks Softly, Shines Boldly</h1>
+          <p>Handcrafted 925 Sterling Silver • Ethically Sourced • Designed for the Modern Woman</p>
+          <a href="#categories" class="btn">Explore Collection</a>
         </div>
-        <div class="scroll-indicator">
-            <span></span>
-        </div>
-    </section>
+      </section>
 
-    <!-- Categories Section -->
-    <section id="categories">
-        <div class="section-title">
-            <h2>Shop by Category</h2>
-            <p class="section-subtitle">Discover curated collections of handcrafted luxury</p>
+      <main class="container">
+        <div class="section-header" id="categories">
+          <h2 class="section-title">Shop by Category</h2>
+          <p class="section-subtitle">Discover our curated collections</p>
         </div>
-        <div class="category-grid">
-            <div class="category-card" onclick="filterProducts('rings')">
-                <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600" alt="Rings">
-                <div class="category-content">
-                    <h3>Rings</h3>
-                    <p>Timeless elegance for every occasion</p>
-                </div>
-            </div>
-            <div class="category-card" onclick="filterProducts('necklaces')">
-                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600" alt="Necklaces">
-                <div class="category-content">
-                    <h3>Necklaces</h3>
-                    <p>Statement pieces that captivate</p>
-                </div>
-            </div>
-            <div class="category-card" onclick="filterProducts('earrings')">
-                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600" alt="Earrings">
-                <div class="category-content">
-                    <h3>Earrings</h3>
-                    <p>Radiance that frames your beauty</p>
-                </div>
-            </div>
-            <div class="category-card" onclick="filterProducts('bracelets')">
-                <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600" alt="Bracelets">
-                <div class="category-content">
-                    <h3>Bracelets</h3>
-                    <p>Delicate charm for your wrist</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        
+        <div class="categories" id="categoriesGrid"></div>
 
-    <!-- Featured Products -->
-    <section id="featured-products">
-        <div class="section-title">
-            <h2>Featured Collection</h2>
-            <p class="section-subtitle">Handpicked masterpieces from our artisan workshops</p>
+        <div class="section-header">
+          <h2 class="section-title">Featured Products</h2>
+          <p class="section-subtitle">Handpicked favorites just for you</p>
         </div>
-        <div class="product-grid" id="product-grid"></div>
-    </section>
+        
+        <div class="products" id="featuredProducts"></div>
 
-    <!-- Features Section -->
-    <section class="features">
-        <div class="section-title">
-            <h2 style="color: var(--white);">Why Choose Misha</h2>
-            <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.8);">Excellence in every detail, luxury in every piece</p>
+        <div class="section-header">
+          <h2 class="section-title">Why Choose Misha</h2>
+          <p class="section-subtitle">Excellence in every detail</p>
         </div>
-        <div class="features-grid">
-            <div class="feature-item">
-                <div class="feature-icon">💎</div>
-                <h4>Premium Quality</h4>
-                <p>Authentic 925 Sterling Silver with hallmark certification</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">💬</div>
-                <h4>24/7 Support</h4>
-                <p>Dedicated assistance for all your queries</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">🚚</div>
-                <h4>Free Shipping</h4>
-                <p>Complimentary delivery on all prepaid orders</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">🔒</div>
-                <h4>Secure Payments</h4>
-                <p>All major payment methods with SSL encryption</p>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Misha Jewellery</h3>
-                <p>Creating exquisite sterling silver jewelry that celebrates your unique elegance and timeless style.</p>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <a href="#about" onclick="openModal('about-modal')">About Us</a>
-                <a href="#care-guide" onclick="openModal('care-modal')">Care Guide</a>
-                <a href="#cancellation" onclick="openModal('cancellation-modal')">Cancellation Policy</a>
-                <a href="#contact" onclick="openModal('contact-modal')">Contact Us</a>
-            </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p>📱 WhatsApp: +91 88715 42203</p>
-                <p>✉️ Email: hello.mishajwellery@gmail.com</p>
-                <p>🕐 Mon–Sat, 10 AM – 6 PM IST</p>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <p>Stay connected for exclusive collections, special offers, and jewelry care tips</p>
-            </div>
+        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:2.5rem; margin-bottom:4rem;">
+          <div style="text-align:center; max-width:220px;">
+            <i class="fas fa-gem" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
+            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">HIGH QUALITY</h4>
+            <p style="font-size:0.85rem; color:var(--text-light);">925 Sterling Silver authenticity guaranteed</p>
+          </div>
+          <div style="text-align:center; max-width:220px;">
+            <i class="fas fa-headset" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
+            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">24/7 SUPPORT</h4>
+            <p style="font-size:0.85rem; color:var(--text-light);">Real-time chat & email support</p>
+          </div>
+          <div style="text-align:center; max-width:220px;">
+            <i class="fas fa-shipping-fast" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
+            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">FREE SHIPPING</h4>
+            <p style="font-size:0.85rem; color:var(--text-light);">On all prepaid orders above ₹2500</p>
+          </div>
+          <div style="text-align:center; max-width:220px;">
+            <i class="fas fa-shield-alt" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
+            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">SECURE PAYMENTS</h4>
+            <p style="font-size:0.85rem; color:var(--text-light);">All major cards & UPI accepted</p>
+          </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Misha Jewellery. All rights reserved. Crafted with passion and excellence.</p>
-        </div>
-    </footer>
-
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/918871542203" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
-        💬
-    </a>
-
-    <!-- Modals -->
-    <div class="modal" id="about-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>About Misha</h2>
-                <button class="close-modal" onclick="closeModal('about-modal')">×</button>
-            </div>
-            <div class="modal-body">
-                <p style="font-size: 1.2rem;">At Misha, jewelry is more than adornment—it's an expression of your unique story, elegance, and timeless beauty.</p>
-                <h3>Our Heritage</h3>
-                <p>Founded with passion for creating exquisite jewelry, Misha has become synonymous with quality and luxury. Our artisans bring decades of experience to every piece.</p>
-                <h3>Our Promise</h3>
-                <p>Every piece comes with hallmark certification, guaranteeing authentic 925 Sterling Silver. We stand behind our craftsmanship with comprehensive support.</p>
-                <h3>Sustainability</h3>
-                <p>We source materials responsibly and ensure fair practices throughout our supply chain.</p>
-            </div>
-        </div>
+      </main>
     </div>
 
-    <div class="modal" id="care-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Jewelry Care Guide</h2>
-                <button class="close-modal" onclick="closeModal('care-modal')">×</button>
-            </div>
-            <div class="modal-body">
-                <p>Your Misha jewelry is crafted to last a lifetime with proper care.</p>
-                <h3>Daily Care</h3>
-                <ul>
-                    <li>Remove before showering, swimming, or exercising</li>
-                    <li>Avoid contact with perfumes, lotions, and harsh chemicals</li>
-                    <li>Wipe with a soft cloth after each wear</li>
-                </ul>
-                <h3>Cleaning</h3>
-                <ul>
-                    <li>Use a soft, lint-free cloth regularly</li>
-                    <li>For deep cleaning, use warm water with mild soap</li>
-                    <li>Dry thoroughly immediately</li>
-                </ul>
-                <h3>Storage</h3>
-                <ul>
-                    <li>Store separately in soft pouches</li>
-                    <li>Keep in cool, dry place away from sunlight</li>
-                    <li>Use anti-tarnish strips</li>
-                </ul>
-            </div>
+    <!-- Category Page -->
+    <div id="categoryPage" class="hidden">
+      <main class="container">
+        <div class="breadcrumb">
+          <a onclick="app.showHome()">Home</a> / <span id="categoryBreadcrumb"></span>
         </div>
+
+        <div class="section-header">
+          <h2 class="section-title" id="categoryTitle"></h2>
+          <p class="section-subtitle" id="categorySubtitle"></p>
+        </div>
+
+        <div class="products" id="categoryProducts"></div>
+
+        <div class="pagination" id="pagination"></div>
+      </main>
     </div>
 
-    <div class="modal" id="contact-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Contact Us</h2>
-                <button class="close-modal" onclick="closeModal('contact-modal')">×</button>
-            </div>
-            <div class="modal-body">
-                <p>We're here to help! Reach out through any of these channels.</p>
-                <h3>Get in Touch</h3>
-                <p><strong>WhatsApp:</strong> +91 88715 42203</p>
-                <p><strong>Email:</strong> hello.mishajwellery@gmail.com</p>
-                <p><strong>Hours:</strong> Monday – Saturday, 10 AM – 6 PM IST</p>
-                <h3>Our Services</h3>
-                <ul>
-                    <li>Product inquiries and recommendations</li>
-                    <li>Order tracking and updates</li>
-                    <li>Customization requests</li>
-                    <li>Care and maintenance guidance</li>
-                    <li>Returns and exchanges</li>
-                </ul>
-            </div>
+    <!-- Product Detail Page -->
+    <div id="productDetailPage" class="hidden">
+      <main class="container">
+        <div class="breadcrumb">
+          <a onclick="app.showHome()">Home</a> / 
+          <a onclick="app.showCategory(app.currentProduct?.category)"><span id="productCategoryBreadcrumb"></span></a> / 
+          <span id="productNameBreadcrumb"></span>
         </div>
+
+        <div class="product-detail">
+          <div class="product-gallery">
+            <div class="main-image" id="mainImage">
+              <img src="" alt="Product" />
+            </div>
+            <div class="thumbnail-images" id="thumbnails"></div>
+          </div>
+
+          <div class="product-details-info">
+            <h1 id="productDetailTitle"></h1>
+            <div class="price" id="productDetailPrice"></div>
+            <div class="product-description" id="productDetailDescription"></div>
+
+            <div class="quantity-selector">
+              <button onclick="app.decreaseQuantity()">−</button>
+              <span id="productQuantity">1</span>
+              <button onclick="app.increaseQuantity()">+</button>
+            </div>
+
+            <button class="add-to-cart" onclick="app.addToCartFromDetail()" style="width:auto; padding:1rem 3rem;">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </main>
     </div>
 
-    <div class="modal" id="cancellation-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Cancellation Policy</h2>
-                <button class="close-modal" onclick="closeModal('cancellation-modal')">×</button>
-            </div>
-            <div class="modal-body">
-                <p>At Misha, we want you to be completely satisfied with your purchase.</p>
-                <h3>Order Cancellation</h3>
-                <p>Cancel within 24 hours of placing your order if it hasn't been shipped. Contact us immediately via WhatsApp or email.</p>
-                <h3>Return & Exchange</h3>
-                <ul>
-                    <li>Returns accepted within 7 days of delivery</li>
-                    <li>Items must be in original condition with tags</li>
-                    <li>Free return shipping on defective items</li>
-                    <li>Exchanges available for size/design preferences</li>
-                </ul>
-                <h3>Refund Process</h3>
-                <p>Refunds processed within 5-7 business days to your original payment method.</p>
-                <h3>Non-Returnable Items</h3>
-                <ul>
-                    <li>Customized or personalized jewelry</li>
-                    <li>Items damaged due to misuse</li>
-                    <li>Pierced jewelry (hygiene reasons)</li>
-                </ul>
-            </div>
+    <!-- Order Confirmation Page -->
+    <div id="orderConfirmationPage" class="hidden">
+      <main class="container">
+        <div class="order-confirmation">
+          <i class="fas fa-check-circle"></i>
+          <h2>Order Placed Successfully!</h2>
+          <p style="margin: 1rem 0;">Thank you for your purchase. We've sent a confirmation email with your order details.</p>
+          
+          <div class="order-details" id="orderDetailsContent"></div>
+
+          <div style="background: #fff3cd; padding: 1rem; margin: 2rem 0; border-left: 4px solid var(--secondary);">
+            <p style="margin: 0; color: #856404; font-size: 0.9rem;">
+              <i class="fas fa-info-circle"></i> We'll contact you on WhatsApp shortly to confirm your order details and delivery.
+            </p>
+          </div>
+
+          <button class="btn" onclick="app.showHome()" style="margin-top: 2rem;">Continue Shopping</button>
         </div>
+      </main>
     </div>
 
-    <div class="modal" id="product-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="product-modal-title"></h2>
-                <button class="close-modal" onclick="closeModal('product-modal')">×</button>
-            </div>
-            <div class="modal-body" id="product-modal-body"></div>
-        </div>
-    </div>
+    <!-- Policy Page -->
+    <div id="policyPage" class="hidden">
+      <main class="container">
+        <div class="policy-content">
+          <h1 style="font-size: 3rem; text-align: center; margin-bottom: 2rem; color: var(--primary);">Returns & Cancellation Policy</h1>
 
-    <div class="modal" id="checkout-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Checkout</h2>
-                <button class="close-modal" onclick="closeModal('checkout-modal')">×</button>
-            </div>
-            <div class="modal-body">
-                <form id="checkout-form" class="checkout-form">
-                    <div class="form-group">
-                        <label>Full Name *</label>
-                        <input type="text" id="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email Address *</label>
-                        <input type="email" id="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number *</label>
-                        <input type="tel" id="phone" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Shipping Address *</label>
-                        <textarea id="address" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Payment Method *</label>
-                        <select id="payment-method" required>
-                            <option value="">Select payment method</option>
-                            <option value="razorpay">Pay Now (Card/UPI/Net Banking)</option>
-                            <option value="cod">Cash on Delivery</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn-submit">Place Order</button>
-                </form>
-            </div>
-        </div>
-    </div>
+          <h2>Returns Policy</h2>
+          <p>At Misha, we want you to be completely satisfied with your purchase. If you're not happy with your jewelry, we offer a hassle-free return policy.</p>
 
-    <div class="modal" id="success-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Order Success</h2>
-                <button class="close-modal" onclick="closeModal('success-modal')">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="success-message">
-                    <div class="success-icon">✓</div>
-                    <h2>Order Placed Successfully!</h2>
-                    <p>Thank you for your purchase. We've sent a confirmation email with your order details.</p>
-                    <p>We'll contact you on WhatsApp shortly to confirm delivery details.</p>
-                    <button class="cta-primary" onclick="closeModal('success-modal'); window.location.reload();">Continue Shopping</button>
-                </div>
-            </div>
-        </div>
-    </div>
+          <h3>Conditions for Returns</h3>
+          <ul>
+            <li>Products must be unused, unworn, and in original packaging</li>
+            <li>All tags and certificates must be intact</li>
+            <li>Item should be in the same condition as received</li>
+          </ul>
 
-    <script>
-        // Product Data
-        const products = [
-            {
-                id: 1,
-                name: "Classic Solitaire Ring",
-                price: 2499,
-                category: "rings",
-                image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600",
-                description: "Elegant solitaire ring in 925 sterling silver with brilliant-cut stone",
-                badge: "Bestseller"
-            },
-            {
-                id: 2,
-                name: "Pearl Drop Necklace",
-                price: 3499,
-                category: "necklaces",
-                image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600",
-                description: "Graceful pearl pendant on delicate sterling silver chain",
-                badge: "New"
-            },
-            {
-                id: 3,
-                name: "Diamond Stud Earrings",
-                price: 1999,
-                category: "earrings",
-                image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600",
-                description: "Timeless diamond studs in 925 sterling silver settings",
-                badge: "Trending"
-            },
-            {
-                id: 4,
-                name: "Infinity Bracelet",
-                price: 1799,
-                category: "bracelets",
-                image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600",
-                description: "Symbolic infinity design on delicate chain bracelet",
-                badge: "Featured"
-            },
-            {
-                id: 5,
-                name: "Vintage Rose Ring",
-                price: 2799,
-                category: "rings",
-                image: "https://images.unsplash.com/photo-1603561596112-0a132b757442?w=600",
-                description: "Intricately designed rose motif in oxidized silver",
-                badge: "Exclusive"
-            },
-            {
-                id: 6,
-                name: "Layered Chain Necklace",
-                price: 2999,
-                category: "necklaces",
-                image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600",
-                description: "Modern multi-layer chain for contemporary style",
-                badge: "New"
-            }
+          <h3>Return Process</h3>
+          <ul>
+            <li>Contact us via WhatsApp or email with your order number</li>
+            <li>Share photos of the product you wish to return</li>
+            <li>Our team will provide return instructions within 24 hours</li>
+            <li>Pack the item securely and ship it back to us</li>
+            <li>Refund will be processed within 5-7 business days after we receive the item</li>
+          </ul>
+
+          <h3>Non-Returnable Items</h3>
+          <ul>
+            <li>Customized or personalized jewelry</li>
+            <li>Items purchased during sale/clearance (unless defective)</li>
+            <li>Products without original packaging or tags</li>
+          </ul>
+
+          <h2>Cancellation Policy</h2>
+
+          <h3>Before Dispatch</h3>
+          <ul>
+            <li>Orders can be cancelled free of charge before dispatch</li>
+            <li>Full refund will be processed to the original payment method</li>
+            <li>Contact us immediately via WhatsApp at +91 88715 42203</li>
+          </ul>
+
+          <h3>After Dispatch</h3>
+          <ul>
+            <li>Once dispatched, orders cannot be cancelled</li>
+            <li>You may refuse delivery and initiate a return</li>
+            <li>Return shipping charges may apply</li>
+          </ul>
+
+          <h2>Refund Policy</h2>
+          <ul>
+            <li>Refunds are processed within 5-7 business days</li>
+            <li>Original payment method will be credited</li>
+            <li>Shipping charges are non-refundable (except for defective items)</li>
+            <li>You'll receive an email confirmation once refund is initiated</li>
+          </ul>
+
+          <h2>Exchange Policy</h2>
+          <ul>
+            <li>We offer one-time exchange for size or design</li>
+            <li>Exchange must be requested within 7 days of delivery</li>
+            <li>Product must be unused and in original condition</li>
+            <li>Subject to availability of requested item</li>
+          </ul>
+
+          <h2>Damaged or Defective Items</h2>
+          <ul>
+            <li>Contact us within 48 hours of delivery with photos</li>
+            <li>We'll arrange free pickup and replacement</li>
+            <li>No questions asked - your satisfaction is our priority</li>
+          </ul>
+
+          <h2>Contact Us</h2>
+          <p><strong>WhatsApp:</strong> +91 88715 42203</p>
+          <p><strong>Email:</strong> hello.mishajwellery@gmail.com</p>
+          <p><strong>Hours:</strong> Monday - Saturday, 10 AM - 6 PM</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/918871542203" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-nav">
+    <ul>
+      <li><a onclick="app.showHome()" id="mobileHomeBtn"><i class="fas fa-home"></i><span>Home</span></a></li>
+      <!-- Only Home and Cart visible on mobile -->
+      <li>
+        <a href="#" id="mobileCart">
+          <div class="cart-icon-mobile">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="mobileCartCount" style="top:-10px; right:-12px;">0</span>
+          </div>
+          <span>Cart</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Customer Info Form - Updated with side-by-side layout -->
+  <div class="customer-modal" id="customerModal">
+    <div class="customer-form">
+      <h2>Complete Your Order</h2>
+      
+      <!-- Info message about valid contact details -->
+      <div class="form-info">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>Important:</strong> Please provide a valid WhatsApp number and email address. All order communications will be sent to these contacts.
+      </div>
+      
+      <form id="customerForm" onsubmit="return false;">
+        <div class="form-group">
+          <label for="customerName">Full Name *</label>
+          <input type="text" id="customerName" required placeholder="Enter your full name">
+          <span class="error-message" id="nameError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="customerEmail">Email Address *</label>
+          <input type="email" id="customerEmail" required placeholder="your.email@example.com">
+          <span class="error-message" id="emailError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="customerPhone">Phone Number (WhatsApp) *</label>
+          <input type="tel" id="customerPhone" required placeholder="+91 98765 43210">
+          <span class="error-message" id="phoneError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="customerPincode">PIN Code *</label>
+          <input type="text" id="customerPincode" required placeholder="110001" onblur="app.populateCityState()">
+          <span class="error-message" id="pincodeError"></span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerCity">City *</label>
+            <input type="text" id="customerCity" required placeholder="City" readonly>
+            <span class="error-message" id="cityError"></span>
+          </div>
+          <div class="form-group">
+            <label for="customerState">State *</label>
+            <input type="text" id="customerState" required placeholder="State" readonly>
+            <span class="error-message" id="stateError"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="customerAddress">Full Delivery Address *</label>
+          <textarea id="customerAddress" rows="3" required placeholder="House No, Street, Area, Landmark"></textarea>
+          <span class="error-message" id="addressError"></span>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" class="btn-cancel" onclick="app.closeCustomerForm()">Cancel</button>
+          <button type="button" class="btn-submit" onclick="app.submitCustomerForm()">Proceed to Payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cart Sidebar - New structure -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button class="close-cart" id="closeCart">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer" id="cartFooter"></div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Misha</h3>
+          <p>Handcrafted 925 Sterling Silver jewelry, ethically sourced and designed with love in India.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Customer Care</h3>
+          <a onclick="app.showPolicy()">Returns & Cancellation</a>
+          <a href="#">Size Guide</a>
+          <a href="#">Care Instructions</a>
+          <a href="#">FAQs</a>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Email: hello.mishajwellery@gmail.com</p>
+          <p>WhatsApp: +91 88715 42203</p>
+          <p>Mon-Sat: 10 AM - 6 PM</p>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© 2025 Misha. All Rights Reserved. | Pure Silver • Handmade with Love</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ==================== CONFIGURATION ====================
+   
+    const CONFIG = {
+      supabase: {
+        url: 'https://kplmeebifsuziytppwzb.supabase.co', 
+        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbG1lZWJpZnN1eml5dHBwd3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODU1NTcsImV4cCI6MjA3ODI2MTU1N30.lzfjMdr5hD7FWcVu-0dHbj7ZgXrttlfxHsaO6_vyAHw',
+        emailFunctionUrl: 'https://kplmeebifsuziytppwzb.supabase.co/functions/v1/clever-responder' 
+      },
+      razorpay: {
+        key: 'rzp_test_1DP5mmOlF5G5ag'
+      },
+      store: {
+        email: 'hello.mishajwellery@gmail.com',
+        phone: '+918871542203'
+      }
+    };
+
+    // ==================== SUPABASE INITIALIZATION ====================
+    const supabase = window.supabase.createClient(CONFIG.supabase.url, CONFIG.supabase.key);
+
+    // ==================== APP STATE ====================
+    const app = {
+      cart: JSON.parse(localStorage.getItem('cart')) || [],
+      currentCategory: null,
+      currentProduct: null,
+      currentPage: 1,
+      itemsPerPage: 10,
+      productQuantity: 1,
+      customerInfo: null,
+      categories: [
+        { id: 'rings', name: 'Rings', icon: 'fa-ring', description: 'Elegant rings for every occasion' },
+        { id: 'necklaces', name: 'Necklaces', icon: 'fa-gem', description: 'Beautiful necklaces and pendants' },
+        { id: 'earrings', name: 'Earrings', icon: 'fa-star', description: 'Stunning earrings collection' },
+        { id: 'bracelets', name: 'Bracelets', icon: 'fa-circle', description: 'Charming bracelets and bangles' },
+        { id: 'anklets', name: 'Anklets', icon: 'fa-heart', description: 'Delicate anklets' }
+      ],
+
+      // ==================== INITIALIZATION ====================
+      async init() {
+        await this.loadProducts();
+        this.renderCategories();
+        this.renderFeaturedProducts();
+        this.updateCartCount();
+        this.setupEventListeners();
+        this.setupSearch();
+      },
+
+      // ==================== PRODUCTS ====================
+      async loadProducts() {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('active', true);
+        
+        if (error) {
+          console.error('Error loading products:', error);
+          this.products = this.getSampleProducts();
+        } else {
+          this.products = data;
+        }
+      },
+
+      getSampleProducts() {
+        return [
+          {
+            id: 'ring-1',
+            name: 'Diamond Solitaire Ring',
+            category: 'rings',
+            price: 5999,
+            description: 'Elegant solitaire ring with cubic zirconia stone. Perfect for engagements or special occasions.',
+            images: ['https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'necklace-1',
+            name: 'Heritage Necklace',
+            category: 'necklaces',
+            price: 4800,
+            description: 'Timeless design with intricate detailing inspired by traditional Indian craftsmanship.',
+            images: ['https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'earring-1',
+            name: 'Jhumka Earrings',
+            category: 'earrings',
+            price: 1950,
+            description: 'Traditional jhumkas with modern flair. Lightweight and comfortable for all-day wear.',
+            images: ['https://images.unsplash.com/photo-1618312900238-2f3a4e5e3e1d?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'bracelet-1',
+            name: 'Temple Bracelet',
+            category: 'bracelets',
+            price: 3200,
+            description: 'Inspired by South Indian temple architecture. A statement piece for any outfit.',
+            images: ['https://images.unsplash.com/photo-1580805026712-2920a23d2e33?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'anklet-1',
+            name: 'Lotus Anklet',
+            category: 'anklets',
+            price: 2450,
+            description: 'Handcrafted with delicate lotus motifs. Elegant and comfortable.',
+            images: ['https://images.unsplash.com/photo-1607082350899-7e105aa886ae?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'ring-2',
+            name: 'Floral Band Ring',
+            category: 'rings',
+            price: 3499,
+            description: 'Delicate floral pattern band ring. Perfect for daily wear.',
+            images: ['https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600'],
+            active: true
+          },
+          {
+            id: 'necklace-2',
+            name: 'Pearl Pendant',
+            category: 'necklaces',
+            price: 2999,
+            description: 'Elegant pearl pendant on sterling silver chain.',
+            images: ['https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=600'],
+            active: true
+          }
         ];
+      },
 
-        let cart = [];
-        let currentFilter = 'all';
+      // ==================== RENDERING ====================
+      renderCategories() {
+        const grid = document.getElementById('categoriesGrid');
+        grid.innerHTML = this.categories.map(cat => `
+          <div class="category-card" onclick="app.showCategory('${cat.id}')">
+            <i class="fas ${cat.icon}"></i>
+            <h3>${cat.name}</h3>
+            <p>${cat.description}</p>
+          </div>
+        `).join('');
+      },
 
-        // Load Products
-        function loadProducts(filter = 'all') {
-            const grid = document.getElementById('product-grid');
-            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
-            
-            grid.innerHTML = filtered.map(product => `
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="${product.image}" alt="${product.name}">
-                        <span class="product-badge">${product.badge}</span>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-category">${product.category}</div>
-                        <h3 class="product-name">${product.name}</h3>
-                        <p class="product-desc">${product.description}</p>
-                        <div class="product-price">₹${product.price.toLocaleString()}</div>
-                        <div class="product-actions">
-                            <button class="btn-add-cart" onclick="addToCart(${product.id})">Add to Cart</button>
-                            <button class="btn-view" onclick="viewProduct(${product.id})">View</button>
-                        </div>
-                    </div>
+      renderFeaturedProducts() {
+        const grid = document.getElementById('featuredProducts');
+        const featured = this.products.slice(0, 4);
+        grid.innerHTML = featured.map(p => this.renderProductCard(p)).join('');
+      },
+
+      renderProductCard(product) {
+        return `
+          <div class="product-card" onclick="app.showProductDetail('${product.id}')">
+            <div class="product-img">
+              <img src="${product.images[0]}" alt="${product.name}">
+            </div>
+            <div class="product-info">
+              <h3>${product.name}</h3>
+              <p>${product.description.substring(0, 60)}...</p>
+              <div class="price">₹${product.price.toLocaleString()}</div>
+              <button class="add-to-cart" onclick="event.stopPropagation(); app.addToCart('${product.id}')">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        `;
+      },
+
+      // ==================== NAVIGATION ====================
+      showHome() {
+        document.getElementById('homePage').classList.remove('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        
+        // Update active mobile nav
+        this.updateMobileNav('home');
+        window.scrollTo(0, 0);
+      },
+
+      updateMobileNav(active) {
+        document.querySelectorAll('.mobile-nav a').forEach(a => a.classList.remove('active'));
+        if (active === 'home') {
+          document.getElementById('mobileHomeBtn').classList.add('active');
+        }
+      },
+
+      showCategory(categoryId) {
+        this.currentCategory = categoryId;
+        this.currentPage = 1;
+        const category = this.categories.find(c => c.id === categoryId);
+        
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.remove('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        
+        document.getElementById('categoryBreadcrumb').textContent = category.name;
+        document.getElementById('categoryTitle').textContent = category.name;
+        document.getElementById('categorySubtitle').textContent = category.description;
+        
+        this.renderCategoryProducts();
+        window.scrollTo(0, 0);
+      },
+
+      renderCategoryProducts() {
+        const products = this.products.filter(p => p.category === this.currentCategory);
+        const startIdx = (this.currentPage - 1) * this.itemsPerPage;
+        const endIdx = startIdx + this.itemsPerPage;
+        const pageProducts = products.slice(startIdx, endIdx);
+        
+        const grid = document.getElementById('categoryProducts');
+        grid.innerHTML = pageProducts.map(p => this.renderProductCard(p)).join('');
+        
+        this.renderPagination(products.length);
+      },
+
+      renderPagination(totalItems) {
+        const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+        const pagination = document.getElementById('pagination');
+        
+        if (totalPages <= 1) {
+          pagination.innerHTML = '';
+          return;
+        }
+        
+        let html = `
+          <button ${this.currentPage === 1 ? 'disabled' : ''} onclick="app.changePage(${this.currentPage - 1})">
+            Previous
+          </button>
+        `;
+        
+        for (let i = 1; i <= totalPages; i++) {
+          html += `
+            <button class="${i === this.currentPage ? 'active' : ''}" onclick="app.changePage(${i})">
+              ${i}
+            </button>
+          `;
+        }
+        
+        html += `
+          <button ${this.currentPage === totalPages ? 'disabled' : ''} onclick="app.changePage(${this.currentPage + 1})">
+            Next
+          </button>
+        `;
+        
+        pagination.innerHTML = html;
+      },
+
+      changePage(page) {
+        this.currentPage = page;
+        this.renderCategoryProducts();
+        window.scrollTo(0, 0);
+      },
+
+      showProductDetail(productId) {
+        const product = this.products.find(p => p.id === productId);
+        if (!product) return;
+        
+        this.currentProduct = product;
+        this.productQuantity = 1;
+        
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.remove('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        
+        const category = this.categories.find(c => c.id === product.category);
+        document.getElementById('productCategoryBreadcrumb').textContent = category?.name || '';
+        document.getElementById('productNameBreadcrumb').textContent = product.name;
+        document.getElementById('productDetailTitle').textContent = product.name;
+        document.getElementById('productDetailPrice').textContent = `₹${product.price.toLocaleString()}`;
+        document.getElementById('productDetailDescription').textContent = product.description;
+        document.getElementById('productQuantity').textContent = this.productQuantity;
+        
+        document.querySelector('#mainImage img').src = product.images[0];
+        
+        const thumbnails = document.getElementById('thumbnails');
+        thumbnails.innerHTML = product.images.map((img, idx) => `
+          <div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="app.changeMainImage('${img}', ${idx})">
+            <img src="${img}" alt="Thumbnail ${idx + 1}">
+          </div>
+        `).join('');
+        
+        window.scrollTo(0, 0);
+      },
+
+      changeMainImage(imgSrc, idx) {
+        document.querySelector('#mainImage img').src = imgSrc;
+        document.querySelectorAll('.thumbnail').forEach((t, i) => {
+          t.classList.toggle('active', i === idx);
+        });
+      },
+
+      increaseQuantity() {
+        this.productQuantity++;
+        document.getElementById('productQuantity').textContent = this.productQuantity;
+      },
+
+      decreaseQuantity() {
+        if (this.productQuantity > 1) {
+          this.productQuantity--;
+          document.getElementById('productQuantity').textContent = this.productQuantity;
+        }
+      },
+
+      showPolicy() {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.remove('hidden');
+        window.scrollTo(0, 0);
+      },
+
+      async showOrders() {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        
+        await this.loadOrders();
+        window.scrollTo(0, 0);
+      },
+
+      // ==================== CART ====================
+      addToCart(productId) {
+        const product = this.products.find(p => p.id === productId);
+        if (!product) return;
+        
+        const existing = this.cart.find(item => item.id === productId);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          this.cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.images[0],
+            quantity: 1
+          });
+        }
+        
+        this.saveCart();
+        this.updateCartCount();
+        this.showCartNotification();
+      },
+
+      showCartNotification() {
+        // Simple notification - could be enhanced
+        const cartIcon = document.getElementById('cartIcon');
+        cartIcon.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+          cartIcon.style.transform = 'scale(1)';
+        }, 300);
+      },
+
+      addToCartFromDetail() {
+        if (!this.currentProduct) return;
+        
+        const existing = this.cart.find(item => item.id === this.currentProduct.id);
+        if (existing) {
+          existing.quantity += this.productQuantity;
+        } else {
+          this.cart.push({
+            id: this.currentProduct.id,
+            name: this.currentProduct.name,
+            price: this.currentProduct.price,
+            image: this.currentProduct.images[0],
+            quantity: this.productQuantity
+          });
+        }
+        
+        this.saveCart();
+        this.updateCartCount();
+        this.openCart();
+        this.showCartNotification();
+      },
+
+      saveCart() {
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+      },
+
+      updateCartCount() {
+        const count = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById('cartCount').textContent = count;
+        document.getElementById('mobileCartCount').textContent = count;
+      },
+
+      renderCart() {
+        const cartItems = document.getElementById('cartItems');
+        const cartFooter = document.getElementById('cartFooter');
+        
+        if (this.cart.length === 0) {
+          cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
+          cartFooter.innerHTML = '';
+          return;
+        }
+
+        let itemsHtml = '';
+        let total = 0;
+
+        this.cart.forEach(item => {
+          const itemTotal = item.price * item.quantity;
+          total += itemTotal;
+          itemsHtml += `
+            <div class="cart-item">
+              <img src="${item.image}" alt="${item.name}">
+              <div class="cart-item-info">
+                <h4>${item.name}</h4>
+                <div class="cart-item-price">₹${item.price.toLocaleString()} × ${item.quantity}</div>
+                <div class="quantity-controls">
+                  <button class="quantity-btn" onclick="app.decreaseCartItem('${item.id}')">-</button>
+                  <span>${item.quantity}</span>
+                  <button class="quantity-btn" onclick="app.increaseCartItem('${item.id}')">+</button>
                 </div>
-            `).join('');
-        }
-
-        // Filter Products
-        function filterProducts(category) {
-            currentFilter = category;
-            loadProducts(category);
-            document.getElementById('featured-products').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // View Product
-        function viewProduct(id) {
-            const product = products.find(p => p.id === id);
-            document.getElementById('product-modal-title').textContent = product.name;
-            document.getElementById('product-modal-body').innerHTML = `
-                <img src="${product.image}" alt="${product.name}" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 15px; margin-bottom: 2rem;">
-                <h3>Product Details</h3>
-                <p style="font-size: 1.2rem;">${product.description}</p>
-                <div style="font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 700; color: var(--navy); margin: 2rem 0;">₹${product.price.toLocaleString()}</div>
-                <h3>Specifications</h3>
-                <ul>
-                    <li>Material: 925 Sterling Silver</li>
-                    <li>Hallmark Certified</li>
-                    <li>Hypoallergenic & Nickel-Free</li>
-                    <li>Handcrafted with premium finish</li>
-                    <li>Includes authenticity certificate</li>
-                    <li>Luxury gift packaging included</li>
-                </ul>
-                <button class="btn-submit" onclick="addToCart(${product.id}); closeModal('product-modal');">Add to Cart</button>
-            `;
-            openModal('product-modal');
-        }
-
-        // Cart Functions
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const existing = cart.find(item => item.id === productId);
-            
-            if (existing) {
-                existing.quantity++;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-            
-            updateCart();
-        }
-
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCart();
-        }
-
-        function updateQuantity(productId, delta) {
-            const item = cart.find(i => i.id === productId);
-            if (item) {
-                item.quantity += delta;
-                if (item.quantity <= 0) {
-                    removeFromCart(productId);
-                } else {
-                    updateCart();
-                }
-            }
-        }
-
-        function updateCart() {
-            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cart-count').textContent = count;
-            
-            const container = document.getElementById('cart-items-container');
-            const footer = document.getElementById('cart-footer');
-            const empty = document.getElementById('cart-empty');
-            
-            if (cart.length === 0) {
-                empty.style.display = 'block';
-                footer.style.display = 'none';
-                container.innerHTML = empty.outerHTML;
-            } else {
-                empty.style.display = 'none';
-                footer.style.display = 'block';
-                
-                container.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-price">₹${(item.price * item.quantity).toLocaleString()}</div>
-                            <div class="cart-item-qty">
-                                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
-                                <span style="font-weight: 700;">${item.quantity}</span>
-                                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
-                            </div>
-                            <button class="remove-item" onclick="removeFromCart(${item.id})">Remove</button>
-                        </div>
-                    </div>
-                `).join('');
-                
-                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                document.getElementById('cart-total-amount').textContent = `₹${total.toLocaleString()}`;
-            }
-        }
-
-        function toggleCart() {
-            const slider = document.getElementById('cart-slider');
-            const overlay = document.getElementById('cart-overlay');
-            
-            slider.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
-
-        // Checkout
-        function proceedToCheckout() {
-            if (cart.length === 0) return;
-            toggleCart();
-            openModal('checkout-modal');
-        }
-
-        document.getElementById('checkout-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const paymentMethod = document.getElementById('payment-method').value;
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            if (paymentMethod === 'razorpay') {
-                initiateRazorpay(total);
-            } else {
-                completeCODOrder();
-            }
+              </div>
+              <button class="remove-item" onclick="app.removeCartItem('${item.id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          `;
         });
 
-        function initiateRazorpay(amount) {
-            const options = {
-                key: 'YOUR_RAZORPAY_KEY_ID', // Replace with your Razorpay key
-                amount: amount * 100, // Amount in paise
-                currency: 'INR',
-                name: 'Misha Jewellery',
-                description: 'Purchase of exquisite jewelry',
-                image: 'https://your-logo-url.com/logo.png',
-                handler: function(response) {
-                    completeOrder(response.razorpay_payment_id);
-                },
-                prefill: {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    contact: document.getElementById('phone').value
-                },
-                theme: {
-                    color: '#1C214C'
-                }
-            };
-            
-            const rzp = new Razorpay(options);
-            rzp.open();
+        cartItems.innerHTML = itemsHtml;
+        cartFooter.innerHTML = `
+          <div class="cart-total">
+            <span>Total:</span>
+            <span>₹${total.toLocaleString()}</span>
+          </div>
+          <button class="checkout-btn" onclick="app.checkout()">Proceed to Checkout</button>
+        `;
+      },
+
+      decreaseCartItem(productId) {
+        const item = this.cart.find(i => i.id === productId);
+        if (item.quantity > 1) {
+          item.quantity--;
+        } else {
+          this.cart = this.cart.filter(i => i.id !== productId);
+        }
+        this.saveCart();
+        this.updateCartCount();
+        this.renderCart();
+      },
+
+      increaseCartItem(productId) {
+        const item = this.cart.find(i => i.id === productId);
+        item.quantity++;
+        this.saveCart();
+        this.updateCartCount();
+        this.renderCart();
+      },
+
+      removeCartItem(productId) {
+        this.cart = this.cart.filter(i => i.id !== productId);
+        this.saveCart();
+        this.updateCartCount();
+        this.renderCart();
+      },
+
+      openCart() {
+        this.renderCart();
+        document.getElementById('cartSidebar').classList.add('active');
+      },
+
+      closeCart() {
+        document.getElementById('cartSidebar').classList.remove('active');
+      },
+
+      // ==================== CUSTOMER FORM ====================
+      checkout() {
+        if (this.cart.length === 0) return;
+        document.getElementById('customerModal').style.display = 'flex';
+      },
+
+      closeCustomerForm() {
+        document.getElementById('customerModal').style.display = 'none';
+        document.getElementById('customerForm').reset();
+        // Clear city/state fields that were set as readonly
+        document.getElementById('customerCity').value = '';
+        document.getElementById('customerState').value = '';
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('error'));
+      },
+
+      validateCustomerForm() {
+        let isValid = true;
+        
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('error'));
+
+        const name = document.getElementById('customerName').value.trim();
+        if (!name || name.length < 2) {
+          document.getElementById('nameError').textContent = 'Please enter a valid name';
+          document.getElementById('customerName').classList.add('error');
+          isValid = false;
         }
 
-        function completeCODOrder() {
-            completeOrder('COD');
+        const email = document.getElementById('customerEmail').value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+          document.getElementById('emailError').textContent = 'Please enter a valid email';
+          document.getElementById('customerEmail').classList.add('error');
+          isValid = false;
         }
 
-        function completeOrder(paymentId) {
-            console.log('Order completed:', {
-                payment: paymentId,
-                items: cart,
-                customer: {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value,
-                    address: document.getElementById('address').value
-                }
-            });
-            
-            cart = [];
-            updateCart();
-            
-            closeModal('checkout-modal');
-            openModal('success-modal');
-            
-            document.getElementById('checkout-form').reset();
+        const phone = document.getElementById('customerPhone').value.trim();
+        const phoneDigits = phone.replace(/\D/g, '');
+        if (!phone || phoneDigits.length < 10) {
+          document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number';
+          document.getElementById('customerPhone').classList.add('error');
+          isValid = false;
         }
 
-        // Modal Functions
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
+        const pincode = document.getElementById('customerPincode').value.trim();
+        if (!pincode || pincode.length !== 6 || !/^\d+$/.test(pincode)) {
+          document.getElementById('pincodeError').textContent = 'Please enter a valid 6-digit PIN code';
+          document.getElementById('customerPincode').classList.add('error');
+          isValid = false;
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
+        const city = document.getElementById('customerCity').value.trim();
+        if (!city) {
+          document.getElementById('cityError').textContent = 'City is required';
+          isValid = false;
         }
 
-        // Header Scroll Effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+        const state = document.getElementById('customerState').value.trim();
+        if (!state) {
+          document.getElementById('stateError').textContent = 'State is required';
+          isValid = false;
+        }
+
+        const address = document.getElementById('customerAddress').value.trim();
+        if (!address || address.length < 10) {
+          document.getElementById('addressError').textContent = 'Please enter a complete delivery address';
+          document.getElementById('customerAddress').classList.add('error');
+          isValid = false;
+        }
+
+        return isValid;
+      },
+
+      // PIN Code auto-populate function
+      populateCityState() {
+        const pincode = document.getElementById('customerPincode').value.trim();
+        if (pincode.length === 6 && /^\d+$/.test(pincode)) {
+          // Mock data - replace with actual API call
+          const pincodeData = {
+            '110001': { city: 'New Delhi', state: 'Delhi' },
+            '400001': { city: 'Mumbai', state: 'Maharashtra' },
+            '560001': { city: 'Bangalore', state: 'Karnataka' },
+            '600001': { city: 'Chennai', state: 'Tamil Nadu' },
+            '700001': { city: 'Kolkata', state: 'West Bengal' },
+            '500001': { city: 'Hyderabad', state: 'Telangana' },
+            '411001': { city: 'Pune', state: 'Maharashtra' },
+            '380001': { city: 'Ahmedabad', state: 'Gujarat' }
+          };
+
+          const data = pincodeData[pincode];
+          if (data) {
+            document.getElementById('customerCity').value = data.city;
+            document.getElementById('customerState').value = data.state;
+            // Remove readonly to allow manual override if needed
+            document.getElementById('customerCity').removeAttribute('readonly');
+            document.getElementById('customerState').removeAttribute('readonly');
+          } else {
+            // Clear fields if no data found
+            document.getElementById('customerCity').value = '';
+            document.getElementById('customerState').value = '';
+            document.getElementById('customerCity').removeAttribute('readonly');
+            document.getElementById('customerState').removeAttribute('readonly');
+          }
+        }
+      },
+
+      submitCustomerForm() {
+        if (!this.validateCustomerForm()) {
+          return;
+        }
+
+        this.customerInfo = {
+          name: document.getElementById('customerName').value.trim(),
+          email: document.getElementById('customerEmail').value.trim(),
+          phone: document.getElementById('customerPhone').value.trim(),
+          address: `${document.getElementById('customerAddress').value.trim()}, ${document.getElementById('customerCity').value.trim()}, ${document.getElementById('customerState').value.trim()} - ${document.getElementById('customerPincode').value.trim()}`
+        };
+
+        this.closeCustomerForm();
+        this.processPayment();
+      },
+
+      // ==================== PAYMENT ====================
+      processPayment() {
+        const total = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        
+        const options = {
+          key: CONFIG.razorpay.key,
+          amount: total * 100,
+          currency: 'INR',
+          name: 'Misha',
+          description: 'Silver Jewelry Order',
+          image: 'https://images.unsplash.com/photo-1599508080112-e8e3de2908c1?auto=format&fit=crop&w=100',
+          handler: async (response) => {
+            await this.handlePaymentSuccess(response, total);
+          },
+          prefill: {
+            name: this.customerInfo.name,
+            email: this.customerInfo.email,
+            contact: this.customerInfo.phone
+          },
+          theme: { color: '#1c214c' }, // Updated to primary color
+          modal: {
+            ondismiss: () => {
+              console.log('Payment cancelled by user');
             }
+          }
+        };
+        
+        const rzp = new Razorpay(options);
+        rzp.open();
+      },
+
+      async handlePaymentSuccess(paymentResponse, total) {
+        const orderId = 'ORD' + Date.now();
+        
+        const orderData = {
+          order_id: orderId,
+          user_name: this.customerInfo.name,
+          user_email: this.customerInfo.email,
+          user_phone: this.customerInfo.phone,
+          user_address: this.customerInfo.address,
+          items: this.cart,
+          total: total,
+          payment_id: paymentResponse.razorpay_payment_id,
+          status: 'confirmed',
+          created_at: new Date().toISOString()
+        };
+
+        const { error } = await supabase
+          .from('orders')
+          .insert([orderData]);
+
+        await this.sendOrderEmails(orderData);
+
+        this.cart = [];
+        this.customerInfo = null;
+        this.saveCart();
+        this.updateCartCount();
+        this.closeCart();
+
+        this.showOrderConfirmation(orderData);
+      },
+
+      async sendOrderEmails(orderData) {
+        try {
+          const response = await fetch(CONFIG.supabase.emailFunctionUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${CONFIG.supabase.key}`
+            },
+            body: JSON.stringify({
+              orderData: orderData
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`Email function failed: ${response.statusText}`);
+          }
+
+          const result = await response.json();
+          return { success: true, data: result };
+        } catch (error) {
+          console.error('Error sending emails:', error);
+          return { success: false, error: error.message };
+        }
+      },
+
+      showOrderConfirmation(orderData) {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.remove('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+
+        const orderDetails = document.getElementById('orderDetailsContent');
+        orderDetails.innerHTML = `
+          <p><strong>Order ID:</strong> ${orderData.order_id}</p>
+          <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
+          <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+          <p><strong>Email:</strong> ${orderData.user_email}</p>
+          <p><strong>Phone:</strong> ${orderData.user_phone}</p>
+          <p><strong>Delivery Address:</strong><br>${orderData.user_address}</p>
+          <p><strong>Total Amount:</strong> ₹${orderData.total.toLocaleString()}</p>
+          <hr style="margin: 1.5rem 0;">
+          <h3 style="margin-bottom: 1rem;">Items Ordered</h3>
+          ${orderData.items.map(item => `
+            <p style="margin: 0.5rem 0;">${item.name} - Qty: ${item.quantity} × ₹${item.price.toLocaleString()}</p>
+          `).join('')}
+        `;
+
+        window.scrollTo(0, 0);
+      },
+
+      // ==================== SEARCH ====================
+      setupSearch() {
+        const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', (e) => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            this.performSearch(e.target.value);
+          }, 300);
+        });
+      },
+
+      performSearch(query) {
+        if (!query.trim()) {
+          this.showHome();
+          return;
+        }
+
+        const results = this.products.filter(p => 
+          p.name.toLowerCase().includes(query.toLowerCase()) ||
+          p.description.toLowerCase().includes(query.toLowerCase()) ||
+          p.category.toLowerCase().includes(query.toLowerCase())
+        );
+
+        this.showSearchResults(query, results);
+      },
+
+      showSearchResults(query, results) {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.remove('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+
+        document.getElementById('categoryBreadcrumb').textContent = 'Search Results';
+        document.getElementById('categoryTitle').textContent = `Search Results for "${query}"`;
+        document.getElementById('categorySubtitle').textContent = `Found ${results.length} product(s)`;
+
+        const grid = document.getElementById('categoryProducts');
+        if (results.length === 0) {
+          grid.innerHTML = '<div class="empty-cart">No products found matching your search.</div>';
+        } else {
+          grid.innerHTML = results.map(p => this.renderProductCard(p)).join('');
+        }
+
+        document.getElementById('pagination').innerHTML = '';
+        window.scrollTo(0, 0);
+      },
+
+      // ==================== EVENT LISTENERS ====================
+      setupEventListeners() {
+        const cartIcon = document.getElementById('cartIcon');
+        const mobileCart = document.getElementById('mobileCart');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const closeCart = document.getElementById('closeCart');
+
+        // Desktop cart icon
+        cartIcon.addEventListener('click', () => {
+          this.openCart();
         });
 
-        // Initialize
-        loadProducts();
-    </script>
+        // Mobile cart icon
+        mobileCart.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.openCart();
+        });
+
+        // Close cart button
+        closeCart.addEventListener('click', () => {
+          this.closeCart();
+        });
+
+        // Close cart when clicking outside
+        window.addEventListener('click', (e) => {
+          if (e.target === document.getElementById('customerModal')) {
+            this.closeCustomerForm();
+          }
+        });
+
+        // Close sidebar when clicking outside on desktop
+        window.addEventListener('click', (e) => {
+          if (!cartSidebar.contains(e.target) && !cartIcon.contains(e.target) && !mobileCart.contains(e.target)) {
+            this.closeCart();
+          }
+        });
+
+        // PIN code input listener
+        document.getElementById('customerPincode').addEventListener('input', (e) => {
+          if (e.target.value.length === 6) {
+            this.populateCityState();
+          }
+        });
+      }
+    };
+
+    // Initialize app when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      app.init();
+    });
+  </script>
 </body>
 </html>

@@ -49,7 +49,7 @@
     .hidden { display: none !important; }
     
     header {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
@@ -75,7 +75,7 @@
     }
     
     .header-content {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -903,6 +903,14 @@
     .order-details strong {
       color: var(--primary);
     }
+   
+    .policy-highlight {
+        background: var(--light-bg);
+        padding: 1rem;
+        border-left: 4px solid var(--secondary-color);
+        margin: 1rem 0;
+    }
+    
     
     .policy-content {
       max-width: 900px;
@@ -1457,7 +1465,7 @@
 
     <!-- Care Guide Page -->
     <div id="careGuidePage" class="hidden">
-        <div class="policy-page">
+        <div class="container">
             <h1>Jewelry Care Guide</h1>
             <p>Your Misha jewelry is crafted to last a lifetime with proper care. Follow these simple guidelines to keep your sterling silver pieces looking brilliant.</p>
             
@@ -1916,6 +1924,7 @@
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
         this.updateMobileNav('home');
         window.scrollTo(0, 0);
       },
@@ -1937,6 +1946,7 @@
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
         
         document.getElementById('categoryBreadcrumb').textContent = category.name;
         document.getElementById('categoryTitle').textContent = category.name;
@@ -2008,6 +2018,7 @@
         document.getElementById('productDetailPage').classList.remove('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
         
         const category = this.categories.find(c => c.id === product.category);
         document.getElementById('productCategoryBreadcrumb').textContent = category?.name || '';
@@ -2053,6 +2064,8 @@
         document.getElementById('categoryPage').classList.add('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+
         document.getElementById('policyPage').classList.remove('hidden');
         window.scrollTo(0, 0);
       },
@@ -2472,6 +2485,8 @@
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.remove('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+
 
         const orderDetails = document.getElementById('orderDetailsContent');
         orderDetails.innerHTML = `
@@ -2525,6 +2540,8 @@
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+
 
         document.getElementById('categoryBreadcrumb').textContent = 'Search Results';
         document.getElementById('categoryTitle').textContent = `Search Results for "${query}"`;
@@ -2589,6 +2606,7 @@
       document.getElementById('careGuidePage').classList.add('hidden');
       document.getElementById('checkoutPage').classList.add('hidden');
       document.getElementById('policyPage').classList.add('hidden');
+
         }
 
 

@@ -2444,4 +2444,214 @@
           },
           prefill: {
             name: this.customerInfo.name,
-            email: this.customerInfo
+            email: this.customerInfo.email,
+            contact: this.customerInfo.phone
+          },
+          theme: { color: '#1c214c' },
+          modal: {
+            ondismiss: () => {
+              console.log('Payment cancelled by user');
+            }
+          }
+        };
+        
+        const rzp = new Razorpay(options);
+        rzp.open();
+      },
+
+      async handlePaymentSuccess(paymentResponse, total) {
+        const orderId = 'ORD' + Date.now();
+        
+        const orderData = {
+          order_id: orderId,
+          user_name: this.customerInfo.name,
+          user_email: this.customerInfo.email,
+          user_phone: this.customerInfo.phone,
+          user_address: this.customerInfo.address,
+          items: this.cart,
+          total: total,
+          payment_id: paymentResponse.razorpay_payment_id,
+          status: 'confirmed',
+          created_at: new Date().toISOString()
+        };
+
+        await supabase.from('orders').insert([orderData]);
+        await this.sendOrderEmails(orderData);
+
+        this.cart = [];
+        this.customerInfo = null;
+        this.saveCart();
+        this.updateCartCount();
+        this.closeCart();
+
+        this.showOrderConfirmation(orderData);
+      },
+
+      async sendOrderEmails(orderData) {
+        try {
+          const response = await fetch(CONFIG.supabase.emailFunctionUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${CONFIG.supabase.key}`
+            },
+            body: JSON.stringify({ orderData: orderData })
+          });
+
+          if (!response.ok) {
+            throw new Error(`Email function failed: ${response.statusText}`);
+          }
+
+          return await response.json();
+        } catch (error) {
+          console.error('Error sending emails:', error);
+          return { success: false, error: error.message };
+        }
+      },
+
+    showCareGuide() {
+      hideAllPages();
+      document.getElementById('careGuidePage').classList.remove('hidden');
+      
+      window.scrollTo(0, 0);
+   },    
+
+      showOrderConfirmation(orderData) {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.remove('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+
+
+        const orderDetails = document.getElementById('orderDetailsContent');
+        orderDetails.innerHTML = `
+          <p><strong>Order ID:</strong> ${orderData.order_id}</p>
+          <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
+          <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+          <p><strong>Email:</strong> ${orderData.user_email}</p>
+          <p><strong>Phone:</strong> ${orderData.user_phone}</p>
+          <p><strong>Delivery Address:</strong><br>${orderData.user_address}</p>
+          <p><strong>Total Amount:</strong> ₹${orderData.total.toLocaleString()}</p>
+          <hr style="margin: 1.5rem 0;">
+          <h3 style="margin-bottom: 1rem;">Items Ordered</h3>
+          ${orderData.items.map(item => `
+            <p style="margin: 0.5rem 0;">${item.name} - Qty: ${item.quantity} × ₹${item.price.toLocaleString()}</p>
+          `).join('')}
+        `;
+
+        window.scrollTo(0, 0);
+      },
+
+      setupSearch() {
+        const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', (e) => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            this.performSearch(e.target.value);
+          }, 300);
+        });
+      },
+
+      performSearch(query) {
+        if (!query.trim()) {
+          this.showHome();
+          return;
+        }
+
+        const results = this.products.filter(p => 
+          p.name.toLowerCase().includes(query.toLowerCase()) ||
+          p.description.toLowerCase().includes(query.toLowerCase()) ||
+          p.category.toLowerCase().includes(query.toLowerCase())
+        );
+
+        this.showSearchResults(query, results);
+      },
+
+      showSearchResults(query, results) {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.remove('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+        document.getElementById('checkoutPage').classList.add('hidden');
+
+
+        document.getElementById('categoryBreadcrumb').textContent = 'Search Results';
+        document.getElementById('categoryTitle').textContent = `Search Results for "${query}"`;
+        document.getElementById('categorySubtitle').textContent = `Found ${results.length} product(s)`;
+
+        const grid = document.getElementById('categoryProducts');
+        if (results.length === 0) {
+          grid.innerHTML = '<div class="empty-cart">No products found matching your search.</div>';
+        } else {
+          grid.innerHTML = results.map(p => this.renderProductCard(p)).join('');
+        }
+
+        document.getElementById('pagination').innerHTML = '';
+        window.scrollTo(0, 0);
+      },
+
+      setupEventListeners() {
+        const cartIcon = document.getElementById('cartIcon');
+        const mobileCartBtn = document.getElementById('mobileCartBtn');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const closeCart = document.getElementById('closeCart');
+
+        cartIcon.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.openCart();
+        });
+
+        mobileCartBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.openCart();
+        });
+
+        closeCart.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.closeCart();
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!cartSidebar.contains(e.target) && !cartIcon.contains(e.target) && !mobileCartBtn.contains(e.target)) {
+            this.closeCart();
+          }
+          
+          if (e.target === document.getElementById('customerModal')) {
+            this.closeCustomerForm();
+          }
+        });
+
+        const pincodeInput = document.getElementById('customerPincode');
+        if (pincodeInput) {
+          pincodeInput.addEventListener('input', (e) => {
+            if (e.target.value.length === 6) {
+              this.populateCityState();
+            }
+          });
+        }
+      }
+    };
+    
+   function hideAllPages() {
+      document.getElementById('homePage').classList.add('hidden');
+      document.getElementById('careGuidePage').classList.add('hidden');
+      document.getElementById('checkoutPage').classList.add('hidden');
+      document.getElementById('policyPage').classList.add('hidden');
+
+        }
+
+
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      app.init();
+    });
+  </script>
+</body>
+</html>

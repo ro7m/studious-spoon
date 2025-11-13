@@ -2237,14 +2237,14 @@
       },
 
       checkout() {
-            if (cart.length === 0) {
+            if (this.cart.length === 0) {
                 alert('Your cart is empty!');
                 return;
             }
 
             hideAllPages();
             document.getElementById('checkoutPage').classList.remove('hidden');
-            toggleCart();
+            this.toggleCart();
             updateCheckoutSummary();
             window.scrollTo(0, 0);
         },
@@ -2595,6 +2595,7 @@
         }
       }
     };
+    
    function hideAllPages() {
       document.getElementById('homePage').classList.add('hidden');
       document.getElementById('aboutPage').classList.add('hidden');

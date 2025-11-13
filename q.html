@@ -2608,7 +2608,23 @@
       document.getElementById('careGuidePage').classList.remove('hidden');
       window.scrollTo(0, 0);
   }    
+        function updateCheckoutSummary() {
+            const checkoutItems = document.getElementById('checkoutItems');
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal >= 2499 ? 0 : 199;
+            const total = subtotal + shipping;
 
+            checkoutItems.innerHTML = cart.map(item => `
+                <div class="summary-item">
+                    <span>${item.name} x ${item.quantity}</span>
+                    <span>₹${item.price * item.quantity}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('checkoutSubtotal').textContent = `₹${subtotal}`;
+            document.getElementById('checkoutShipping').textContent = shipping === 0 ? 'FREE' : `₹${shipping}`;
+            document.getElementById('checkoutTotal').textContent = `₹${total}`;
+        }
     
     document.addEventListener('DOMContentLoaded', () => {
       app.init();

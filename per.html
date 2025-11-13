@@ -1948,7 +1948,6 @@
       },
 
       showHome() {
-        this.closeCart();
         document.getElementById('homePage').classList.remove('hidden');
         document.getElementById('categoryPage').classList.add('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
@@ -1972,7 +1971,6 @@
         this.currentPage = 1;
         const category = this.categories.find(c => c.id === categoryId);
         
-        this.closeCart();
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('categoryPage').classList.remove('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
@@ -2046,7 +2044,6 @@
         this.currentProduct = product;
         this.productQuantity = 1;
         
-        this.closeCart();
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('categoryPage').classList.add('hidden');
         document.getElementById('productDetailPage').classList.remove('hidden');
@@ -2095,7 +2092,6 @@
       },
 
       showPolicy() {
-        this.closeCart();
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('categoryPage').classList.add('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
@@ -2262,8 +2258,8 @@
             }
 
             hideAllPages();
-            this.closeCart();
             document.getElementById('checkoutPage').classList.remove('hidden');
+            this.toggleCart();
             this.updateCheckoutSummary();
             window.scrollTo(0, 0);
         },
@@ -2486,6 +2482,7 @@
         this.customerInfo = null;
         this.saveCart();
         this.updateCartCount();
+        this.closeCart();
 
         this.showOrderConfirmation(orderData);
       },
@@ -2512,35 +2509,40 @@
         }
       },
 
-    showOrderConfirmation(orderData) {
-      this.closeCart();
-      document.getElementById('homePage').classList.add('hidden');
-      document.getElementById('categoryPage').classList.add('hidden');
-      document.getElementById('productDetailPage').classList.add('hidden');
-      document.getElementById('orderConfirmationPage').classList.remove('hidden');
-      document.getElementById('policyPage').classList.add('hidden');
-      document.getElementById('careGuidePage').classList.add('hidden');
-      document.getElementById('checkoutPage').classList.add('hidden');
-
-
-      const orderDetails = document.getElementById('orderDetailsContent');
-      orderDetails.innerHTML = `
-        <p><strong>Order ID:</strong> ${orderData.order_id}</p>
-        <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
-        <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-        <p><strong>Email:</strong> ${orderData.user_email}</p>
-        <p><strong>Phone:</strong> ${orderData.user_phone}</p>
-        <p><strong>Delivery Address:</strong><br>${orderData.user_address}</p>
-        <p><strong>Total Amount:</strong> ₹${orderData.total.toLocaleString()}</p>
-        <hr style="margin: 1.5rem 0;">
-        <h3 style="margin-bottom: 1rem;">Items Ordered</h3>
-        ${orderData.items.map(item => `
-          <p style="margin: 0.5rem 0;">${item.name} - Qty: ${item.quantity} × ₹${item.price.toLocaleString()}</p>
-        `).join('')}
-      `;
-
+    showCareGuide() {
+      hideAllPages();
+      document.getElementById('careGuidePage').classList.remove('hidden');
+      
       window.scrollTo(0, 0);
-    },
+   },    
+
+      showOrderConfirmation(orderData) {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.remove('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+
+
+        const orderDetails = document.getElementById('orderDetailsContent');
+        orderDetails.innerHTML = `
+          <p><strong>Order ID:</strong> ${orderData.order_id}</p>
+          <p><strong>Payment ID:</strong> ${orderData.payment_id}</p>
+          <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+          <p><strong>Email:</strong> ${orderData.user_email}</p>
+          <p><strong>Phone:</strong> ${orderData.user_phone}</p>
+          <p><strong>Delivery Address:</strong><br>${orderData.user_address}</p>
+          <p><strong>Total Amount:</strong> ₹${orderData.total.toLocaleString()}</p>
+          <hr style="margin: 1.5rem 0;">
+          <h3 style="margin-bottom: 1rem;">Items Ordered</h3>
+          ${orderData.items.map(item => `
+            <p style="margin: 0.5rem 0;">${item.name} - Qty: ${item.quantity} × ₹${item.price.toLocaleString()}</p>
+          `).join('')}
+        `;
+
+        window.scrollTo(0, 0);
+      },
 
       setupSearch() {
         const searchInput = document.getElementById('searchInput');
@@ -2570,7 +2572,6 @@
       },
 
       showSearchResults(query, results) {
-        this.closeCart();
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('categoryPage').classList.remove('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
@@ -2578,7 +2579,8 @@
         document.getElementById('policyPage').classList.add('hidden');
         document.getElementById('careGuidePage').classList.add('hidden');
         document.getElementById('checkoutPage').classList.add('hidden');
-        
+
+
         document.getElementById('categoryBreadcrumb').textContent = 'Search Results';
         document.getElementById('categoryTitle').textContent = `Search Results for "${query}"`;
         document.getElementById('categorySubtitle').textContent = `Found ${results.length} product(s)`;
@@ -2637,18 +2639,19 @@
       }
     };
     
-          // Fixed hideAllPages function to hide ALL pages
-      function hideAllPages() {
-        document.getElementById('homePage').classList.add('hidden');
-        document.getElementById('categoryPage').classList.add('hidden');
+   function hideAllPages() {
+      document.getElementById('homePage').classList.add('hidden');
+     document.getElementById('categoryPage').classList.add('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
-        document.getElementById('orderConfirmationPage').classList.add('hidden');
-        document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('careGuidePage').classList.add('hidden');
-        document.getElementById('checkoutPage').classList.add('hidden');
-      }
-    };
+      document.getElementById('careGuidePage').classList.add('hidden');
+      document.getElementById('checkoutPage').classList.add('hidden');
+      document.getElementById('policyPage').classList.add('hidden');
+     document.getElementById('orderConfirmationPage').classList.add('hidden');
 
+        }
+
+
+    
     document.addEventListener('DOMContentLoaded', () => {
       app.init();
     });

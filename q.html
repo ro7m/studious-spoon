@@ -128,7 +128,6 @@
     }
     
     nav {
-      color: var(--secondary);
       display: flex;
       gap: 2.5rem;
       align-items: center;
@@ -136,7 +135,7 @@
     
     nav a {
       text-decoration: none;
-      color: var(--text);
+      color: var(--secondary);
       font-size: 0.85rem;
       font-weight: 500;
       letter-spacing: 1.2px;
@@ -2461,6 +2460,12 @@
         }
       },
 
+    showCareGuide() {
+      hideAllPages();
+      document.getElementById('careGuidePage').classList.remove('hidden');
+      window.scrollTo(0, 0);
+   },    
+
       showOrderConfirmation(orderData) {
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('categoryPage').classList.add('hidden');
@@ -2586,11 +2591,6 @@
       document.getElementById('policyPage').classList.add('hidden');
         }
 
-  function showCareGuide() {
-      hideAllPages();
-      document.getElementById('careGuidePage').classList.remove('hidden');
-      window.scrollTo(0, 0);
-  }    
 
     
     document.addEventListener('DOMContentLoaded', () => {

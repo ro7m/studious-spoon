@@ -8,18 +8,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <style>
     :root {
-      --primary: #1a1a1a;
-      --secondary: #c9a961;
-      --accent: #d4af37;
-      --dark: #0d0d0d;
-      --light: #f8f6f3;
+      --primary: #1c214c;
       --white: #ffffff;
-      --text: #2d2d2d;
-      --text-light: #666666;
-      --border: #d4d4d4;
-      --shadow: rgba(0,0,0,0.1);
+      --text: var(--primary);
+      --text-light: rgba(28, 33, 76, 0.7);
+      --border: rgba(28, 33, 76, 0.2);
+      --shadow: rgba(28, 33, 76, 0.1);
+      --light: rgba(28, 33, 76, 0.03);
     }
     
     * { 
@@ -45,9 +43,8 @@
 
     .hidden { display: none !important; }
     
-    /* Header */
     header {
-      background: var(--white);
+      background: var(--primary);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
@@ -56,14 +53,14 @@
     }
     
     .top-banner {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
-      color: var(--white);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--white) 100%);
+      color: var(--primary);
       text-align: center;
       padding: 10px 0;
       font-size: 0.75rem;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      font-weight: 400;
+      font-weight: 500;
     }
     
     .container {
@@ -73,6 +70,7 @@
     }
     
     .header-content {
+      background: var(--primary);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -83,7 +81,7 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 2rem;
       font-weight: 500;
-      color: var(--primary);
+      color: var(--white);
       text-decoration: none;
       letter-spacing: 3px;
       text-transform: uppercase;
@@ -91,7 +89,7 @@
     }
     
     .logo span { 
-      color: var(--secondary);
+      color: var(--white);
       font-weight: 600;
     }
 
@@ -109,11 +107,13 @@
       font-family: 'Montserrat', sans-serif;
       font-size: 0.85rem;
       transition: border-color 0.3s ease;
+      background: var(--white);
+      color: var(--text);
     }
 
     .search-bar input:focus {
       outline: none;
-      border-color: var(--secondary);
+      border-color: var(--primary);
     }
 
     .search-bar i {
@@ -132,18 +132,18 @@
     
     nav a {
       text-decoration: none;
-      color: var(--text);
+      color: var(--white);
       font-size: 0.85rem;
       font-weight: 500;
       letter-spacing: 1.2px;
       text-transform: uppercase;
       position: relative;
-      transition: color 0.3s ease;
+      transition: opacity 0.3s ease;
       cursor: pointer;
     }
     
     nav a:hover {
-      color: var(--secondary);
+      opacity: 0.8;
     }
     
     nav a::after {
@@ -153,7 +153,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: var(--secondary);
+      background: var(--white);
       transition: width 0.3s ease;
     }
     
@@ -171,20 +171,20 @@
       position: relative;
       cursor: pointer;
       font-size: 1.3rem;
-      color: var(--text);
-      transition: color 0.3s ease;
+      color: var(--white);
+      transition: transform 0.3s ease;
     }
     
     .cart-icon:hover {
-      color: var(--secondary);
+      transform: scale(1.1);
     }
     
     .cart-count {
       position: absolute;
       top: -8px;
       right: -10px;
-      background: var(--secondary);
-      color: var(--white);
+      background: var(--white);
+      color: var(--primary);
       font-size: 0.6rem;
       width: 18px;
       height: 18px;
@@ -194,21 +194,21 @@
       align-items: center;
       font-weight: 600;
       font-family: 'Montserrat', sans-serif;
+      border: 1px solid var(--primary);
     }
     
-    /* WhatsApp Button */
     .whatsapp-float {
       position: fixed;
       width: 60px;
       height: 60px;
       bottom: 25px;
       right: 25px;
-      background-color: #25d366;
-      color: #FFF;
+      background-color: var(--primary);
+      color: var(--white);
       border-radius: 50px;
       text-align: center;
       font-size: 32px;
-      box-shadow: 0 4px 15px rgba(37,211,102,0.4);
+      box-shadow: 0 4px 15px var(--shadow);
       z-index: 100;
       display: flex;
       align-items: center;
@@ -218,39 +218,16 @@
     }
     
     .whatsapp-float:hover {
-      background-color: #20ba5a;
+      background-color: var(--white);
+      color: var(--primary);
       transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(37,211,102,0.6);
-    }
-
-    /* Admin Access Button */
-    .admin-link {
-      position: fixed;
-      bottom: 100px;
-      right: 25px;
-      background: var(--primary);
-      color: var(--white);
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
-      z-index: 99;
-    }
-
-    .admin-link:hover {
-      background: var(--secondary);
-      transform: scale(1.1);
+      box-shadow: 0 6px 20px var(--shadow);
+      border: 2px solid var(--primary);
     }
     
     .hero {
       position: relative;
-      background: linear-gradient(rgba(10,10,10,0.5), rgba(10,10,10,0.5)), url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1400');
+      background: linear-gradient(rgba(28, 33, 76, 0.8), rgba(28, 33, 76, 0.8)), url('https://images.unsplash.com/photo-1608481337062-23943b876123?auto=format&fit=crop&w=1400');
       background-size: cover;
       background-position: center;
       color: var(--white);
@@ -271,7 +248,7 @@
       margin-bottom: 1rem;
       font-weight: 400;
       opacity: 0.95;
-      color: var(--secondary);
+      color: var(--white);
     }
     
     .hero h1 { 
@@ -293,12 +270,12 @@
     
     .btn {
       display: inline-block;
-      background: var(--secondary);
-      color: var(--white);
+      background: var(--white);
+      color: var(--primary);
       padding: 1rem 3rem;
       text-decoration: none;
       font-weight: 500;
-      border: 2px solid var(--secondary);
+      border: 2px solid var(--white);
       letter-spacing: 2px;
       text-transform: uppercase;
       font-size: 0.8rem;
@@ -312,7 +289,6 @@
       border-color: var(--white);
     }
 
-    /* Categories */
     .categories {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -327,18 +303,22 @@
       cursor: pointer;
       transition: all 0.3s ease;
       background: var(--white);
+      border-radius: 8px;
     }
 
     .category-card:hover {
-      border-color: var(--secondary);
+      border-color: var(--primary);
       transform: translateY(-5px);
       box-shadow: 0 10px 30px var(--shadow);
     }
 
-    .category-card i {
-      font-size: 3rem;
-      color: var(--secondary);
+    .category-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
       margin-bottom: 1rem;
+      border: 3px solid var(--light);
     }
 
     .category-card h3 {
@@ -352,7 +332,6 @@
       color: var(--text-light);
     }
     
-    /* Section Title */
     .section-header {
       text-align: center;
       margin: 4rem 0 3rem;
@@ -380,7 +359,7 @@
     }
 
     .breadcrumb a {
-      color: var(--secondary);
+      color: var(--primary);
       text-decoration: none;
       cursor: pointer;
     }
@@ -389,7 +368,6 @@
       text-decoration: underline;
     }
     
-    /* Products Grid */
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -404,12 +382,13 @@
       transition: all 0.4s ease;
       position: relative;
       cursor: pointer;
+      border-radius: 8px;
     }
     
     .product-card:hover { 
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 40px var(--shadow);
       transform: translateY(-8px);
-      border-color: var(--secondary);
+      border-color: var(--primary);
     }
     
     .product-img {
@@ -456,7 +435,7 @@
     
     .price {
       font-size: 1.4rem;
-      color: var(--secondary);
+      color: var(--primary);
       margin: 1rem 0;
       font-weight: 600;
       font-family: 'Cormorant Garamond', serif;
@@ -473,7 +452,7 @@
       font-weight: 500;
       margin-top: 1rem;
       transition: all 0.3s ease;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       font-size: 0.75rem;
       font-family: 'Montserrat', sans-serif;
@@ -484,7 +463,6 @@
       color: var(--primary);
     }
 
-    /* Pagination */
     .pagination {
       display: flex;
       justify-content: center;
@@ -499,12 +477,13 @@
       cursor: pointer;
       font-family: 'Montserrat', sans-serif;
       transition: all 0.3s ease;
+      color: var(--primary);
     }
 
     .pagination button:hover:not(:disabled) {
-      background: var(--secondary);
+      background: var(--primary);
       color: var(--white);
-      border-color: var(--secondary);
+      border-color: var(--primary);
     }
 
     .pagination button.active {
@@ -518,7 +497,6 @@
       cursor: not-allowed;
     }
 
-    /* Product Detail Page */
     .product-detail {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -567,7 +545,7 @@
     }
 
     .thumbnail:hover, .thumbnail.active {
-      border-color: var(--secondary);
+      border-color: var(--primary);
     }
 
     .thumbnail img {
@@ -608,6 +586,7 @@
       cursor: pointer;
       font-size: 1.2rem;
       transition: all 0.3s ease;
+      color: var(--primary);
     }
 
     .quantity-selector button:hover {
@@ -620,243 +599,275 @@
       text-align: center;
       font-size: 1.2rem;
       font-weight: 500;
-    }
-
-    /* Customer Info Modal */
-    .customer-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(8px);
-    }
-
-    .customer-form {
-      background: var(--white);
-      width: 90%;
-      max-width: 500px;
-      padding: 2.5rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .customer-form h2 {
       color: var(--primary);
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      text-align: center;
     }
 
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: var(--text);
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.8rem;
-      border: 2px solid var(--border);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.9rem;
-      transition: border-color 0.3s ease;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--secondary);
-    }
-
-    .form-group input.error {
-      border-color: #e74c3c;
-    }
-
-    .error-message {
-      color: #e74c3c;
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
-      display: block;
-    }
-
-    .form-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .form-buttons button {
-      flex: 1;
-      padding: 1rem;
-      border: none;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .btn-submit {
-      background: var(--secondary);
-      color: var(--white);
-    }
-
-    .btn-submit:hover {
-      background: var(--primary);
-    }
-
-    .btn-cancel {
-      background: var(--light);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .btn-cancel:hover {
-      background: var(--border);
-    }
-    
-    /* Cart Modal */
-    .cart-modal {
-      display: none;
+    .cart-sidebar {
       position: fixed;
+      right: -400px;
       top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(8px);
-    }
-    
-    .cart-content {
+      width: 400px;
+      height: 100vh;
       background: var(--white);
-      width: 90%;
-      max-width: 500px;
-      border-radius: 0;
-      padding: 2.5rem;
-      max-height: 85vh;
-      overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      box-shadow: -5px 0 15px var(--shadow);
+      transition: right 0.3s ease;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
     }
-    
+
+    .cart-sidebar.active {
+      right: 0;
+    }
+
     .cart-header {
+      background: var(--primary);
+      color: var(--white);
+      padding: 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 2px solid var(--border);
     }
-    
-    .cart-header h2 { 
-      color: var(--primary);
-      font-size: 2rem;
+
+    .cart-header h2 {
+      font-size: 1.5rem;
       font-weight: 400;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
     }
-    
-    .close-cart { 
-      font-size: 2rem;
+
+    .close-cart {
       background: none;
       border: none;
+      color: var(--white);
+      font-size: 1.5rem;
       cursor: pointer;
-      color: var(--text);
-      transition: color 0.3s ease;
+      transition: opacity 0.3s ease;
     }
-    
+
     .close-cart:hover {
-      color: var(--primary);
+      opacity: 0.7;
     }
-    
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+
     .cart-item {
       display: flex;
-      gap: 1.2rem;
-      padding: 1.5rem 0;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
     }
-    
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
     .cart-item img {
       width: 80px;
       height: 80px;
       object-fit: contain;
       background: var(--light);
-      padding: 10px;
+      padding: 5px;
+      border-radius: 8px;
     }
-    
-    .cart-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 0.8rem;
-      align-items: center;
+
+    .cart-item-info {
+      flex: 1;
     }
-    
-    .cart-actions button {
-      padding: 6px 14px;
-      border: 1px solid var(--border);
-      background: var(--white);
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      font-family: 'Montserrat', sans-serif;
+
+    .cart-item-info h4 {
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      font-size: 1.1rem;
       font-weight: 500;
     }
-    
-    .cart-actions button:hover {
+
+    .cart-item-price {
+      color: var(--primary);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .quantity-btn {
+      background: var(--light);
+      border: 1px solid var(--border);
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      color: var(--primary);
+    }
+
+    .quantity-btn:hover {
       background: var(--primary);
       color: var(--white);
       border-color: var(--primary);
     }
-    
+
+    .remove-item {
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 1.2rem;
+      margin-left: auto;
+      transition: opacity 0.3s ease;
+    }
+
+    .remove-item:hover {
+      opacity: 0.5;
+    }
+
+    .cart-footer {
+      border-top: 2px solid var(--border);
+      padding: 1.5rem;
+    }
+
     .cart-total {
       display: flex;
       justify-content: space-between;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 600;
-      margin: 2rem 0 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 2px solid var(--primary);
-      font-family: 'Cormorant Garamond', serif;
+      margin-bottom: 1rem;
       color: var(--primary);
+      font-family: 'Cormorant Garamond', serif;
     }
-    
+
     .checkout-btn {
       width: 100%;
-      padding: 1.2rem;
-      background: var(--secondary);
+      background: var(--primary);
       color: var(--white);
+      padding: 1.2rem;
       border: none;
       font-weight: 600;
       font-size: 0.9rem;
       cursor: pointer;
-      margin-top: 1rem;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       transition: all 0.3s ease;
       font-family: 'Montserrat', sans-serif;
     }
-    
+
     .checkout-btn:hover {
-      background: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      background: var(--white);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .checkout-page {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+    }
+
+    .checkout-grid {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 2rem;
+    }
+
+    .checkout-form {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px var(--shadow);
+    }
+
+    .form-section {
+        margin-bottom: 2rem;
+    }
+
+    .form-section h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+        font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .checkout-summary {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px var(--shadow);
+        height: fit-content;
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .summary-total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 1rem;
+        color: var(--primary);
+    }
+
+    .place-order-btn {
+        width: 100%;
+        background: var(--primary);
+        color: var(--white);
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .place-order-btn:hover {
+        background: var(--white);
+        color: var(--primary);
+        border: 2px solid var(--primary);
     }
     
     .empty-cart {
@@ -866,20 +877,20 @@
       font-weight: 300;
       letter-spacing: 0.5px;
     }
-
-    /* Order Confirmation Page */
+    
     .order-confirmation {
       max-width: 700px;
       margin: 4rem auto;
       text-align: center;
       padding: 3rem 2rem;
       background: var(--light);
-      border: 2px solid var(--secondary);
+      border: 2px solid var(--primary);
+      border-radius: 15px;
     }
 
     .order-confirmation i {
       font-size: 4rem;
-      color: #27ae60;
+      color: var(--primary);
       margin-bottom: 1.5rem;
     }
 
@@ -894,6 +905,8 @@
       text-align: left;
       background: var(--white);
       padding: 2rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
     }
 
     .order-details p {
@@ -904,8 +917,15 @@
     .order-details strong {
       color: var(--primary);
     }
-
-    /* Policy Page */
+   
+    .policy-highlight {
+        background: var(--light);
+        padding: 1rem;
+        border-left: 4px solid var(--primary);
+        margin: 1rem 0;
+    }
+    
+    
     .policy-content {
       max-width: 900px;
       margin: 3rem auto;
@@ -921,7 +941,7 @@
     .policy-content h3 {
       font-size: 1.4rem;
       margin: 1.5rem 0 0.8rem;
-      color: var(--secondary);
+      color: var(--primary);
     }
 
     .policy-content ul {
@@ -932,64 +952,7 @@
     .policy-content li {
       margin: 0.5rem 0;
     }
-
-    /* Admin Dashboard */
-    .admin-dashboard {
-      max-width: 1200px;
-      margin: 3rem auto;
-    }
-
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .orders-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--white);
-      box-shadow: 0 2px 10px var(--shadow);
-    }
-
-    .orders-table th {
-      background: var(--primary);
-      color: var(--white);
-      padding: 1rem;
-      text-align: left;
-      font-weight: 500;
-      letter-spacing: 1px;
-      font-size: 0.85rem;
-    }
-
-    .orders-table td {
-      padding: 1rem;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-    }
-
-    .orders-table tr:hover {
-      background: var(--light);
-    }
-
-    .whatsapp-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #25d366;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.85rem;
-    }
-
-    .whatsapp-link:hover {
-      text-decoration: underline;
-    }
     
-    /* Footer */
     footer {
       background: var(--primary);
       color: var(--white);
@@ -1007,7 +970,7 @@
     .footer-section h3 {
       font-size: 1.3rem;
       margin-bottom: 1.2rem;
-      color: var(--secondary);
+      color: var(--white);
       font-weight: 500;
       letter-spacing: 1.5px;
     }
@@ -1015,25 +978,25 @@
     .footer-section p,
     .footer-section a {
       font-size: 0.85rem;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,0.9);
       line-height: 1.9;
       text-decoration: none;
       display: block;
       margin-bottom: 0.6rem;
       font-weight: 300;
-      transition: color 0.3s ease;
+      transition: opacity 0.3s ease;
       cursor: pointer;
     }
     
     .footer-section a:hover {
-      color: var(--secondary);
+      opacity: 0.7;
     }
     
     .footer-bottom {
       text-align: center;
       padding-top: 2rem;
       border-top: 1px solid rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.7);
+      color: rgba(255,255,255,0.9);
       font-size: 0.8rem;
       font-weight: 300;
       letter-spacing: 0.5px;
@@ -1048,28 +1011,27 @@
     .social-icons a {
       width: 40px;
       height: 40px;
-      border: 1px solid rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.5);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,0.8);
+      color: var(--white);
       transition: all 0.3s ease;
     }
     
     .social-icons a:hover {
-      background: var(--secondary);
-      color: var(--white);
-      border-color: var(--secondary);
+      background: var(--white);
+      color: var(--primary);
+      border-color: var(--white);
     }
     
-    /* Mobile Bottom Nav */
     .mobile-nav {
       display: none;
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background: var(--white);
+      background: var(--primary);
       border-top: 2px solid var(--border);
       z-index: 1000;
       box-shadow: 0 -2px 10px var(--shadow);
@@ -1088,7 +1050,7 @@
     }
     
     .mobile-nav a {
-      color: var(--text);
+      color: var(--white);
       text-decoration: none;
       display: flex;
       flex-direction: column;
@@ -1115,7 +1077,21 @@
       position: relative;
     }
 
-    /* Loading Spinner */
+    .mobile-nav a.active {
+      background: var(--white);
+      color: var(--primary);
+    }
+
+    .mobile-nav a.active::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--primary);
+    }
+    
     .loading {
       text-align: center;
       padding: 3rem;
@@ -1125,7 +1101,7 @@
 
     .spinner {
       border: 3px solid var(--border);
-      border-top: 3px solid var(--secondary);
+      border-top: 3px solid var(--primary);
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -1137,8 +1113,158 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    
-    /* Responsive */
+
+    .customer-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(28, 33, 76, 0.8);
+      z-index: 3000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .customer-form {
+      background: var(--white);
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      box-shadow: 0 10px 50px var(--shadow);
+      position: relative;
+      border-radius: 15px;
+    }
+
+    .customer-form h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid var(--border);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.3s ease;
+      background: var(--white);
+      color: var(--text);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-group input.error,
+    .form-group textarea.error {
+      border-color: var(--primary);
+      border-style: dashed;
+    }
+
+    .error-message {
+      display: block;
+      color: var(--primary);
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      min-height: 1rem;
+      font-weight: 500;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-info {
+      background: var(--light);
+      padding: 1rem;
+      border-left: 4px solid var(--primary);
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .form-info i {
+      color: var(--primary);
+      margin-right: 0.5rem;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn-cancel,
+    .btn-submit {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .btn-cancel {
+      background: var(--light);
+      color: var(--primary);
+      border: 2px solid var(--border);
+    }
+
+    .btn-cancel:hover {
+      background: var(--border);
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-submit:hover {
+      background: var(--white);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .loading-indicator {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid var(--white);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 0.5rem;
+    }
+
     @media (max-width: 768px) {
       body {
         padding-bottom: 65px;
@@ -1162,7 +1288,6 @@
       
       nav {
         gap: 1rem;
-        font-size: 0.75rem;
       }
       
       nav a {
@@ -1198,15 +1323,33 @@
         height: 400px;
       }
 
-      .orders-table {
-        font-size: 0.75rem;
+      .cart-sidebar {
+        width: 100%;
+        right: -100%;
       }
 
-      .orders-table th,
-      .orders-table td {
-        padding: 0.5rem;
+      .form-row {
+        grid-template-columns: 1fr;
       }
-      
+
+      /* Checkout Page Mobile Fix */
+      .checkout-grid {
+          grid-template-columns: 1fr;
+      }
+
+      .checkout-page {
+          padding: 0 1rem;
+      }
+
+      .checkout-form,
+      .checkout-summary {
+          padding: 1.5rem;
+      }
+
+      .customer-form {
+          padding: 1.5rem;
+      }
+
       .footer-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -1218,14 +1361,6 @@
         bottom: 80px;
         right: 20px;
         font-size: 28px;
-      }
-
-      .admin-link {
-        width: 45px;
-        height: 45px;
-        bottom: 145px;
-        right: 20px;
-        font-size: 18px;
       }
       
       .mobile-nav { 
@@ -1245,10 +1380,6 @@
   </style>
 </head>
 <body>
-  <!-- Top Banner -->
-  <div class="top-banner">
-    Free Shipping on Orders Above ₹2,500 • Handcrafted in India
-  </div>
 
   <header>
     <div class="container header-content">
@@ -1262,31 +1393,19 @@
       <nav>
         <a onclick="app.showHome()">Home</a>
         <a onclick="app.showPolicy()">Returns</a>
-        <a onclick="window.open('https://wa.me/918871542203', '_blank')">Contact</a>
       </nav>
 
       <div class="header-icons">
         <div class="cart-icon cart-icon-desktop" id="cartIcon">
-          <i class="fas fa-shopping-bag"></i>
+          <i class="fas fa-shopping-cart"></i>
           <span class="cart-count" id="cartCount">0</span>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Main Content Area -->
   <div id="mainContent">
-    <!-- Home Page -->
     <div id="homePage">
-      <section class="hero">
-        <div class="hero-content">
-          <div class="hero-subtitle">Timeless Elegance</div>
-          <h1>Jewelry That Speaks Softly, Shines Boldly</h1>
-          <p>Handcrafted 925 Sterling Silver • Ethically Sourced • Designed for the Modern Woman</p>
-          <a href="#categories" class="btn">Explore Collection</a>
-        </div>
-      </section>
-
       <main class="container">
         <div class="section-header" id="categories">
           <h2 class="section-title">Shop by Category</h2>
@@ -1301,38 +1420,9 @@
         </div>
         
         <div class="products" id="featuredProducts"></div>
-
-        <div class="section-header">
-          <h2 class="section-title">Why Choose Misha</h2>
-          <p class="section-subtitle">Excellence in every detail</p>
-        </div>
-
-        <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:2.5rem; margin-bottom:4rem;">
-          <div style="text-align:center; max-width:220px;">
-            <i class="fas fa-gem" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
-            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">HIGH QUALITY</h4>
-            <p style="font-size:0.85rem; color:var(--text-light);">925 Sterling Silver authenticity guaranteed</p>
-          </div>
-          <div style="text-align:center; max-width:220px;">
-            <i class="fas fa-headset" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
-            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">24/7 SUPPORT</h4>
-            <p style="font-size:0.85rem; color:var(--text-light);">Real-time chat & email support</p>
-          </div>
-          <div style="text-align:center; max-width:220px;">
-            <i class="fas fa-shipping-fast" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
-            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">FREE SHIPPING</h4>
-            <p style="font-size:0.85rem; color:var(--text-light);">On all prepaid orders above ₹2500</p>
-          </div>
-          <div style="text-align:center; max-width:220px;">
-            <i class="fas fa-shield-alt" style="font-size:3rem; color:var(--secondary); margin-bottom:1rem;"></i>
-            <h4 style="font-size:0.9rem; font-weight:600; margin-bottom:0.5rem; color:var(--primary); letter-spacing:1px;">SECURE PAYMENTS</h4>
-            <p style="font-size:0.85rem; color:var(--text-light);">All major cards & UPI accepted</p>
-          </div>
-        </div>
       </main>
     </div>
 
-    <!-- Category Page -->
     <div id="categoryPage" class="hidden">
       <main class="container">
         <div class="breadcrumb">
@@ -1345,12 +1435,10 @@
         </div>
 
         <div class="products" id="categoryProducts"></div>
-
         <div class="pagination" id="pagination"></div>
       </main>
     </div>
 
-    <!-- Product Detail Page -->
     <div id="productDetailPage" class="hidden">
       <main class="container">
         <div class="breadcrumb">
@@ -1386,7 +1474,6 @@
       </main>
     </div>
 
-    <!-- Order Confirmation Page -->
     <div id="orderConfirmationPage" class="hidden">
       <main class="container">
         <div class="order-confirmation">
@@ -1396,8 +1483,8 @@
           
           <div class="order-details" id="orderDetailsContent"></div>
 
-          <div style="background: #fff3cd; padding: 1rem; margin: 2rem 0; border-left: 4px solid var(--secondary);">
-            <p style="margin: 0; color: #856404; font-size: 0.9rem;">
+          <div class="policy-highlight">
+            <p style="margin: 0; font-size: 0.9rem;">
               <i class="fas fa-info-circle"></i> We'll contact you on WhatsApp shortly to confirm your order details and delivery.
             </p>
           </div>
@@ -1407,7 +1494,58 @@
       </main>
     </div>
 
-    <!-- Policy Page -->
+    <div id="careGuidePage" class="hidden">
+        <div class="container">
+            <h1>Jewelry Care Guide</h1>
+            <p>Your Misha jewelry is crafted to last a lifetime with proper care. Follow these simple guidelines to keep your sterling silver pieces looking brilliant.</p>
+            
+            <h2>Daily Care</h2>
+            <ul>
+                <li>Remove jewelry before showering, swimming, or exercising</li>
+                <li>Apply perfumes, lotions, and cosmetics before wearing jewelry</li>
+                <li>Avoid contact with household chemicals and harsh substances</li>
+                <li>Store in a cool, dry place away from direct sunlight</li>
+            </ul>
+            
+            <h2>Cleaning Your Jewelry</h2>
+            <h3>Regular Cleaning</h3>
+            <ul>
+                <li>Use a soft, lint-free cloth to gently polish your jewelry</li>
+                <li>Mix mild soap with warm water and clean with a soft brush</li>
+                <li>Rinse thoroughly and pat dry with a soft cloth</li>
+                <li>Clean after each wear to remove oils and residue</li>
+            </ul>
+            
+            <h3>Deep Cleaning</h3>
+            <ul>
+                <li>Create a paste with baking soda and water</li>
+                <li>Gently rub the paste on tarnished areas with a soft cloth</li>
+                <li>Rinse thoroughly and dry completely</li>
+                <li>Use a silver polishing cloth for extra shine</li>
+            </ul>
+            
+            <h2>Storage Tips</h2>
+            <ul>
+                <li>Store each piece separately to prevent scratching</li>
+                <li>Use anti-tarnish strips or pouches</li>
+                <li>Keep in airtight containers when not in use</li>
+                <li>Avoid storing in bathrooms due to humidity</li>
+            </ul>
+            
+            <h2>What to Avoid</h2>
+            <ul>
+                <li>Chlorine and bleach can permanently damage silver</li>
+                <li>Saltwater can cause pitting and corrosion</li>
+                <li>Rubber contains sulfur which causes tarnishing</li>
+                <li>Excessive moisture accelerates tarnishing</li>
+            </ul>
+            
+            <div class="policy-highlight">
+                <strong>Pro Tip:</strong> The more you wear your sterling silver jewelry, the less it tarnishes! The natural oils from your skin help maintain its shine.
+            </div>
+        </div>
+    </div>    
+
     <div id="policyPage" class="hidden">
       <main class="container">
         <div class="policy-content">
@@ -1416,11 +1554,11 @@
           <h2>Returns Policy</h2>
           <p>At Misha, we want you to be completely satisfied with your purchase. If you're not happy with your jewelry, we offer a hassle-free return policy.</p>
 
-          <h3>Return Window</h3>
+          <h3>Conditions for Returns</h3>
           <ul>
-            <li><strong>7 Days</strong> from the date of delivery to initiate a return</li>
             <li>Products must be unused, unworn, and in original packaging</li>
             <li>All tags and certificates must be intact</li>
+            <li>Item should be in the same condition as received</li>
           </ul>
 
           <h3>Return Process</h3>
@@ -1440,7 +1578,7 @@
           </ul>
 
           <h2>Cancellation Policy</h2>
-          
+
           <h3>Before Dispatch</h3>
           <ul>
             <li>Orders can be cancelled free of charge before dispatch</li>
@@ -1487,21 +1625,17 @@
     </div>
   </div>
 
-  <!-- WhatsApp Float Button -->
   <a href="https://wa.me/918871542203" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
 
-
-  <!-- Mobile Bottom Nav -->
   <nav class="mobile-nav">
     <ul>
-      <li><a onclick="app.showHome()"><i class="fas fa-home"></i><span>Home</span></a></li>
-      <li><a onclick="window.open('https://wa.me/918871542203', '_blank')"><i class="fas fa-phone"></i><span>Contact</span></a></li>
+      <li><a onclick="app.showHome()" id="mobileHomeBtn"><i class="fas fa-home"></i><span>Home</span></a></li>
       <li>
-        <a href="#" id="mobileCart">
+        <a href="#" id="mobileCartBtn">
           <div class="cart-icon-mobile">
-            <i class="fas fa-shopping-bag"></i>
+            <i class="fas fa-shopping-cart"></i>
             <span class="cart-count" id="mobileCartCount" style="top:-10px; right:-12px;">0</span>
           </div>
           <span>Cart</span>
@@ -1510,15 +1644,16 @@
     </ul>
   </nav>
 
-  <!-- Customer Info Modal -->
-  <div class="customer-modal" id="customerModal">
-    <div class="customer-form">
-      <h2>Complete Your Order</h2>
-      <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem; font-size: 0.9rem;">
-        Please provide your details to complete the purchase
-      </p>
+    <div id="checkoutPage" class="hidden">
+        <div class="checkout-page">
+            <h1>Checkout</h1>
+            <div class="checkout-grid">
       
       <form id="customerForm" onsubmit="return false;">
+        <div class="form-group">
+          <i class="fas fa-exclamation-triangle"></i>
+          <strong>Important:</strong> Please provide a valid WhatsApp number and email address. All order communications will be sent to these contacts.
+        </div>  
         <div class="form-group">
           <label for="customerName">Full Name *</label>
           <input type="text" id="customerName" required placeholder="Enter your full name">
@@ -1532,14 +1667,39 @@
         </div>
 
         <div class="form-group">
-          <label for="customerPhone">Phone Number *</label>
+          <label for="customerPhone">Phone Number (WhatsApp) *</label>
           <input type="tel" id="customerPhone" required placeholder="+91 98765 43210">
           <span class="error-message" id="phoneError"></span>
         </div>
 
         <div class="form-group">
-          <label for="customerAddress">Delivery Address *</label>
-          <textarea id="customerAddress" rows="3" required placeholder="House No, Street, Area, City, State, PIN"></textarea>
+          <label for="customerPincode">PIN Code *</label>
+          <input type="text" id="customerPincode" required placeholder="110001" maxlength="6" pattern="\d{6}">
+          <span class="error-message" id="pincodeError"></span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerCity">City *</label>
+            <input type="text" id="customerCity" required placeholder="City">
+            <span class="error-message" id="cityError"></span>
+          </div>
+          <div class="form-group">
+            <label for="customerDistrict">District *</label>
+            <input type="text" id="customerDistrict" required placeholder="District" readonly>
+            <span class="error-message" id="districtError"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="customerState">State *</label>
+          <input type="text" id="customerState" required placeholder="State" readonly>
+          <span class="error-message" id="stateError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="customerAddress">Full Delivery Address *</label>
+          <textarea id="customerAddress" rows="3" required placeholder="House No, Street, Area, Landmark"></textarea>
           <span class="error-message" id="addressError"></span>
         </div>
 
@@ -1548,19 +1708,34 @@
           <button type="button" class="btn-submit" onclick="app.submitCustomerForm()">Proceed to Payment</button>
         </div>
       </form>
-    </div>
-  </div>
 
-  <!-- Cart Modal -->
-  <div class="cart-modal" id="cartModal">
-    <div class="cart-content">
-      <div class="cart-header">
-        <h2>Your Cart</h2>
-        <button class="close-cart" id="closeCart">&times;</button>
-      </div>
-      <div id="cartItems"></div>
-      <div id="cartFooter"></div>
+                <div class="checkout-summary">
+                    <h3>Order Summary</h3>
+                    <div id="checkoutItems"></div>
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span id="checkoutSubtotal">₹0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping</span>
+                        <span id="checkoutShipping">₹0</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span id="checkoutTotal">₹0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+  
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button class="close-cart" id="closeCart">&times;</button>
     </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer" id="cartFooter"></div>
   </div>
 
   <footer>
@@ -1580,37 +1755,31 @@
           <h3>Customer Care</h3>
           <a onclick="app.showPolicy()">Returns & Cancellation</a>
           <a href="#">Size Guide</a>
-          <a href="#">Care Instructions</a>
+          <a onclick="app.showCareGuide()">Care Instructions</a>
           <a href="#">FAQs</a>
         </div>
         
         <div class="footer-section">
           <h3>Contact</h3>
           <p>Email: hello.mishajwellery@gmail.com</p>
-          <p>Phone: +91 88715 42203</p>
+          <p>WhatsApp: +91 88715 42203</p>
           <p>Mon-Sat: 10 AM - 6 PM</p>
         </div>
       </div>
       
-      <div class="footer-bottom">
-        <p>© 2025 Misha. All Rights Reserved. | Pure Silver • Handmade with Love</p>
-      </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Misha Jewellry. All rights reserved. | Crafted with ❤️ in India</p>
+        </div>
     </div>
   </footer>
 
-  <!-- Razorpay -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
   <script>
-    // ==================== CONFIGURATION ====================
-   
     const CONFIG = {
       supabase: {
         url: 'https://kplmeebifsuziytppwzb.supabase.co', 
         key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbG1lZWJpZnN1eml5dHBwd3piIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2ODU1NTcsImV4cCI6MjA3ODI2MTU1N30.lzfjMdr5hD7FWcVu-0dHbj7ZgXrttlfxHsaO6_vyAHw',
         emailFunctionUrl: 'https://kplmeebifsuziytppwzb.supabase.co/functions/v1/clever-responder' 
-    
-    },
+      },
       razorpay: {
         key: 'rzp_test_1DP5mmOlF5G5ag'
       },
@@ -1620,10 +1789,8 @@
       }
     };
 
-    // ==================== SUPABASE INITIALIZATION ====================
     const supabase = window.supabase.createClient(CONFIG.supabase.url, CONFIG.supabase.key);
 
-    // ==================== APP STATE ====================
     const app = {
       cart: JSON.parse(localStorage.getItem('cart')) || [],
       currentCategory: null,
@@ -1633,14 +1800,13 @@
       productQuantity: 1,
       customerInfo: null,
       categories: [
-        { id: 'rings', name: 'Rings', icon: 'fa-ring', description: 'Elegant rings for every occasion' },
-        { id: 'necklaces', name: 'Necklaces', icon: 'fa-gem', description: 'Beautiful necklaces and pendants' },
-        { id: 'earrings', name: 'Earrings', icon: 'fa-star', description: 'Stunning earrings collection' },
-        { id: 'bracelets', name: 'Bracelets', icon: 'fa-circle', description: 'Charming bracelets and bangles' },
-        { id: 'anklets', name: 'Anklets', icon: 'fa-heart', description: 'Delicate anklets' }
+        { id: 'rings', name: 'Rings', image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80', description: 'Elegant rings for every occasion' },
+        { id: 'necklaces', name: 'Necklaces', image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80', description: 'Beautiful necklaces and pendants' },
+        { id: 'earrings', name: 'Earrings', image: 'https://images.unsplash.com/photo-1611591437281-460cc5f3e1c7?auto=format&fit=crop&w=500&q=80', description: 'Stunning earrings collection' },
+        { id: 'bracelets', name: 'Bracelets', image: 'https://images.unsplash.com/photo-1618331835717-801e976710b8?auto=format&fit=crop&w=500&q=80', description: 'Charming bracelets and bangles' },
+        { id: 'anklets', name: 'Anklets', image: 'https://images.unsplash.com/photo-1607082350899-7e105aa886ae?auto=format&fit=crop&w=500&q=80', description: 'Delicate anklets' }
       ],
 
-      // ==================== INITIALIZATION ====================
       async init() {
         await this.loadProducts();
         this.renderCategories();
@@ -1650,18 +1816,31 @@
         this.setupSearch();
       },
 
-      // ==================== PRODUCTS ====================
       async loadProducts() {
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .eq('active', true);
-        
-        if (error) {
-          console.error('Error loading products:', error);
+        try {
+          const productsEl = document.getElementById('featuredProducts');
+          if (productsEl) {
+            productsEl.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading products...</p></div>';
+          }
+
+          const { data, error } = await supabase
+            .from('products')
+            .select('*')
+            .eq('active', true);
+          
+          if (error) {
+            console.error('Error loading products:', error);
+            this.products = this.getSampleProducts();
+          } else {
+            this.products = data && data.length > 0 ? data : this.getSampleProducts();
+          }
+
+          if (productsEl) {
+            productsEl.innerHTML = '';
+          }
+        } catch (err) {
+          console.error('Failed to load products:', err);
           this.products = this.getSampleProducts();
-        } else {
-          this.products = data;
         }
       },
 
@@ -1733,12 +1912,11 @@
         ];
       },
 
-      // ==================== RENDERING ====================
       renderCategories() {
         const grid = document.getElementById('categoriesGrid');
         grid.innerHTML = this.categories.map(cat => `
           <div class="category-card" onclick="app.showCategory('${cat.id}')">
-            <i class="fas ${cat.icon}"></i>
+            <img src="${cat.image}" alt="${cat.name}">
             <h3>${cat.name}</h3>
             <p>${cat.description}</p>
           </div>
@@ -1769,14 +1947,23 @@
         `;
       },
 
-      // ==================== NAVIGATION ====================
-showHome() {
+      showHome() {
         document.getElementById('homePage').classList.remove('hidden');
         document.getElementById('categoryPage').classList.add('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+        document.getElementById('checkoutPage').classList.add('hidden');
+        this.updateMobileNav('home');
         window.scrollTo(0, 0);
+      },
+
+      updateMobileNav(active) {
+        document.querySelectorAll('.mobile-nav a').forEach(a => a.classList.remove('active'));
+        if (active === 'home') {
+          document.getElementById('mobileHomeBtn').classList.add('active');
+        }
       },
 
       showCategory(categoryId) {
@@ -1789,6 +1976,8 @@ showHome() {
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+        document.getElementById('checkoutPage').classList.add('hidden');
         
         document.getElementById('categoryBreadcrumb').textContent = category.name;
         document.getElementById('categoryTitle').textContent = category.name;
@@ -1860,6 +2049,8 @@ showHome() {
         document.getElementById('productDetailPage').classList.remove('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+        document.getElementById('checkoutPage').classList.add('hidden');
         
         const category = this.categories.find(c => c.id === product.category);
         document.getElementById('productCategoryBreadcrumb').textContent = category?.name || '';
@@ -1905,22 +2096,18 @@ showHome() {
         document.getElementById('categoryPage').classList.add('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+        document.getElementById('checkoutPage').classList.add('hidden');
         document.getElementById('policyPage').classList.remove('hidden');
         window.scrollTo(0, 0);
       },
 
-      async showOrders() {
-        document.getElementById('homePage').classList.add('hidden');
-        document.getElementById('categoryPage').classList.add('hidden');
-        document.getElementById('productDetailPage').classList.add('hidden');
-        document.getElementById('orderConfirmationPage').classList.add('hidden');
-        document.getElementById('policyPage').classList.add('hidden');
-        
-        await this.loadOrders();
+      showCareGuide() {
+        hideAllPages();
+        document.getElementById('careGuidePage').classList.remove('hidden');
         window.scrollTo(0, 0);
-      },
+      },    
 
-      // ==================== CART ====================
       addToCart(productId) {
         const product = this.products.find(p => p.id === productId);
         if (!product) return;
@@ -1940,6 +2127,15 @@ showHome() {
         
         this.saveCart();
         this.updateCartCount();
+        this.showCartNotification();
+      },
+
+      showCartNotification() {
+        const cartIcon = document.getElementById('cartIcon');
+        cartIcon.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+          cartIcon.style.transform = 'scale(1)';
+        }, 300);
       },
 
       addToCartFromDetail() {
@@ -1960,7 +2156,8 @@ showHome() {
         
         this.saveCart();
         this.updateCartCount();
-        alert(`Added ${this.productQuantity} item(s) to cart!`);
+        this.openCart();
+        this.showCartNotification();
       },
 
       saveCart() {
@@ -1992,16 +2189,18 @@ showHome() {
           itemsHtml += `
             <div class="cart-item">
               <img src="${item.image}" alt="${item.name}">
-              <div style="flex:1;">
-                <h4 style="margin-bottom:0.5rem; font-size:1.1rem;">${item.name}</h4>
-                <p style="color:var(--text-light); font-size:0.9rem;">₹${item.price.toLocaleString()} × ${item.quantity}</p>
-                <div class="cart-actions">
-                  <button onclick="app.decreaseCartItem('${item.id}')">−</button>
-                  <span style="min-width:30px; text-align:center; font-weight:500;">${item.quantity}</span>
-                  <button onclick="app.increaseCartItem('${item.id}')">+</button>
-                  <button onclick="app.removeCartItem('${item.id}')" style="margin-left: 10px; color: #e74c3c;">Remove</button>
+              <div class="cart-item-info">
+                <h4>${item.name}</h4>
+                <div class="cart-item-price">₹${item.price.toLocaleString()} × ${item.quantity}</div>
+                <div class="quantity-controls">
+                  <button class="quantity-btn" onclick="app.decreaseCartItem('${item.id}')">-</button>
+                  <span>${item.quantity}</span>
+                  <button class="quantity-btn" onclick="app.increaseCartItem('${item.id}')">+</button>
                 </div>
               </div>
+              <button class="remove-item" onclick="app.removeCartItem('${item.id}')">
+                <i class="fas fa-trash"></i>
+              </button>
             </div>
           `;
         });
@@ -2043,17 +2242,58 @@ showHome() {
         this.renderCart();
       },
 
-      // ==================== CUSTOMER FORM ====================
-      checkout() {
-        if (this.cart.length === 0) return;
-        document.getElementById('customerModal').style.display = 'flex';
+      openCart() {
+        this.renderCart();
+        document.getElementById('cartSidebar').classList.add('active');
       },
 
+      closeCart() {
+        document.getElementById('cartSidebar').classList.remove('active');
+      },
+
+      checkout() {
+            if (this.cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            hideAllPages();
+            document.getElementById('checkoutPage').classList.remove('hidden');
+            this.toggleCart();
+            this.updateCheckoutSummary();
+            window.scrollTo(0, 0);
+        },
+
+      updateCheckoutSummary() {
+        const checkoutItems = document.getElementById('checkoutItems');
+        const subtotal = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const shipping = subtotal >= 2499 ? 0 : 199;
+        const total = subtotal + shipping;
+
+        checkoutItems.innerHTML = this.cart.map(item => `
+            <div class="summary-item">
+                <span>${item.name} x ${item.quantity}</span>
+                <span>₹${item.price * item.quantity}</span>
+            </div>
+        `).join('');
+
+        document.getElementById('checkoutSubtotal').textContent = `₹${subtotal}`;
+        document.getElementById('checkoutShipping').textContent = shipping === 0 ? 'FREE' : `₹${shipping}`;
+        document.getElementById('checkoutTotal').textContent = `₹${total}`;
+    },
+      toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('active');
+        },   
+
       closeCustomerForm() {
-        document.getElementById('customerModal').style.display = 'none';
         document.getElementById('customerForm').reset();
+        document.getElementById('customerCity').value = '';
+        document.getElementById('customerDistrict').value = '';
+        document.getElementById('customerState').value = '';
         document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
         document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('error'));
+        hideAllPages();
+        document.getElementById('homePage').classList.remove('hidden');
       },
 
       validateCustomerForm() {
@@ -2085,6 +2325,34 @@ showHome() {
           isValid = false;
         }
 
+        const pincode = document.getElementById('customerPincode').value.trim();
+        if (!pincode || pincode.length !== 6 || !/^\d+$/.test(pincode)) {
+          document.getElementById('pincodeError').textContent = 'Please enter a valid 6-digit PIN code';
+          document.getElementById('customerPincode').classList.add('error');
+          isValid = false;
+        }
+
+        const city = document.getElementById('customerCity').value.trim();
+        if (!city) {
+          document.getElementById('cityError').textContent = 'City is required';
+          document.getElementById('customerCity').classList.add('error');
+          isValid = false;
+        }
+
+        const district = document.getElementById('customerDistrict').value.trim();
+        if (!district) {
+          document.getElementById('districtError').textContent = 'District is required';
+          document.getElementById('customerDistrict').classList.add('error');
+          isValid = false;
+        }
+
+        const state = document.getElementById('customerState').value.trim();
+        if (!state) {
+          document.getElementById('stateError').textContent = 'State is required';
+          document.getElementById('customerState').classList.add('error');
+          isValid = false;
+        }
+
         const address = document.getElementById('customerAddress').value.trim();
         if (!address || address.length < 10) {
           document.getElementById('addressError').textContent = 'Please enter a complete delivery address';
@@ -2095,23 +2363,72 @@ showHome() {
         return isValid;
       },
 
-      submitCustomerForm() {
-        if (!this.validateCustomerForm()) {
-          return;
+      async populateCityState() {
+        const pincode = document.getElementById('customerPincode').value.trim();
+        const cityInput = document.getElementById('customerCity');
+        const districtInput = document.getElementById('customerDistrict');
+        const stateInput = document.getElementById('customerState');
+        const pincodeError = document.getElementById('pincodeError');
+        
+        if (pincode.length === 6 && /^\d+$/.test(pincode)) {
+          try {
+            pincodeError.textContent = 'Fetching location...';
+            pincodeError.style.color = 'var(--primary)';
+            
+            const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+            const data = await response.json();
+            
+            if (data && data[0].Status === 'Success' && data[0].PostOffice && data[0].PostOffice.length > 0) {
+              const postOffice = data[0].PostOffice[0];
+              
+              cityInput.value = postOffice.Name || postOffice.District || '';
+              cityInput.removeAttribute('readonly');
+              
+              districtInput.value = postOffice.District || '';
+              stateInput.value = postOffice.State || '';
+              
+              pincodeError.textContent = '';
+              document.getElementById('cityError').textContent = '';
+              document.getElementById('districtError').textContent = '';
+              document.getElementById('stateError').textContent = '';
+              
+              cityInput.classList.remove('error');
+              districtInput.classList.remove('error');
+              stateInput.classList.remove('error');
+            } else {
+              cityInput.value = '';
+              districtInput.value = '';
+              stateInput.value = '';
+              cityInput.removeAttribute('readonly');
+              
+              pincodeError.textContent = 'Invalid PIN code or location not found';
+            }
+          } catch (error) {
+            console.error('Error fetching PIN code data:', error);
+            cityInput.value = '';
+            districtInput.value = '';
+            stateInput.value = '';
+            cityInput.removeAttribute('readonly');
+            
+            pincodeError.textContent = 'Error fetching location data';
+          }
         }
+      },
+
+      submitCustomerForm() {
+        if (!this.validateCustomerForm()) return;
 
         this.customerInfo = {
           name: document.getElementById('customerName').value.trim(),
           email: document.getElementById('customerEmail').value.trim(),
           phone: document.getElementById('customerPhone').value.trim(),
-          address: document.getElementById('customerAddress').value.trim()
+          address: `${document.getElementById('customerAddress').value.trim()}, ${document.getElementById('customerCity').value.trim()}, ${document.getElementById('customerDistrict').value.trim()}, ${document.getElementById('customerState').value.trim()} - ${document.getElementById('customerPincode').value.trim()}`
         };
 
         this.closeCustomerForm();
         this.processPayment();
       },
 
-      // ==================== PAYMENT ====================
       processPayment() {
         const total = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         
@@ -2130,7 +2447,7 @@ showHome() {
             email: this.customerInfo.email,
             contact: this.customerInfo.phone
           },
-          theme: { color: '#c9a961' },
+          theme: { color: '#1c214c' },
           modal: {
             ondismiss: () => {
               console.log('Payment cancelled by user');
@@ -2158,62 +2475,46 @@ showHome() {
           created_at: new Date().toISOString()
         };
 
-        console.log('=== ORDER CREATED ===');
-        console.log('Order Data:', orderData);
-
-        const { error } = await supabase
-          .from('orders')
-          .insert([orderData]);
-
-        // if (error) {
-        //   //console.error('❌ Error saving order to Supabase:', error);
-        // } else {
-        //   //console.log('✅ Order saved to Supabase successfully');
-        // }
-
-        //console.log('=== SENDING EMAILS ===');
+        await supabase.from('orders').insert([orderData]);
         await this.sendOrderEmails(orderData);
 
         this.cart = [];
         this.customerInfo = null;
         this.saveCart();
         this.updateCartCount();
-        document.getElementById('cartModal').style.display = 'none';
+        this.closeCart();
 
         this.showOrderConfirmation(orderData);
       },
 
       async sendOrderEmails(orderData) {
-      try {
-        //console.log('📧 Sending order emails via Supabase Edge Function...');
+        try {
+          const response = await fetch(CONFIG.supabase.emailFunctionUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${CONFIG.supabase.key}`
+            },
+            body: JSON.stringify({ orderData: orderData })
+          });
 
-        // Call Supabase Edge Function for sending email
-        const response = await fetch(`${CONFIG.supabase.emailFunctionUrl}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${CONFIG.supabase.key}`
-          },
-          body: JSON.stringify({
-            orderData: orderData
-          })
-        });
+          if (!response.ok) {
+            throw new Error(`Email function failed: ${response.statusText}`);
+          }
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to send email');
+          return await response.json();
+        } catch (error) {
+          console.error('Error sending emails:', error);
+          return { success: false, error: error.message };
         }
+      },
 
-        const result = await response.json();
-        //console.log('✅ Emails sent successfully:', result);
-        return { success: true, data: result };
-
-      } catch (error) {
-        //console.error('❌ Error sending emails:', error);
-        // Don't throw - we don't want to block order completion if email fails
-        return { success: false, error: error.message };
-      }
-    },
+    showCareGuide() {
+      hideAllPages();
+      document.getElementById('careGuidePage').classList.remove('hidden');
+      
+      window.scrollTo(0, 0);
+   },    
 
       showOrderConfirmation(orderData) {
         document.getElementById('homePage').classList.add('hidden');
@@ -2221,6 +2522,8 @@ showHome() {
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.remove('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+
 
         const orderDetails = document.getElementById('orderDetailsContent');
         orderDetails.innerHTML = `
@@ -2241,7 +2544,6 @@ showHome() {
         window.scrollTo(0, 0);
       },
 
-      // ==================== SEARCH ====================
       setupSearch() {
         const searchInput = document.getElementById('searchInput');
         let searchTimeout;
@@ -2275,6 +2577,9 @@ showHome() {
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+        document.getElementById('checkoutPage').classList.add('hidden');
+
 
         document.getElementById('categoryBreadcrumb').textContent = 'Search Results';
         document.getElementById('categoryTitle').textContent = `Search Results for "${query}"`;
@@ -2291,40 +2596,62 @@ showHome() {
         window.scrollTo(0, 0);
       },
 
-      // ==================== EVENT LISTENERS ====================
       setupEventListeners() {
         const cartIcon = document.getElementById('cartIcon');
-        const mobileCart = document.getElementById('mobileCart');
-        const cartModal = document.getElementById('cartModal');
+        const mobileCartBtn = document.getElementById('mobileCartBtn');
+        const cartSidebar = document.getElementById('cartSidebar');
         const closeCart = document.getElementById('closeCart');
 
-        cartIcon.addEventListener('click', () => {
-          this.renderCart();
-          cartModal.style.display = 'flex';
+        cartIcon.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.openCart();
         });
 
-        mobileCart.addEventListener('click', (e) => {
+        mobileCartBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          this.renderCart();
-          cartModal.style.display = 'flex';
+          e.stopPropagation();
+          this.openCart();
         });
 
-        closeCart.addEventListener('click', () => {
-          cartModal.style.display = 'none';
+        closeCart.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.closeCart();
         });
 
-        window.addEventListener('click', (e) => {
-          if (e.target === cartModal) {
-            cartModal.style.display = 'none';
+        document.addEventListener('click', (e) => {
+          if (!cartSidebar.contains(e.target) && !cartIcon.contains(e.target) && !mobileCartBtn.contains(e.target)) {
+            this.closeCart();
           }
+          
           if (e.target === document.getElementById('customerModal')) {
             this.closeCustomerForm();
           }
         });
+
+        const pincodeInput = document.getElementById('customerPincode');
+        if (pincodeInput) {
+          pincodeInput.addEventListener('input', (e) => {
+            if (e.target.value.length === 6) {
+              this.populateCityState();
+            }
+          });
+        }
       }
     };
+    
+   function hideAllPages() {
+      document.getElementById('homePage').classList.add('hidden');
+     document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+      document.getElementById('careGuidePage').classList.add('hidden');
+      document.getElementById('checkoutPage').classList.add('hidden');
+      document.getElementById('policyPage').classList.add('hidden');
+     document.getElementById('orderConfirmationPage').classList.add('hidden');
 
-    // Initialize app when DOM is ready
+        }
+
+
+    
     document.addEventListener('DOMContentLoaded', () => {
       app.init();
     });

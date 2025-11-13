@@ -1646,13 +1646,12 @@
         <div class="checkout-page">
             <h1>Checkout</h1>
             <div class="checkout-grid">
-
-      <div class="form-info">
-        <i class="fas fa-exclamation-triangle"></i>
-        <strong>Important:</strong> Please provide a valid WhatsApp number and email address. All order communications will be sent to these contacts.
-      </div>
       
       <form id="customerForm" onsubmit="return false;">
+        <div class="form-group">
+          <i class="fas fa-exclamation-triangle"></i>
+          <strong>Important:</strong> Please provide a valid WhatsApp number and email address. All order communications will be sent to these contacts.
+        </div>  
         <div class="form-group">
           <label for="customerName">Full Name *</label>
           <input type="text" id="customerName" required placeholder="Enter your full name">
@@ -1723,7 +1722,6 @@
                         <span>Total</span>
                         <span id="checkoutTotal">₹0</span>
                     </div>
-                    <button class="place-order-btn" onclick="app.submitCustomerForm()">Place Order</button>
                 </div>
             </div>
         </div>
@@ -2273,13 +2271,14 @@
         },   
 
       closeCustomerForm() {
-        document.getElementById('customerModal').style.display = 'none';
         document.getElementById('customerForm').reset();
         document.getElementById('customerCity').value = '';
         document.getElementById('customerDistrict').value = '';
         document.getElementById('customerState').value = '';
         document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
         document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('error'));
+        hideAllPages();
+        document.getElementById('homePage').classList.remove('hidden');
       },
 
       validateCustomerForm() {

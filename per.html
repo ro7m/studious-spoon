@@ -2270,7 +2270,9 @@
         }
         this.saveCart();
         this.updateCartCount();
-        //this.renderCart();
+        document.getElementById('cartSidebar').classList.remove('active');
+      
+        this.openCart();
       },
 
       increaseCartItem(productId) {
@@ -2278,14 +2280,18 @@
         item.quantity++;
         this.saveCart();
         this.updateCartCount();
-        //this.renderCart();
+        document.getElementById('cartSidebar').classList.remove('active');
+        
+        this.openCart();
       },
 
       removeCartItem(productId) {
         this.cart = this.cart.filter(i => i.id !== productId);
         this.saveCart();
         this.updateCartCount();
-        //this.openCart();
+        document.getElementById('cartSidebar').classList.remove('active');
+
+        this.openCart();
       },
 
       openCart() {

@@ -2217,49 +2217,49 @@
       },
 
       renderCart() {
-        const cartItems = document.getElementById('cartItems');
-        const cartFooter = document.getElementById('cartFooter');
-        
-        if (this.cart.length === 0) {
-          cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
-          cartFooter.innerHTML = '';
-          return;
-        }
+  const cartItems = document.getElementById('cartItems');
+  const cartFooter = document.getElementById('cartFooter');
+  
+  if (this.cart.length === 0) {
+    cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
+    cartFooter.innerHTML = '';
+    return;
+  }
 
-        let itemsHtml = '';
-        let total = 0;
+  let itemsHtml = '';
+  let total = 0;
 
-        this.cart.forEach(item => {
-          const itemTotal = item.price * item.quantity;
-          total += itemTotal;
-          itemsHtml += `
-            <div class="cart-item">
-              <img src="${item.image}" alt="${item.name}">
-              <div class="cart-item-info">
-                <h4>${item.name}</h4>
-                <div class="cart-item-price">₹${item.price.toLocaleString()} × ${item.quantity}</div>
-                <div class="quantity-controls">
-                  <button class="quantity-btn" onclick="app.decreaseCartItem('${item.id}')">-</button>
-                  <span>${item.quantity}</span>
-                  <button class="quantity-btn" onclick="app.increaseCartItem('${item.id}')">+</button>
-                </div>
-              </div>
-              <button class="remove-item" onclick="app.removeCartItem('${item.id}')">
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
-          `;
-        });
-
-        cartItems.innerHTML = itemsHtml;
-        cartFooter.innerHTML = `
-          <div class="cart-total">
-            <span>Total:</span>
-            <span>₹${total.toLocaleString()}</span>
+  this.cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    itemsHtml += `
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}">
+        <div class="cart-item-info">
+          <h4>${item.name}</h4>
+          <div class="cart-item-price">₹${item.price.toLocaleString()} × ${item.quantity}</div>
+          <div class="quantity-controls">
+            <button class="quantity-btn" onclick="event.stopPropagation(); app.decreaseCartItem('${item.id}')">-</button>
+            <span>${item.quantity}</span>
+            <button class="quantity-btn" onclick="event.stopPropagation(); app.increaseCartItem('${item.id}')">+</button>
           </div>
-          <button class="checkout-btn" onclick="app.checkout()">Proceed to Checkout</button>
-        `;
-      },
+        </div>
+        <button class="remove-item" onclick="event.stopPropagation(); app.removeCartItem('${item.id}')">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    `;
+  });
+
+  cartItems.innerHTML = itemsHtml;
+  cartFooter.innerHTML = `
+    <div class="cart-total">
+      <span>Total:</span>
+      <span>₹${total.toLocaleString()}</span>
+    </div>
+    <button class="checkout-btn" onclick="app.checkout()">Proceed to Checkout</button>
+  `;
+},
 
       decreaseCartItem(productId) {
         const item = this.cart.find(i => i.id === productId);

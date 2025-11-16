@@ -1292,6 +1292,16 @@
       100% { transform: rotate(360deg); }
     }
 
+    #productDetailWishlist {
+  flex-shrink: 0;
+}
+
+#productDetailWishlist.active {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+    }
+
     .customer-modal {
       display: none;
       position: fixed;
@@ -1729,22 +1739,29 @@
             </div>
             <div class="thumbnail-images" id="thumbnails"></div>
           </div>
+<div class="product-details-info">
+  <h1 id="productDetailTitle"></h1>
+  <div class="price" id="productDetailPrice"></div>
+  <div class="product-description" id="productDetailDescription"></div>
 
-          <div class="product-details-info">
-            <h1 id="productDetailTitle"></h1>
-            <div class="price" id="productDetailPrice"></div>
-            <div class="product-description" id="productDetailDescription"></div>
+  <div class="quantity-selector">
+    <button onclick="app.decreaseQuantity()">−</button>
+    <span id="productQuantity">1</span>
+    <button onclick="app.increaseQuantity()">+</button>
+  </div>
 
-            <div class="quantity-selector">
-              <button onclick="app.decreaseQuantity()">−</button>
-              <span id="productQuantity">1</span>
-              <button onclick="app.increaseQuantity()">+</button>
-            </div>
-
-            <button class="add-to-cart" onclick="app.addToCartFromDetail()" style="width:auto; padding:1rem 3rem;">
-              Add to Cart
-            </button>
-          </div>
+  <div style="display: flex; gap: 1rem; align-items: center;">
+    <button class="add-to-cart" onclick="app.addToCartFromDetail()" style="flex: 1; padding: 1rem 2rem;">
+      <i class="fas fa-cart-plus"></i> Add to Cart
+    </button>
+    <button class="wishlist-btn" id="productDetailWishlist" onclick="app.toggleWishlistFromDetail()" 
+            style="width: 55px; height: 55px; font-size: 1.3rem;"
+            title="Add to Wishlist">
+      <i class="fas fa-heart"></i>
+    </button>
+  </div>
+</div>
+          
         </div>
       </main>
     </div>
@@ -1819,7 +1836,17 @@
                 <strong>Pro Tip:</strong> The more you wear your sterling silver jewelry, the less it tarnishes! The natural oils from your skin help maintain its shine.
             </div>
         </div>
-    </div>    
+    </div>  
+    <div id="wishlistPage" class="hidden">
+  <main class="container">
+    <div class="section-header">
+      <h2 class="section-title">My Wishlist</h2>
+      <p class="section-subtitle">Your favorite items</p>
+    </div>
+    
+    <div class="products" id="wishlistProducts"></div>
+  </main>
+    </div>
 
     <div id="policyPage" class="hidden">
       <main class="container">
@@ -2034,9 +2061,7 @@
         <div class="footer-section">
           <h3>Customer Care</h3>
           <a onclick="app.showPolicy()">Returns & Cancellation</a>
-          <a href="#">Size Guide</a>
           <a onclick="app.showCareGuide()">Care Instructions</a>
-          <a href="#">FAQs</a>
         </div>
         
         <div class="footer-section">
@@ -2308,7 +2333,19 @@ stopBannerAutoPlay() {
     </div>
   `;
 },
-      toggleWishlist(productId) {
+      toggleWishlistFromDetail() {
+  if (!this.currentProduct) return;
+  
+  this.toggleWishlist(this.currentProduct.id);
+  
+  // Update the detail page button
+  const button = document.getElementById('productDetailWishlist');
+  const isInWishlist = this.wishlist.some(item => item.id === this.currentProduct.id);
+  button.classList.toggle('active', isInWishlist);
+  button.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
+},
+      
+toggleWishlist(productId) {
   const product = this.products.find(p => p.id === productId);
   if (!product) return;
   
@@ -2328,30 +2365,26 @@ stopBannerAutoPlay() {
   }
   
   this.saveWishlist();
-  this.updateWishlistUI();
+  this.updateWishlistCount();
+  
+  // Update the specific button that was clicked
+  const buttons = document.querySelectorAll(`[onclick*="toggleWishlist('${productId}')"]`);
+  buttons.forEach(button => {
+    const isInWishlist = this.wishlist.some(item => item.id === productId);
+    button.classList.toggle('active', isInWishlist);
+    button.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
+  });
 },
-
+      
 saveWishlist() {
   localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
 },
 
-updateWishlistUI() {
-  // Update all wishlist buttons on the page
-  document.querySelectorAll('.product-card').forEach(card => {
-    const button = card.querySelector('.wishlist-btn');
-    if (button) {
-      const productId = button.getAttribute('onclick').match(/'([^']+)'/)[1];
-      const isInWishlist = this.wishlist.some(item => item.id === productId);
-      button.classList.toggle('active', isInWishlist);
-      button.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
-    }
-  });
-  
-  // Re-render if on home page to update the UI
-  if (!document.getElementById('homePage').classList.contains('hidden')) {
-    this.renderFeaturedProducts();
-  } else if (!document.getElementById('categoryPage').classList.contains('hidden')) {
-    this.renderCategoryProducts();
+updateWishlistCount() {
+  const count = this.wishlist.length;
+  const countEl = document.getElementById('wishlistCount');
+  if (countEl) {
+    countEl.textContent = count;
   }
 },
 
@@ -2363,6 +2396,7 @@ updateWishlistUI() {
   document.getElementById('policyPage').classList.add('hidden');
   document.getElementById('careGuidePage').classList.add('hidden');
   document.getElementById('checkoutPage').classList.add('hidden');
+  document.getElementById('wishlistPage').classList.add('hidden');
   this.updateMobileNav('home');
   this.startBannerAutoPlay();
   window.scrollTo(0, 0);
@@ -2384,19 +2418,20 @@ updateWishlistUI() {
   
   document.getElementById('homePage').classList.add('hidden');
   document.getElementById('categoryPage').classList.remove('hidden');
-        document.getElementById('productDetailPage').classList.add('hidden');
-        document.getElementById('orderConfirmationPage').classList.add('hidden');
-        document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('careGuidePage').classList.add('hidden');
-        document.getElementById('checkoutPage').classList.add('hidden');
-        
-        document.getElementById('categoryBreadcrumb').textContent = category.name;
-        document.getElementById('categoryTitle').textContent = category.name;
-        document.getElementById('categorySubtitle').textContent = category.description;
-        
-        this.renderCategoryProducts();
-        window.scrollTo(0, 0);
-      },
+  document.getElementById('productDetailPage').classList.add('hidden');
+  document.getElementById('orderConfirmationPage').classList.add('hidden');
+  document.getElementById('policyPage').classList.add('hidden');
+  document.getElementById('careGuidePage').classList.add('hidden');
+  document.getElementById('checkoutPage').classList.add('hidden');
+  document.getElementById('wishlistPage').classList.add('hidden');
+  
+  document.getElementById('categoryBreadcrumb').textContent = category.name;
+  document.getElementById('categoryTitle').textContent = category.name;
+  document.getElementById('categorySubtitle').textContent = category.description;
+  
+  this.renderCategoryProducts();
+  window.scrollTo(0, 0);
+},
 
       renderCategoryProducts() {
         const products = this.products.filter(p => p.category === this.currentCategory);
@@ -2447,41 +2482,78 @@ updateWishlistUI() {
         this.renderCategoryProducts();
         window.scrollTo(0, 0);
       },
+      showWishlist() {
+  this.stopBannerAutoPlay();
+  
+  document.getElementById('homePage').classList.add('hidden');
+  document.getElementById('categoryPage').classList.add('hidden');
+  document.getElementById('productDetailPage').classList.add('hidden');
+  document.getElementById('orderConfirmationPage').classList.add('hidden');
+  document.getElementById('policyPage').classList.add('hidden');
+  document.getElementById('careGuidePage').classList.add('hidden');
+  document.getElementById('checkoutPage').classList.add('hidden');
+  document.getElementById('wishlistPage').classList.remove('hidden');
+  
+  this.renderWishlistProducts();
+  window.scrollTo(0, 0);
+},
+      renderWishlistProducts() {
+  const grid = document.getElementById('wishlistProducts');
+  
+  if (this.wishlist.length === 0) {
+    grid.innerHTML = '<div class="empty-cart">Your wishlist is empty. Start adding your favorite items!</div>';
+    return;
+  }
+  
+  const wishlistProducts = this.wishlist.map(wishItem => {
+    return this.products.find(p => p.id === wishItem.id);
+  }).filter(p => p !== undefined);
+  
+  grid.innerHTML = wishlistProducts.map(p => this.renderProductCard(p)).join('');
+},
 
       showProductDetail(productId) {
-        const product = this.products.find(p => p.id === productId);
-        if (!product) return;
-        
-        this.currentProduct = product;
-        this.productQuantity = 1;
-        
-        document.getElementById('homePage').classList.add('hidden');
-        document.getElementById('categoryPage').classList.add('hidden');
-        document.getElementById('productDetailPage').classList.remove('hidden');
-        document.getElementById('orderConfirmationPage').classList.add('hidden');
-        document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('careGuidePage').classList.add('hidden');
-        document.getElementById('checkoutPage').classList.add('hidden');
-        
-        const category = this.categories.find(c => c.id === product.category);
-        document.getElementById('productCategoryBreadcrumb').textContent = category?.name || '';
-        document.getElementById('productNameBreadcrumb').textContent = product.name;
-        document.getElementById('productDetailTitle').textContent = product.name;
-        document.getElementById('productDetailPrice').textContent = `₹${product.price.toLocaleString()}`;
-        document.getElementById('productDetailDescription').textContent = product.description;
-        document.getElementById('productQuantity').textContent = this.productQuantity;
-        
-        document.querySelector('#mainImage img').src = product.images[0];
-        
-        const thumbnails = document.getElementById('thumbnails');
-        thumbnails.innerHTML = product.images.map((img, idx) => `
-          <div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="app.changeMainImage('${img}', ${idx})">
-            <img src="${img}" alt="Thumbnail ${idx + 1}">
-          </div>
-        `).join('');
-        
-        window.scrollTo(0, 0);
-      },
+  const product = this.products.find(p => p.id === productId);
+  if (!product) return;
+  
+  this.currentProduct = product;
+  this.productQuantity = 1;
+  
+  document.getElementById('homePage').classList.add('hidden');
+  document.getElementById('categoryPage').classList.add('hidden');
+  document.getElementById('productDetailPage').classList.remove('hidden');
+  document.getElementById('orderConfirmationPage').classList.add('hidden');
+  document.getElementById('policyPage').classList.add('hidden');
+  document.getElementById('careGuidePage').classList.add('hidden');
+  document.getElementById('checkoutPage').classList.add('hidden');
+  document.getElementById('wishlistPage').classList.add('hidden');
+  
+  const category = this.categories.find(c => c.id === product.category);
+  document.getElementById('productCategoryBreadcrumb').textContent = category?.name || '';
+  document.getElementById('productNameBreadcrumb').textContent = product.name;
+  document.getElementById('productDetailTitle').textContent = product.name;
+  document.getElementById('productDetailPrice').textContent = `₹${product.price.toLocaleString()}`;
+  document.getElementById('productDetailDescription').textContent = product.description;
+  document.getElementById('productQuantity').textContent = this.productQuantity;
+  
+  document.querySelector('#mainImage img').src = product.images[0];
+
+        // Update wishlist button state
+const isInWishlist = this.wishlist.some(item => item.id === product.id);
+const wishlistBtn = document.getElementById('productDetailWishlist');
+if (wishlistBtn) {
+  wishlistBtn.classList.toggle('active', isInWishlist);
+  wishlistBtn.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
+}
+  const thumbnails = document.getElementById('thumbnails');
+  thumbnails.innerHTML = product.images.map((img, idx) => `
+    <div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="app.changeMainImage('${img}', ${idx})">
+      <img src="${img}" alt="Thumbnail ${idx + 1}">
+    </div>
+  `).join('');
+  
+  window.scrollTo(0, 0);
+},
 
       changeMainImage(imgSrc, idx) {
         document.querySelector('#mainImage img').src = imgSrc;
@@ -3086,15 +3158,15 @@ updateWishlistUI() {
     };
     
    function hideAllPages() {
-      document.getElementById('homePage').classList.add('hidden');
-     document.getElementById('categoryPage').classList.add('hidden');
-        document.getElementById('productDetailPage').classList.add('hidden');
-      document.getElementById('careGuidePage').classList.add('hidden');
-      document.getElementById('checkoutPage').classList.add('hidden');
-      document.getElementById('policyPage').classList.add('hidden');
-     document.getElementById('orderConfirmationPage').classList.add('hidden');
-
-        }
+  document.getElementById('homePage').classList.add('hidden');
+  document.getElementById('categoryPage').classList.add('hidden');
+  document.getElementById('productDetailPage').classList.add('hidden');
+  document.getElementById('careGuidePage').classList.add('hidden');
+  document.getElementById('checkoutPage').classList.add('hidden');
+  document.getElementById('policyPage').classList.add('hidden');
+  document.getElementById('orderConfirmationPage').classList.add('hidden');
+  document.getElementById('wishlistPage').classList.add('hidden');
+   }
 
 
     

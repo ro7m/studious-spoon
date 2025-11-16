@@ -263,6 +263,116 @@
       padding: 9rem 1rem;
       margin-bottom: 4rem;
     }
+
+    .banner-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto 4rem;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.banner-slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.banner-slide {
+  min-width: 100%;
+  position: relative;
+}
+
+.banner-slide img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+}
+
+.banner-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: var(--white);
+  width: 90%;
+  max-width: 600px;
+}
+
+.banner-content h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.banner-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.banner-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.banner-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.banner-dot.active {
+  background: var(--white);
+  transform: scale(1.2);
+  border-color: var(--primary);
+}
+
+.banner-dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.banner-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.3);
+  color: var(--white);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.banner-arrow:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.banner-arrow.left {
+  left: 20px;
+}
+
+.banner-arrow.right {
+  right: 20px;
+}
     
     .hero-content {
       max-width: 700px;
@@ -1294,9 +1404,39 @@
     }
 
     @media (max-width: 768px) {
+      
       body {
         padding-bottom: 65px;
       }
+      .banner-carousel {
+  border-radius: 0;
+}
+
+.banner-slide img {
+  height: 350px;
+}
+
+.banner-content h2 {
+  font-size: 2rem;
+}
+
+.banner-content p {
+  font-size: 1rem;
+}
+
+.banner-arrow {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+}
+
+.banner-arrow.left {
+  left: 10px;
+}
+
+.banner-arrow.right {
+  right: 10px;
+}
       
       .container {
         padding: 0 1rem;
@@ -1434,6 +1574,43 @@
 
   <div id="mainContent">
     <div id="homePage">
+  <!-- Banner Carousel -->
+  <div class="banner-carousel">
+    <div class="banner-slides" id="bannerSlides">
+      <div class="banner-slide">
+        <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1400&q=80" alt="Banner 1">
+        <div class="banner-content">
+          <h2>New Collection 2024</h2>
+          <p>Discover our latest handcrafted jewelry designs</p>
+          <button class="btn" onclick="app.showCategory('necklaces')">Shop Now</button>
+        </div>
+      </div>
+      <div class="banner-slide">
+        <img src="https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=1400&q=80" alt="Banner 2">
+        <div class="banner-content">
+          <h2>Festive Special</h2>
+          <p>Celebrate in style with our exclusive designs</p>
+          <button class="btn" onclick="app.showCategory('earrings')">Explore Collection</button>
+        </div>
+      </div>
+      <div class="banner-slide">
+        <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1400&q=80" alt="Banner 3">
+        <div class="banner-content">
+          <h2>Handcrafted Excellence</h2>
+          <p>925 Sterling Silver | Made in India</p>
+          <button class="btn" onclick="app.showCategory('rings')">View Rings</button>
+        </div>
+      </div>
+    </div>
+    <button class="banner-arrow left" onclick="app.prevBanner()">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="banner-arrow right" onclick="app.nextBanner()">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+    <div class="banner-dots" id="bannerDots"></div>
+  </div>
+
       <main class="container">
         <div class="section-header" id="categories">
           <h2 class="section-title">Shop by Category</h2>
@@ -1825,14 +2002,17 @@
     const supabase = window.supabase.createClient(CONFIG.supabase.url, CONFIG.supabase.key);
 
     const app = {
-      cart: JSON.parse(localStorage.getItem('cart')) || [],
-      currentCategory: null,
-      currentProduct: null,
-      currentPage: 1,
-      itemsPerPage: 10,
-      productQuantity: 1,
-      customerInfo: null,
-      categories: [
+  cart: JSON.parse(localStorage.getItem('cart')) || [],
+  currentCategory: null,
+  currentProduct: null,
+  currentPage: 1,
+  itemsPerPage: 10,
+  productQuantity: 1,
+  customerInfo: null,
+  currentBannerIndex: 0,
+  bannerInterval: null,
+  totalBanners: 3,
+  categories: [
         { id: 'rings', name: 'Rings', image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80', description: 'Elegant rings for every occasion' },
         { id: 'necklaces', name: 'Necklaces', image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80', description: 'Beautiful necklaces and pendants' },
         { id: 'earrings', name: 'Earrings', image: 'https://images.unsplash.com/photo-1611591437281-460cc5f3e1c7?auto=format&fit=crop&w=500&q=80', description: 'Stunning earrings collection' },
@@ -1841,13 +2021,14 @@
       ],
 
       async init() {
-        await this.loadProducts();
-        this.renderCategories();
-        this.renderFeaturedProducts();
-        this.updateCartCount();
-        this.setupEventListeners();
-        this.setupSearch();
-      },
+  await this.loadProducts();
+  this.renderCategories();
+  this.renderFeaturedProducts();
+  this.updateCartCount();
+  this.setupEventListeners();
+  this.setupSearch();
+  this.initBannerCarousel();
+},
 
       async loadProducts() {
         try {
@@ -1876,6 +2057,64 @@
           this.products = this.getSampleProducts();
         }
       },
+
+      initBannerCarousel() {
+  const dotsContainer = document.getElementById('bannerDots');
+  dotsContainer.innerHTML = '';
+  
+  for (let i = 0; i < this.totalBanners; i++) {
+    const dot = document.createElement('div');
+    dot.className = `banner-dot ${i === 0 ? 'active' : ''}`;
+    dot.onclick = () => this.goToBanner(i);
+    dotsContainer.appendChild(dot);
+  }
+  
+  this.startBannerAutoPlay();
+},
+
+goToBanner(index) {
+  this.currentBannerIndex = index;
+  this.updateBannerPosition();
+  this.stopBannerAutoPlay();
+  this.startBannerAutoPlay();
+},
+
+nextBanner() {
+  this.currentBannerIndex = (this.currentBannerIndex + 1) % this.totalBanners;
+  this.updateBannerPosition();
+  this.stopBannerAutoPlay();
+  this.startBannerAutoPlay();
+},
+
+prevBanner() {
+  this.currentBannerIndex = (this.currentBannerIndex - 1 + this.totalBanners) % this.totalBanners;
+  this.updateBannerPosition();
+  this.stopBannerAutoPlay();
+  this.startBannerAutoPlay();
+},
+
+updateBannerPosition() {
+  const slides = document.getElementById('bannerSlides');
+  slides.style.transform = `translateX(-${this.currentBannerIndex * 100}%)`;
+  
+  document.querySelectorAll('.banner-dot').forEach((dot, index) => {
+    dot.classList.toggle('active', index === this.currentBannerIndex);
+  });
+},
+
+startBannerAutoPlay() {
+  this.stopBannerAutoPlay();
+  this.bannerInterval = setInterval(() => {
+    this.nextBanner();
+  }, 5000);
+},
+
+stopBannerAutoPlay() {
+  if (this.bannerInterval) {
+    clearInterval(this.bannerInterval);
+    this.bannerInterval = null;
+  }
+},
 
       getSampleProducts() {
         return [
@@ -1981,16 +2220,17 @@
       },
 
       showHome() {
-        document.getElementById('homePage').classList.remove('hidden');
-        document.getElementById('categoryPage').classList.add('hidden');
-        document.getElementById('productDetailPage').classList.add('hidden');
-        document.getElementById('orderConfirmationPage').classList.add('hidden');
-        document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('careGuidePage').classList.add('hidden');
-        document.getElementById('checkoutPage').classList.add('hidden');
-        this.updateMobileNav('home');
-        window.scrollTo(0, 0);
-      },
+  document.getElementById('homePage').classList.remove('hidden');
+  document.getElementById('categoryPage').classList.add('hidden');
+  document.getElementById('productDetailPage').classList.add('hidden');
+  document.getElementById('orderConfirmationPage').classList.add('hidden');
+  document.getElementById('policyPage').classList.add('hidden');
+  document.getElementById('careGuidePage').classList.add('hidden');
+  document.getElementById('checkoutPage').classList.add('hidden');
+  this.updateMobileNav('home');
+  this.startBannerAutoPlay();
+  window.scrollTo(0, 0);
+},
 
       updateMobileNav(active) {
         document.querySelectorAll('.mobile-nav a').forEach(a => a.classList.remove('active'));
@@ -2000,12 +2240,14 @@
       },
 
       showCategory(categoryId) {
-        this.currentCategory = categoryId;
-        this.currentPage = 1;
-        const category = this.categories.find(c => c.id === categoryId);
-        
-        document.getElementById('homePage').classList.add('hidden');
-        document.getElementById('categoryPage').classList.remove('hidden');
+  this.currentCategory = categoryId;
+  this.currentPage = 1;
+  const category = this.categories.find(c => c.id === categoryId);
+  
+  this.stopBannerAutoPlay();
+  
+  document.getElementById('homePage').classList.add('hidden');
+  document.getElementById('categoryPage').classList.remove('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');

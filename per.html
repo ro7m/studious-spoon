@@ -507,94 +507,134 @@
     }
     
     .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.product-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.4s ease;
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.product-card:hover { 
+  box-shadow: 0 10px 40px var(--shadow);
+  transform: translateY(-8px);
+  border-color: var(--primary);
+}
+
+.product-img {
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--light);
+  overflow: hidden;
+  position: relative;
+}
+
+.product-img img {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-img img {
+  transform: scale(1.08);
+}
+
+.product-info {
+  padding: 1.2rem 1rem;
+  text-align: center;
+}
+
+.product-info h3 {
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.product-info p {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-bottom: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.price {
+  font-size: 1.2rem;
+  color: var(--primary);
+  margin: 0.8rem 0;
+  font-weight: 600;
+  font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 1px;
+}
+
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem 1rem;
+}
+
+.wishlist-btn,
+.add-to-cart-icon {
+  width: 45px;
+  height: 45px;
+  border: 2px solid var(--border);
+  background: var(--white);
+  color: var(--primary);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.wishlist-btn:hover,
+.add-to-cart-icon:hover {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+  transform: scale(1.1);
+}
+
+.wishlist-btn.active {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+}
+
+.wishlist-btn.active i {
+  animation: heartBeat 0.3s ease;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.add-to-cart {
+  display: none;
+}
     
-    .product-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      transition: all 0.4s ease;
-      position: relative;
-      cursor: pointer;
-      border-radius: 8px;
-    }
     
-    .product-card:hover { 
-      box-shadow: 0 10px 40px var(--shadow);
-      transform: translateY(-8px);
-      border-color: var(--primary);
-    }
-    
-    .product-img {
-      height: 380px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--light);
-      overflow: hidden;
-      position: relative;
-    }
-    
-    .product-img img {
-      max-width: 85%;
-      max-height: 85%;
-      object-fit: contain;
-      transition: transform 0.5s ease;
-    }
-    
-    .product-card:hover .product-img img {
-      transform: scale(1.08);
-    }
-    
-    .product-info {
-      padding: 2rem 1.5rem;
-      text-align: center;
-    }
-    
-    .product-info h3 {
-      margin-bottom: 0.8rem;
-      color: var(--primary);
-      font-size: 1.5rem;
-      font-weight: 500;
-      letter-spacing: 1px;
-    }
-    
-    .product-info p {
-      font-size: 0.85rem;
-      color: var(--text-light);
-      margin-bottom: 1.2rem;
-      font-weight: 300;
-      letter-spacing: 0.5px;
-    }
-    
-    .price {
-      font-size: 1.4rem;
-      color: var(--primary);
-      margin: 1rem 0;
-      font-weight: 600;
-      font-family: 'Cormorant Garamond', serif;
-      letter-spacing: 1px;
-    }
-    
-    .add-to-cart {
-      width: 100%;
-      padding: 1rem;
-      background: var(--primary);
-      color: var(--white);
-      border: 2px solid var(--primary);
-      cursor: pointer;
-      font-weight: 500;
-      margin-top: 1rem;
-      transition: all 0.3s ease;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      font-family: 'Montserrat', sans-serif;
-    }
     
     .add-to-cart:hover {
       background: transparent;
@@ -1538,7 +1578,36 @@
       .cart-icon-desktop { 
         display: none; 
       }
-    }
+  
+  .products {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+  
+  .product-img {
+    height: 200px;
+  }
+  
+  .product-info h3 {
+    font-size: 1rem;
+  }
+  
+  .product-info p {
+    font-size: 0.75rem;
+  }
+  
+  .price {
+    font-size: 1rem;
+  }
+  
+  .wishlist-btn,
+  .add-to-cart-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+}
+    
     
     @media (min-width: 769px) {
       .mobile-nav { 
@@ -1559,8 +1628,9 @@
       </div>
 
       <nav>
-        <a onclick="app.showHome()">Home</a>
-        <a onclick="app.showPolicy()">Returns</a>
+  <a onclick="app.showHome()">Home</a>
+  <a onclick="app.showWishlist()">Wishlist (<span id="wishlistCount">0</span>)</a>
+  <a onclick="app.showPolicy()">Returns</a>
       </nav>
 
       <div class="header-icons">
@@ -2003,6 +2073,7 @@
 
     const app = {
   cart: JSON.parse(localStorage.getItem('cart')) || [],
+  wishlist: JSON.parse(localStorage.getItem('wishlist')) || [],
   currentCategory: null,
   currentProduct: null,
   currentPage: 1,
@@ -2012,7 +2083,7 @@
   currentBannerIndex: 0,
   bannerInterval: null,
   totalBanners: 3,
-  categories: [
+  categories: [  
         { id: 'rings', name: 'Rings', image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80', description: 'Elegant rings for every occasion' },
         { id: 'necklaces', name: 'Necklaces', image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80', description: 'Beautiful necklaces and pendants' },
         { id: 'earrings', name: 'Earrings', image: 'https://images.unsplash.com/photo-1611591437281-460cc5f3e1c7?auto=format&fit=crop&w=500&q=80', description: 'Stunning earrings collection' },
@@ -2025,6 +2096,7 @@
   this.renderCategories();
   this.renderFeaturedProducts();
   this.updateCartCount();
+  this.updateWishlistCount();
   this.setupEventListeners();
   this.setupSearch();
   this.initBannerCarousel();
@@ -2183,6 +2255,13 @@ stopBannerAutoPlay() {
           }
         ];
       },
+      updateWishlistCount() {
+  const count = this.wishlist.length;
+  const countEl = document.getElementById('wishlistCount');
+  if (countEl) {
+    countEl.textContent = count;
+  }
+},
 
       renderCategories() {
         const grid = document.getElementById('categoriesGrid');
@@ -2202,22 +2281,79 @@ stopBannerAutoPlay() {
       },
 
       renderProductCard(product) {
-        return `
-          <div class="product-card" onclick="app.showProductDetail('${product.id}')">
-            <div class="product-img">
-              <img src="${product.images[0]}" alt="${product.name}">
-            </div>
-            <div class="product-info">
-              <h3>${product.name}</h3>
-              <p>${product.description.substring(0, 60)}...</p>
-              <div class="price">₹${product.price.toLocaleString()}</div>
-              <button class="add-to-cart" onclick="event.stopPropagation(); app.addToCart('${product.id}')">
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        `;
-      },
+  const isInWishlist = this.wishlist.some(item => item.id === product.id);
+  
+  return `
+    <div class="product-card" onclick="app.showProductDetail('${product.id}')">
+      <div class="product-img">
+        <img src="${product.images[0]}" alt="${product.name}">
+      </div>
+      <div class="product-info">
+        <h3>${product.name}</h3>
+        <p>${product.description.substring(0, 50)}...</p>
+        <div class="price">₹${product.price.toLocaleString()}</div>
+      </div>
+      <div class="product-actions">
+        <button class="wishlist-btn ${isInWishlist ? 'active' : ''}" 
+                onclick="event.stopPropagation(); app.toggleWishlist('${product.id}')"
+                title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}">
+          <i class="fas fa-heart"></i>
+        </button>
+        <button class="add-to-cart-icon" 
+                onclick="event.stopPropagation(); app.addToCart('${product.id}')"
+                title="Add to Cart">
+          <i class="fas fa-cart-plus"></i>
+        </button>
+      </div>
+    </div>
+  `;
+},
+      toggleWishlist(productId) {
+  const product = this.products.find(p => p.id === productId);
+  if (!product) return;
+  
+  const existingIndex = this.wishlist.findIndex(item => item.id === productId);
+  
+  if (existingIndex !== -1) {
+    // Remove from wishlist
+    this.wishlist.splice(existingIndex, 1);
+  } else {
+    // Add to wishlist
+    this.wishlist.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0]
+    });
+  }
+  
+  this.saveWishlist();
+  this.updateWishlistUI();
+},
+
+saveWishlist() {
+  localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+},
+
+updateWishlistUI() {
+  // Update all wishlist buttons on the page
+  document.querySelectorAll('.product-card').forEach(card => {
+    const button = card.querySelector('.wishlist-btn');
+    if (button) {
+      const productId = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+      const isInWishlist = this.wishlist.some(item => item.id === productId);
+      button.classList.toggle('active', isInWishlist);
+      button.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
+    }
+  });
+  
+  // Re-render if on home page to update the UI
+  if (!document.getElementById('homePage').classList.contains('hidden')) {
+    this.renderFeaturedProducts();
+  } else if (!document.getElementById('categoryPage').classList.contains('hidden')) {
+    this.renderCategoryProducts();
+  }
+},
 
       showHome() {
   document.getElementById('homePage').classList.remove('hidden');

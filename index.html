@@ -78,20 +78,23 @@
     }
     
     .logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 500;
-      color: var(--white);
-      text-decoration: none;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-    
-    .logo span { 
-      color: var(--white);
-      font-weight: 600;
-    }
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  height: 60px;
+}
+
+.logo img {
+  height: 100%;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.logo span { 
+  display: none;
+}
 
     .search-bar {
       flex: 1;
@@ -1512,8 +1515,14 @@
         font-size: 0.7rem;
       }
       
-      .logo {
-        font-size: 1.6rem;
+      
+  .logo {
+    height: 50px;
+  }
+  
+  .logo img {
+    max-width: 140px;
+  }
       }
       
       .hero {
@@ -1630,8 +1639,9 @@
 
   <header>
     <div class="container header-content">
-      <a class="logo" onclick="app.showHome()">Misha<span>.</span></a>
-      
+      <a class="logo" onclick="app.showHome()">
+      <img src="https://res.cloudinary.com/dsm5crlf1/image/upload/v1763133630/Maisha_Jewellery_Logo_2_ph7wqa.png" alt="Misha Jewellery" />
+      </a>
       <div class="search-bar">
         <input type="text" id="searchInput" placeholder="Search for jewelry..." />
         <i class="fas fa-search"></i>

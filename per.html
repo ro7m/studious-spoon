@@ -74,41 +74,73 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 0;
+      padding: 1rem 0;
     }
     
     .logo {
       font-family: 'Cormorant Garamond', serif;
       font-size: 2rem;
       font-weight: 500;
+      height: 75px;
       color: var(--white);
       text-decoration: none;
       letter-spacing: 3px;
       text-transform: uppercase;
       cursor: pointer;
     }
-    
+   .logo img {
+  height: 100%;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+} 
     .logo span { 
       color: var(--white);
       font-weight: 600;
     }
 
     .search-bar {
-      flex: 1;
-      max-width: 500px;
+      width: 45px;
+      height: 45px;
+      transition: all 0.4s ease;
       margin: 0 2rem;
       position: relative;
     }
 
     .search-bar input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
       width: 100%;
       padding: 0.7rem 2.5rem 0.7rem 1rem;
       border: 2px solid var(--border);
       font-family: 'Montserrat', sans-serif;
       font-size: 0.85rem;
-      transition: border-color 0.3s ease;
+      transition: all 0.4s ease;
       background: var(--white);
       color: var(--text);
+      border-radius: 45px;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 1;
+    }
+    
+    .search-bar:focus-within {
+      width: 100%;
+      max-width: 500px;
+    }
+    
+    .search-bar:focus-within input {
+      opacity: 1;
+      cursor: text;
+      padding: 0.7rem 2.5rem 0.7rem 1rem;
+    }
+    
+    .search-bar:focus-within i {
+      right: 1rem;
+      left: auto;
+      color: var(--primary);
     }
 
     .search-bar input:focus {
@@ -118,16 +150,22 @@
 
     .search-bar i {
       position: absolute;
-      right: 1rem;
+      left: 14px;
+      right: auto;
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-light);
+      z-index: 2;
+      font-size: 1.1rem;
+      transition: all 0.4s ease;
     }
     
     nav {
       display: flex;
-      gap: 2.5rem;
+      gap: 2rem;
       align-items: center;
+      flex: 1;
+      justify-content: center;
     }
     
     nav a {
@@ -267,7 +305,6 @@
     .banner-carousel {
   position: relative;
   width: 100%;
-  max-width: 1400px;
   margin: 0 auto 4rem;
   overflow: hidden;
   border-radius: 0;
@@ -428,13 +465,18 @@
     }
 
     .categories {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-snap-type: x mandatory;
+      padding: 2rem 0;
       gap: 2rem;
       margin: 3rem 0 4rem;
     }
 
     .category-card {
+      min-width: 220px;
+      scroll-snap-align: center;
       text-align: center;
       padding: 2rem 1rem;
       border: 2px solid var(--border);
@@ -446,7 +488,7 @@
 
     .category-card:hover {
       border-color: var(--primary);
-      transform: translateY(-5px);
+      transform: translateY(-5px) scale(1.05);
       box-shadow: 0 10px 30px var(--shadow);
     }
 
@@ -511,6 +553,22 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
+}
+
+#featuredProducts {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  scroll-snap-type: x mandatory;
+  padding: 1rem 0;
+  gap: 1.5rem;
+  /* Override .products grid styles */
+  grid-template-columns: none;
+}
+
+#featuredProducts .product-card {
+  min-width: 270px;
+  scroll-snap-align: start;
 }
 
 .product-card {
@@ -1502,18 +1560,38 @@
         order: 3;
         flex-basis: 100%;
         margin: 0;
+        width: 100%; /* Full width on mobile */
+        height: 45px;
+      }
+      
+      .search-bar:focus-within {
+        width: 100%; /* Stay full width */
+      }
+      
+      .search-bar input {
+        opacity: 1; /* Always visible on mobile */
+        cursor: text;
+        position: relative;
+        padding: 0.7rem 2.5rem 0.7rem 1rem;
+      }
+      
+      .search-bar i {
+        position: absolute;
+        right: 1rem;
+        left: auto;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-light);
+        z-index: 2;
       }
       
       nav {
-        gap: 1rem;
-      }
-      
-      nav a {
-        font-size: 0.7rem;
+        display: none; /* Hide desktop nav on mobile */
       }
       
       .logo {
         font-size: 1.6rem;
+        height: 50px; /* Adjust mobile logo height */
       }
       
       .hero {
@@ -1529,8 +1607,8 @@
       }
       
       .products {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
       }
 
       .product-detail {
@@ -1585,13 +1663,13 @@
         display: block; 
       }
       
-      .cart-icon-desktop { 
+      .cart-icon-desktop,
+      .wishlist-icon-desktop { 
         display: none; 
       }
   
-  .products {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 1rem;
+  #featuredProducts .product-card {
+    min-width: 200px; /* Smaller cards for mobile reel */
   }
   
   .product-img {
@@ -1630,20 +1708,28 @@
 
   <header>
     <div class="container header-content">
-      <a class="logo" onclick="app.showHome()">Misha<span>.</span></a>
-      
+      <a class="logo" onclick="app.showHome()">
+      <img src="https://res.cloudinary.com/dsm5crlf1/image/upload/v1763133630/Maisha_Jewellery_Logo_2_ph7wqa.png" alt="Misha Jewellery" />
+      </a>
       <div class="search-bar">
         <input type="text" id="searchInput" placeholder="Search for jewelry..." />
         <i class="fas fa-search"></i>
       </div>
 
       <nav>
-  <a onclick="app.showHome()">Home</a>
-  <a onclick="app.showWishlist()">Wishlist (<span id="wishlistCount">0</span>)</a>
-  <a onclick="app.showPolicy()">Returns</a>
+        <a onclick="app.showHome()">Home</a>
+        <a onclick="app.showCategory('rings')">Rings</a>
+        <a onclick="app.showCategory('necklaces')">Necklaces</a>
+        <a onclick="app.showCategory('earrings')">Earrings</a>
+        <a onclick="app.showCategory('bracelets')">Bracelets</a>
+        <a onclick="app.showCategory('anklets')">Anklets</a>
       </nav>
 
       <div class="header-icons">
+        <div class="cart-icon wishlist-icon-desktop" onclick="app.showWishlist()">
+          <i class="fas fa-heart"></i>
+          <span class="cart-count" id="wishlistCount">0</span>
+        </div>
         <div class="cart-icon cart-icon-desktop" id="cartIcon">
           <i class="fas fa-shopping-cart"></i>
           <span class="cart-count" id="cartCount">0</span>
@@ -1654,7 +1740,6 @@
 
   <div id="mainContent">
     <div id="homePage">
-  <!-- Banner Carousel -->
   <div class="banner-carousel">
     <div class="banner-slides" id="bannerSlides">
       <div class="banner-slide">
@@ -2052,7 +2137,7 @@
           <h3>About Misha</h3>
           <p>Handcrafted 925 Sterling Silver jewelry, ethically sourced and designed with love in India.</p>
           <div class="social-icons">
-            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.instagram.com/mishajewellery.in?igsh=MXhwc2Z1NzdkbXJnZw=="><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-facebook"></i></a>
             <a href="#"><i class="fab fa-pinterest"></i></a>
           </div>
@@ -2067,7 +2152,7 @@
         <div class="footer-section">
           <h3>Contact</h3>
           <p>Email: hello.mishajwellery@gmail.com</p>
-          <p>WhatsApp: +91 88715 42203</p>
+          <p>WhatsApp: +91 77718 18695</p>
           <p>Mon-Sat: 10 AM - 6 PM</p>
         </div>
       </div>
@@ -2090,7 +2175,7 @@
       },
       store: {
         email: 'hello.mishajwellery@gmail.com',
-        phone: '+918871542203'
+        phone: '+917771818695'
       }
     };
 
@@ -2301,7 +2386,7 @@ stopBannerAutoPlay() {
 
       renderFeaturedProducts() {
         const grid = document.getElementById('featuredProducts');
-        const featured = this.products.slice(0, 4);
+        const featured = this.products.slice(0, 8); // Show more products in the reel
         grid.innerHTML = featured.map(p => this.renderProductCard(p)).join('');
       },
 

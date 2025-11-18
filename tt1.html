@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Misha Jewellery - Opening Soon</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Misha Jewellery - Coming Soon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,179 +14,163 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #1C214C 0%, #2a3166 50%, #1C214C 100%);
+            background: #1C214C;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             position: relative;
         }
 
-        /* Animated background particles */
-        .particles {
+        /* Background subtle pattern */
+        body::before {
+            content: '';
             position: absolute;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: float 15s infinite ease-in-out;
-        }
-
-        .particle:nth-child(1) { width: 4px; height: 4px; left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { width: 6px; height: 6px; left: 20%; animation-delay: 2s; }
-        .particle:nth-child(3) { width: 3px; height: 3px; left: 30%; animation-delay: 4s; }
-        .particle:nth-child(4) { width: 5px; height: 5px; left: 50%; animation-delay: 1s; }
-        .particle:nth-child(5) { width: 4px; height: 4px; left: 70%; animation-delay: 3s; }
-        .particle:nth-child(6) { width: 6px; height: 6px; left: 85%; animation-delay: 5s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-100vh) scale(1); }
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         /* Main container */
         .container {
             text-align: center;
-            z-index: 10;
             position: relative;
-            padding: 40px;
+            z-index: 10;
         }
 
-        /* Logo/Brand name */
-        .brand-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 20px;
+        /* SVG handwriting animation */
+        .signature-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.3s forwards;
+        }
+
+        svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+        }
+
+        /* Animate the SVG paths */
+        .svg-text {
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: drawText 4s ease-out forwards;
+        }
+
+        /* Staggered animation for "Jewellery" */
+        .svg-text-2 {
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: drawText 3s ease-out 2s forwards;
+        }
+
+        /* Fill animation after drawing */
+        .svg-text-fill {
+            fill: #ffffff;
+            opacity: 0;
+            animation: fillText 1s ease-out 4s forwards;
+        }
+
+        .svg-text-fill-2 {
+            fill: #ffffff;
+            opacity: 0;
+            animation: fillText 1s ease-out 5s forwards;
+        }
+
+        @keyframes drawText {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes fillText {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Coming Soon text */
+        .coming-soon {
+            font-size: 2rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
             letter-spacing: 8px;
             text-transform: uppercase;
-            animation: fadeInDown 1.5s ease-out;
-            position: relative;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-        }
-
-        /* Shimmer effect on brand name */
-        .brand-name::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* Decorative line */
-        .decorative-line {
-            width: 200px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #fff, transparent);
-            margin: 0 auto 30px;
-            animation: expandLine 2s ease-out 0.5s backwards;
-        }
-
-        @keyframes expandLine {
-            from { width: 0; opacity: 0; }
-            to { width: 200px; opacity: 1; }
-        }
-
-        /* Subtitle */
-        .subtitle {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 300;
-            color: #e0e0e0;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 50px;
-            animation: fadeIn 2s ease-out 1s backwards;
-        }
-
-        /* Diamond icon animation */
-        .diamond-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 40px;
-            animation: rotateDiamond 4s infinite ease-in-out, fadeIn 1.5s ease-out 1.5s backwards;
-        }
-
-        .diamond {
-            width: 80px;
-            height: 80px;
-            position: relative;
-            transform: rotate(45deg);
-        }
-
-        .diamond-inner {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #ffffff 0%, #c0c0c0 50%, #ffffff 100%);
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-            animation: pulse 2s infinite ease-in-out;
-        }
-
-        @keyframes rotateDiamond {
-            0%, 100% { transform: rotate(45deg) scale(1); }
-            50% { transform: rotate(45deg) scale(1.1); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); }
-            50% { box-shadow: 0 0 50px rgba(255, 255, 255, 0.9); }
-        }
-
-        /* Opening Soon text */
-        .opening-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            font-weight: 700;
-            color: #fff;
             margin-bottom: 30px;
-            animation: fadeInUp 2s ease-out 2s backwards;
-            letter-spacing: 6px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 5.5s forwards;
         }
 
         /* Description */
         .description {
-            font-family: 'Montserrat', sans-serif;
             font-size: 1.1rem;
             font-weight: 300;
-            color: #d0d0d0;
+            color: rgba(255, 255, 255, 0.7);
             max-width: 600px;
-            margin: 0 auto 40px;
+            margin: 0 auto 50px;
             line-height: 1.8;
-            animation: fadeIn 2s ease-out 2.5s backwards;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 6s forwards;
         }
 
-        /* Email notification form */
+        /* Decorative diamond */
+        .diamond {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 40px;
+            position: relative;
+            transform: rotate(45deg);
+            opacity: 0;
+            animation: fadeInScale 1s ease-out 6.5s forwards;
+        }
+
+        .diamond::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffffff 0%, #d0d0d0 50%, #ffffff 100%);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Email form */
         .notify-form {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin-bottom: 40px;
-            animation: fadeInUp 2s ease-out 3s backwards;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 7s forwards;
         }
 
         .email-input {
             padding: 15px 25px;
             width: 350px;
             border: 2px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             color: #fff;
             font-size: 1rem;
             border-radius: 50px;
@@ -196,12 +180,12 @@
         }
 
         .email-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .email-input:focus {
             border-color: #fff;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .notify-btn {
@@ -224,51 +208,37 @@
             box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
         }
 
-        /* Social links */
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            animation: fadeIn 2s ease-out 3.5s backwards;
-        }
-
-        .social-icon {
-            width: 45px;
-            height: 45px;
-            border: 2px solid rgba(255, 255, 255, 0.5);
+        /* WhatsApp float button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: white;
+            font-size: 32px;
             text-decoration: none;
-            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
             transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInScale 1s ease-out 7.5s forwards;
+            z-index: 1000;
         }
 
-        .social-icon:hover {
-            background: #fff;
-            color: #1C214C;
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -276,86 +246,97 @@
             }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotate(45deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(45deg);
+            }
         }
 
-        /* Responsive design */
+        /* Responsive */
         @media (max-width: 768px) {
-            .brand-name {
-                font-size: 2.5rem;
+            .signature-container {
+                max-width: 90%;
+            }
+
+            .coming-soon {
+                font-size: 1.5rem;
                 letter-spacing: 4px;
-            }
-
-            .opening-text {
-                font-size: 2rem;
-                letter-spacing: 3px;
-            }
-
-            .notify-form {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .email-input {
-                width: 280px;
             }
 
             .description {
                 font-size: 1rem;
                 padding: 0 20px;
             }
+
+            .notify-form {
+                flex-direction: column;
+                align-items: center;
+                padding: 0 20px;
+            }
+
+            .email-input {
+                width: 100%;
+                max-width: 300px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Animated particles background -->
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-
-    <!-- Main content -->
     <div class="container">
-        <h1 class="brand-name">Misha</h1>
-        <div class="decorative-line"></div>
-        <p class="subtitle">Fine Silver Jewellery</p>
-        
-        <div class="diamond-icon">
-            <div class="diamond">
-                <div class="diamond-inner"></div>
-            </div>
+        <!-- Handwriting SVG Animation -->
+        <div class="signature-container">
+            <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- "Misha" in handwriting style -->
+                <path class="svg-text" d="M 80 150 Q 90 100, 110 120 Q 120 140, 130 110 Q 140 80, 150 130 Q 160 180, 170 140 Q 180 100, 190 150" />
+                <path class="svg-text" d="M 200 150 L 200 90 L 200 180" />
+                <path class="svg-text" d="M 220 100 Q 240 90, 250 110 Q 260 130, 270 100 Q 280 70, 290 120" />
+                <path class="svg-text" d="M 310 150 Q 320 100, 340 120 Q 350 140, 360 110 Q 370 80, 380 140" />
+                <path class="svg-text" d="M 400 140 Q 410 100, 430 130 Q 440 160, 460 120 L 470 150" />
+                
+                <!-- Decorative underline -->
+                <path class="svg-text" d="M 75 170 Q 250 180, 475 170" stroke-width="1.5" />
+                
+                <!-- "Jewellery" in elegant script -->
+                <text class="svg-text-2 svg-text-fill-2" x="400" y="240" font-family="'Allura', cursive" font-size="48" text-anchor="middle">Jewellery</text>
+                
+                <!-- Brand name as fallback/fill -->
+                <text class="svg-text-fill" x="275" y="150" font-family="'Allura', cursive" font-size="72" text-anchor="middle">Misha</text>
+            </svg>
         </div>
 
-        <h2 class="opening-text">Opening Soon</h2>
+        <h2 class="coming-soon">Coming Soon</h2>
         
         <p class="description">
-            Discover exquisite handcrafted silver jewellery that embodies elegance and timeless beauty. 
-            Be the first to explore our exclusive collection.
+            Exquisite handcrafted silver jewellery. Experience timeless elegance and royal craftsmanship. 
+            Join our exclusive launch.
         </p>
+
+        <div class="diamond"></div>
 
         <form class="notify-form" onsubmit="return handleSubmit(event)">
             <input type="email" class="email-input" placeholder="Enter your email" required>
             <button type="submit" class="notify-btn">Notify Me</button>
         </form>
-
-        <div class="social-links">
-            <a href="#" class="social-icon" aria-label="Instagram">📷</a>
-            <a href="#" class="social-icon" aria-label="Facebook">f</a>
-            <a href="#" class="social-icon" aria-label="WhatsApp">💬</a>
-        </div>
     </div>
+
+    <!-- WhatsApp Contact -->
+    <a href="https://wa.me/918871542203" class="whatsapp-float" target="_blank" aria-label="Contact us on WhatsApp">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="white">
+            <path d="M16 0C7.164 0 0 7.164 0 16c0 2.825.738 5.478 2.031 7.777L0 32l8.399-2.002A15.915 15.915 0 0016 32c8.836 0 16-7.164 16-16S24.836 0 16 0zm8.164 22.547c-.347.977-2.039 1.848-2.883 1.973-.844.125-1.687.391-5.664-1.211-4.836-1.945-7.93-6.821-8.172-7.137-.242-.316-2.004-2.668-2.004-5.098s1.266-3.609 1.723-4.105c.457-.496.996-.621 1.328-.621.332 0 .664.004.957.016.309.016.723-.117 1.133.863.41.98 1.406 3.43 1.527 3.684.121.254.203.551.043.867-.16.316-.242.512-.484.785-.242.273-.508.609-.723.816-.242.23-.496.48-.211.945.285.465 1.266 2.086 2.715 3.379 1.867 1.668 3.434 2.184 3.926 2.434.492.25.781.211 1.066-.129.285-.34 1.219-1.422 1.547-1.914.328-.492.652-.41 1.098-.246.446.164 2.836 1.336 3.324 1.582.488.246.812.367.93.574.117.207.117 1.184-.23 2.161z"/>
+        </svg>
+    </a>
 
     <script>
         function handleSubmit(event) {
             event.preventDefault();
             const email = event.target.querySelector('.email-input').value;
-            alert('Thank you! We will notify you at ' + email + ' when we launch.');
+            // Here you would typically send to your backend
+            alert('Thank you! We will notify you at ' + email + ' when Misha Jewellery launches.');
             event.target.reset();
             return false;
         }

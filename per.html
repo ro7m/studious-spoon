@@ -75,9 +75,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 2rem;
+      padding: 1rem 2rem;
       gap: 2rem;
       position: relative;
+      min-height: 80px;
     }
 
     /* Hamburger Menu */
@@ -196,7 +197,7 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 2rem;
       font-weight: 500;
-      height: 110px;
+      max-height: 70px;
       color: var(--white);
       text-decoration: none;
       letter-spacing: 3px;
@@ -208,12 +209,14 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
+      overflow: hidden;
     }
 
     .logo img {
       height: 100%;
       width: auto;
-      max-width: 300px;
+      max-width: 250px;
+      max-height: 70px;
       object-fit: contain;
     }
 
@@ -363,7 +366,7 @@
 
     .cart-notification {
       position: fixed;
-      top: 80px;
+      top: 100px;
       right: 20px;
       background: #28a745;
       color: white;
@@ -592,111 +595,127 @@
       border-color: var(--white);
     }
 
-    /* Parallax Categories Section */
-    .parallax-section {
+    /* 3D Circular Carousel Slider */
+    .carousel-3d-section {
       position: relative;
       margin: 5rem 0;
-      overflow: hidden;
-      perspective: 1000px;
-    }
-
-    .parallax-container {
-      position: relative;
-      height: 500px;
-      overflow: hidden;
-    }
-
-    .parallax-track {
-      display: flex;
-      gap: 3rem;
-      position: absolute;
-      left: 0;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       padding: 3rem 0;
     }
 
-    .parallax-item {
-      min-width: 320px;
-      flex-shrink: 0;
+    .carousel-3d-container {
       position: relative;
-      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      transform-style: preserve-3d;
+      height: 550px;
+      perspective: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .category-card {
-      text-align: center;
-      padding: 2.5rem 1.5rem;
-      border: 2px solid var(--border);
+    .carousel-3d {
+      position: relative;
+      width: 350px;
+      height: 400px;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .carousel-3d-item {
+      position: absolute;
+      width: 300px;
+      height: 350px;
+      left: 50%;
+      top: 50%;
+      margin-left: -150px;
+      margin-top: -175px;
+      backface-visibility: hidden;
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .category-card-3d,
+    .product-card-3d {
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(28, 33, 76, 0.15);
+      overflow: hidden;
       cursor: pointer;
       transition: all 0.5s ease;
-      background: var(--white);
-      border-radius: 15px;
-      height: 100%;
-      transform: scale(0.85) translateZ(-100px);
-      opacity: 0.5;
-      box-shadow: 0 10px 40px rgba(28, 33, 76, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      border: 2px solid var(--border);
     }
 
-    .parallax-item.active .category-card {
-      transform: scale(1.15) translateZ(50px) rotateY(0deg);
-      opacity: 1;
+    .category-card-3d:hover,
+    .product-card-3d:hover {
+      box-shadow: 0 25px 70px rgba(28, 33, 76, 0.25);
       border-color: var(--primary);
-      box-shadow: 0 25px 60px rgba(28, 33, 76, 0.25);
-      z-index: 10;
+      transform: scale(1.05);
     }
 
-    .parallax-item.near .category-card {
-      transform: scale(0.95) translateZ(-20px);
-      opacity: 0.7;
-    }
-
-    .category-card:hover {
-      border-color: var(--primary);
-      transform: scale(1.2) translateZ(60px);
-      box-shadow: 0 30px 70px rgba(28, 33, 76, 0.3);
-      opacity: 1;
-    }
-
-    .category-card img {
-      width: 100px;
-      height: 100px;
+    .category-card-3d img {
+      width: 120px;
+      height: 120px;
       object-fit: cover;
       border-radius: 50%;
       margin-bottom: 1.5rem;
       border: 4px solid var(--light);
-      transition: all 0.4s ease;
     }
 
-    .parallax-item.active .category-card img {
-      transform: scale(1.1);
-      border-color: var(--primary);
-    }
-
-    .category-card h3 {
-      font-size: 1.5rem;
+    .category-card-3d h3 {
+      font-size: 1.8rem;
       color: var(--primary);
-      margin-bottom: 0.8rem;
-      transition: all 0.3s ease;
+      margin-bottom: 1rem;
     }
 
-    .category-card p {
-      font-size: 0.9rem;
+    .category-card-3d p {
+      font-size: 0.95rem;
       color: var(--text-light);
-      transition: all 0.3s ease;
     }
 
-    .parallax-nav {
+    .product-card-3d img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+    }
+
+    .product-card-3d h3 {
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .product-card-3d .price {
+      font-size: 1.3rem;
+      color: var(--primary);
+      font-weight: 600;
+      font-family: 'Cormorant Garamond', serif;
+      margin: 0.5rem 0;
+    }
+
+    .product-card-3d .product-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .carousel-3d-nav {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       background: var(--primary);
       color: var(--white);
       border: none;
-      width: 50px;
-      height: 50px;
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -705,62 +724,78 @@
       box-shadow: 0 5px 20px var(--shadow);
     }
 
-    .parallax-nav:hover {
+    .carousel-3d-nav:hover {
       background: var(--white);
       color: var(--primary);
       transform: translateY(-50%) scale(1.15);
       box-shadow: 0 8px 30px var(--shadow);
     }
 
-    .parallax-nav:active {
-      transform: translateY(-50%) scale(0.95);
+    .carousel-3d-nav.left {
+      left: 10%;
     }
 
-    .parallax-nav.left {
-      left: 20px;
+    .carousel-3d-nav.right {
+      right: 10%;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin: 4rem 0 3rem;
+    }
+    
+    .section-title {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+    
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-light);
+      font-weight: 300;
+      letter-spacing: 1px;
     }
 
-    .parallax-nav.right {
-      right: 20px;
+    .breadcrumb {
+      margin: 2rem 0 1rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
     }
 
-    /* Parallax Products */
-    .product-parallax-item {
-      min-width: 340px;
+    .breadcrumb a {
+      color: var(--primary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
     }
 
     .product-card {
       background: var(--white);
       border: 2px solid var(--border);
       overflow: hidden;
-      transition: all 0.5s ease;
+      transition: all 0.4s ease;
       position: relative;
       cursor: pointer;
       border-radius: 15px;
-      height: 100%;
-      transform: scale(0.85) translateZ(-100px) rotateY(-5deg);
-      opacity: 0.5;
-      box-shadow: 0 10px 40px rgba(28, 33, 76, 0.1);
-    }
-
-    .parallax-item.active .product-card {
-      transform: scale(1.1) translateZ(50px) rotateY(0deg);
-      opacity: 1;
-      box-shadow: 0 25px 60px rgba(28, 33, 76, 0.25);
-      border-color: var(--primary);
-      z-index: 10;
-    }
-
-    .parallax-item.near .product-card {
-      transform: scale(0.92) translateZ(-30px) rotateY(-3deg);
-      opacity: 0.7;
     }
 
     .product-card:hover { 
-      box-shadow: 0 30px 70px rgba(28, 33, 76, 0.3);
-      transform: scale(1.15) translateZ(60px) rotateY(0deg);
+      box-shadow: 0 15px 50px rgba(28, 33, 76, 0.2);
+      transform: translateY(-5px);
       border-color: var(--primary);
-      opacity: 1;
     }
 
     .product-img {
@@ -777,11 +812,11 @@
       max-width: 85%;
       max-height: 85%;
       object-fit: contain;
-      transition: transform 0.6s ease;
+      transition: transform 0.5s ease;
     }
 
     .product-card:hover .product-img img {
-      transform: scale(1.12);
+      transform: scale(1.1);
     }
 
     .product-info {
@@ -862,54 +897,6 @@
     @keyframes heartBeat {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.3); }
-    }
-    
-    .section-header {
-      text-align: center;
-      margin: 4rem 0 3rem;
-    }
-    
-    .section-title {
-      font-size: 3rem;
-      color: var(--primary);
-      margin-bottom: 1rem;
-      font-weight: 400;
-      letter-spacing: 2px;
-    }
-    
-    .section-subtitle {
-      font-size: 1rem;
-      color: var(--text-light);
-      font-weight: 300;
-      letter-spacing: 1px;
-    }
-
-    .breadcrumb {
-      margin: 2rem 0 1rem;
-      font-size: 0.85rem;
-      color: var(--text-light);
-    }
-
-    .breadcrumb a {
-      color: var(--primary);
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .breadcrumb a:hover {
-      text-decoration: underline;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .products .product-card {
-      transform: none;
-      opacity: 1;
     }
 
     .pagination {
@@ -1601,6 +1588,7 @@
       .header-content {
         padding: 1rem;
         justify-content: center;
+        min-height: 70px;
       }
 
       .hamburger-menu {
@@ -1608,13 +1596,14 @@
       }
 
       .logo {
-        height: 70px;
+        max-height: 55px;
         position: static;
         transform: none;
       }
 
       .logo img {
-        max-width: 180px;
+        max-width: 160px;
+        max-height: 55px;
       }
 
       .search-container {
@@ -1680,30 +1669,34 @@
         font-size: 2rem;
       }
 
-      .parallax-container {
-        height: 400px;
+      .carousel-3d-container {
+        height: 450px;
       }
 
-      .parallax-item {
-        min-width: 260px;
+      .carousel-3d {
+        width: 280px;
+        height: 350px;
       }
 
-      .product-parallax-item {
-        min-width: 260px;
+      .carousel-3d-item {
+        width: 250px;
+        height: 300px;
+        margin-left: -125px;
+        margin-top: -150px;
       }
 
-      .parallax-nav {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
+      .carousel-3d-nav {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
       }
 
-      .parallax-nav.left {
-        left: 10px;
+      .carousel-3d-nav.left {
+        left: 5%;
       }
 
-      .parallax-nav.right {
-        right: 10px;
+      .carousel-3d-nav.right {
+        right: 5%;
       }
 
       .products {
@@ -1866,14 +1859,14 @@
           <p class="section-subtitle">Discover our curated collections</p>
         </div>
         
-        <div class="parallax-section">
-          <div class="parallax-container">
-            <div class="parallax-track" id="categoriesTrack"></div>
+        <div class="carousel-3d-section">
+          <div class="carousel-3d-container">
+            <div class="carousel-3d" id="categoriesCarousel"></div>
           </div>
-          <button class="parallax-nav left" onclick="app.scrollParallax('categories', -1')">
+          <button class="carousel-3d-nav left" onclick="app.rotateCarousel('categories', -1)">
             <i class="fas fa-chevron-left"></i>
           </button>
-          <button class="parallax-nav right" onclick="app.scrollParallax('categories', 1)">
+          <button class="carousel-3d-nav right" onclick="app.rotateCarousel('categories', 1)">
             <i class="fas fa-chevron-right"></i>
           </button>
         </div>
@@ -1883,14 +1876,14 @@
           <p class="section-subtitle">Handpicked favorites just for you</p>
         </div>
         
-        <div class="parallax-section">
-          <div class="parallax-container">
-            <div class="parallax-track" id="productsTrack"></div>
+        <div class="carousel-3d-section">
+          <div class="carousel-3d-container">
+            <div class="carousel-3d" id="productsCarousel"></div>
           </div>
-          <button class="parallax-nav left" onclick="app.scrollParallax('products', -1)">
+          <button class="carousel-3d-nav left" onclick="app.rotateCarousel('products', -1)">
             <i class="fas fa-chevron-left"></i>
           </button>
-          <button class="parallax-nav right" onclick="app.scrollParallax('products', 1)">
+          <button class="carousel-3d-nav right" onclick="app.rotateCarousel('products', 1)">
             <i class="fas fa-chevron-right"></i>
           </button>
         </div>
@@ -2306,8 +2299,8 @@
       currentBannerIndex: 0,
       bannerInterval: null,
       totalBanners: 3,
-      categoriesIndex: 0,
-      productsIndex: 0,
+      categoriesRotation: 0,
+      productsRotation: 0,
       categories: [  
         { id: 'rings', name: 'Rings', image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80', description: 'Elegant rings for every occasion', icon: 'fa-ring' },
         { id: 'necklaces', name: 'Necklaces', image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80', description: 'Beautiful necklaces and pendants', icon: 'fa-gem' },
@@ -2318,9 +2311,9 @@
 
       async init() {
         await this.loadProducts();
-        this.renderCategories();
+        this.renderCategories3D();
         this.renderCategorySidebar();
-        this.renderFeaturedProducts();
+        this.renderFeaturedProducts3D();
         this.updateCartCount();
         this.updateWishlistCount();
         this.setupEventListeners();
@@ -2511,36 +2504,73 @@
         this.performSearch(query);
       },
 
-      // Parallax Scrolling
-      scrollParallax(type, direction) {
-        const track = document.getElementById(type === 'categories' ? 'categoriesTrack' : 'productsTrack');
-        const items = track.querySelectorAll('.parallax-item');
-        const itemWidth = items[0].offsetWidth + 48; // width + gap
-        
+      // 3D Circular Carousel
+      rotateCarousel(type, direction) {
         if (type === 'categories') {
-          this.categoriesIndex = Math.max(0, Math.min(this.categories.length - 1, this.categoriesIndex + direction));
-          const offset = -this.categoriesIndex * itemWidth;
-          track.style.transform = `translateX(${offset}px)`;
-          this.updateParallaxActive(track, this.categoriesIndex);
+          this.categoriesRotation += direction * (360 / this.categories.length);
+          const carousel = document.getElementById('categoriesCarousel');
+          carousel.style.transform = `rotateY(${this.categoriesRotation}deg)`;
         } else {
-          const maxIndex = Math.min(6, this.products.length) - 1;
-          this.productsIndex = Math.max(0, Math.min(maxIndex, this.productsIndex + direction));
-          const offset = -this.productsIndex * itemWidth;
-          track.style.transform = `translateX(${offset}px)`;
-          this.updateParallaxActive(track, this.productsIndex);
+          this.productsRotation += direction * (360 / Math.min(6, this.products.length));
+          const carousel = document.getElementById('productsCarousel');
+          carousel.style.transform = `rotateY(${this.productsRotation}deg)`;
         }
       },
 
-      updateParallaxActive(track, activeIndex) {
-        const items = track.querySelectorAll('.parallax-item');
-        items.forEach((item, index) => {
-          item.classList.remove('active', 'near');
-          if (index === activeIndex) {
-            item.classList.add('active');
-          } else if (Math.abs(index - activeIndex) === 1) {
-            item.classList.add('near');
-          }
-        });
+      renderCategories3D() {
+        const carousel = document.getElementById('categoriesCarousel');
+        const angleStep = 360 / this.categories.length;
+        const radius = 400;
+        
+        carousel.innerHTML = this.categories.map((cat, index) => {
+          const angle = angleStep * index;
+          const transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+          
+          return `
+            <div class="carousel-3d-item" style="transform: ${transform};">
+              <div class="category-card-3d" onclick="app.showCategory('${cat.id}')">
+                <img src="${cat.image}" alt="${cat.name}">
+                <h3>${cat.name}</h3>
+                <p>${cat.description}</p>
+              </div>
+            </div>
+          `;
+        }).join('');
+      },
+
+      renderFeaturedProducts3D() {
+        const carousel = document.getElementById('productsCarousel');
+        const featured = this.products.slice(0, 6);
+        const angleStep = 360 / featured.length;
+        const radius = 450;
+        
+        carousel.innerHTML = featured.map((p, index) => {
+          const angle = angleStep * index;
+          const transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+          const isInWishlist = this.wishlist.some(item => item.id === p.id);
+          
+          return `
+            <div class="carousel-3d-item" style="transform: ${transform};">
+              <div class="product-card-3d" onclick="app.showProductDetail('${p.id}')">
+                <img src="${p.images[0]}" alt="${p.name}">
+                <h3>${p.name}</h3>
+                <div class="price">₹${p.price.toLocaleString()}</div>
+                <div class="product-actions">
+                  <button class="wishlist-btn ${isInWishlist ? 'active' : ''}" 
+                          onclick="event.stopPropagation(); app.toggleWishlist('${p.id}')"
+                          title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <button class="add-to-cart-icon" 
+                          onclick="event.stopPropagation(); app.addToCart('${p.id}')"
+                          title="Add to Cart">
+                    <i class="fas fa-cart-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
       },
 
       updateWishlistCount() {
@@ -2550,29 +2580,6 @@
         
         if (countEl) countEl.textContent = count;
         if (mobileCountEl) mobileCountEl.textContent = count;
-      },
-
-      renderCategories() {
-        const track = document.getElementById('categoriesTrack');
-        track.innerHTML = this.categories.map((cat, index) => `
-          <div class="parallax-item ${index === 0 ? 'active' : ''}" data-index="${index}">
-            <div class="category-card" onclick="app.showCategory('${cat.id}')">
-              <img src="${cat.image}" alt="${cat.name}">
-              <h3>${cat.name}</h3>
-              <p>${cat.description}</p>
-            </div>
-          </div>
-        `).join('');
-      },
-
-      renderFeaturedProducts() {
-        const track = document.getElementById('productsTrack');
-        const featured = this.products.slice(0, 6);
-        track.innerHTML = featured.map((p, index) => `
-          <div class="parallax-item product-parallax-item ${index === 0 ? 'active' : ''}" data-index="${index}">
-            ${this.renderProductCard(p)}
-          </div>
-        `).join('');
       },
 
       renderProductCard(product) {
@@ -2773,10 +2780,10 @@
         `).join('');
         
         const wishlistBtn = document.getElementById('productDetailWishlist');
-        const isInWishlist = this.wishlist.some(item => item.id === product.id);
+        const isInWishlist = this.wish
+list.some(item => item.id === product.id);
         wishlistBtn.classList.toggle('active', isInWishlist);
-
-              wishlistBtn.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
+        wishlistBtn.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
         
         window.scrollTo(0, 0);
       },
@@ -3267,7 +3274,7 @@
         document.getElementById('categorySubtitle').textContent = `Found ${searchResults.length} products`;
         
         const grid = document.getElementById('categoryProducts');
-        grid.innerHTML = searchResults.map(p => this.renderProductCard(p)).join('');
+        grid.u = searchResults.map(p => this.renderProductCard(p)).join('');
         
         document.getElementById('pagination').innerHTML = '';
         
@@ -3279,7 +3286,7 @@
       }
     };
 
-    document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
       app.init();
     });
   </script>

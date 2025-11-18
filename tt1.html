@@ -1,139 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Misha Jewellery — Coming Soon</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #fafafa;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Inter', sans-serif;
-      color: #333;
-      padding: 2rem;
-    }
-
-    .container {
-      max-width: 600px;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .signature {
-      width: 100%;
-      height: 140px;
-      margin: 1.5rem auto 2rem;
-      position: relative;
-    }
-
-    .signature svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-
-    .signature path {
-      stroke: #c0c6d4; /* Cool silver */
-      stroke-width: 2.4;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: 1800;
-      stroke-dashoffset: 1800;
-      animation: draw 3.5s ease-in-out forwards;
-    }
-
-    @keyframes draw {
-      to {
-        stroke-dashoffset: 0;
-      }
-    }
-
-    .bead {
-      width: 10px;
-      height: 10px;
-      background: #c0c6d4;
-      border-radius: 50%;
-      margin: 1.8rem auto 1.5rem;
-      opacity: 0;
-      animation: beadAppear 1s 3.5s forwards;
-    }
-
-    @keyframes beadAppear {
-      to {
-        opacity: 1;
-      }
-    }
-
-    .brand {
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: #4a4a4a;
-      margin-bottom: 0.8rem;
-      opacity: 0;
-      animation: fadeUp 1s 4s forwards;
-    }
-
-    .tagline {
-      font-size: 1.1rem;
-      font-weight: 300;
-      color: #7a7a7a;
-      letter-spacing: 0.05em;
-      opacity: 0;
-      animation: fadeUp 1s 4.2s forwards;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MISHA JEWELLERY - Coming Soon</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            cursor: none;
+            position: relative;
+            height: 100vh;
+        }
+        
+        #canvas {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 1;
+        }
+        
+        .brand-container {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            perspective: 1000px;
+        }
+        
+        .brand-name {
+            font-size: 6rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            background: linear-gradient(135deg, #d4af37 0%, #fff 40%, #d4af37 60%, #fff 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: liquidGold 4s ease-in-out infinite, float3D 6s ease-in-out infinite;
+            transform-style: preserve-3d;
+            position: relative;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+        
+        @keyframes liquidGold {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes float3D {
+            0%, 100% { transform: rotateX(0deg) rotateY(0deg) translateZ(0px); }
+            25% { transform: rotateX(5deg) rotateY(-5deg) translateZ(20px); }
+            50% { transform: rotateX(-5deg) rotateY(5deg) translateZ(40px); }
+            75% { transform: rotateX(3deg) rotateY(-3deg) translateZ(20px); }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            color: #d4af37;
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 2s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100;
+            transition: transform 0.1s;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.3), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99;
+            transition: transform 0.3s;
+        }
+        
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #d4af37;
+            border-radius: 50%;
+            opacity: 0;
+            box-shadow: 0 0 10px #d4af37;
+        }
+        
+        .hologram-ring {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            z-index: 3;
+        }
+        
+        .ring-path {
+            stroke: #d4af37;
+            stroke-width: 2;
+            fill: none;
+            filter: drop-shadow(0 0 15px #d4af37);
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawRing 3s ease-out 1s forwards, pulseRing 2s ease-in-out infinite 4s;
+        }
+        
+        @keyframes drawRing {
+            to { stroke-dashoffset: 0; }
+        }
+        
+        @keyframes pulseRing {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        .coming-soon {
+            position: fixed;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            letter-spacing: 6px;
+            color: #888;
+            z-index: 10;
+        }
+    </style>
+<base target="_blank">
 </head>
 <body>
-  <div class="container">
-    <div class="signature">
-      <svg viewBox="0 0 600 140" preserveAspectRatio="xMidYMid meet">
-        <!-- Realistic handwritten "Misha" -->
-        <path d="
-          M 80 90
-          Q 85 60, 105 70
-          Q 120 78, 130 65
-          Q 140 50, 155 65
-          L 160 70
-          Q 165 80, 175 75
-          Q 185 70, 190 60
-          Q 195 50, 205 60
-          Q 210 65, 215 70
-          Q 220 80, 230 75
-          Q 240 70, 245 60
-          Q 250 50, 260 60
-          Q 265 65, 270 70
-          Q 275 80, 285 75
-          Q 295 70, 300 60
-          Q 305 50, 315 60
-          Q 320 65, 325 70
-          Q 330 80, 340 70
-          Q 345 65, 350 70
-          Q 355 80, 365 70
-          Q 370 65, 375 70
-        " />
-      </svg>
+    <canvas id="canvas"></canvas>
+    
+    <div class="hologram-ring">
+        <svg viewBox="0 0 300 300" width="300" height="300">
+            <path class="ring-path" d="M150,50 C200,50 240,90 240,140 C240,190 200,230 150,230 C100,230 60,190 60,140 C60,90 100,50 150,50 Z M150,80 C180,80 200,100 200,130 C200,160 180,180 150,180 C120,180 100,160 100,130 C100,100 120,80 150,80 Z" />
+            <circle cx="150" cy="140" r="30" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.5" />
+        </svg>
     </div>
     
-    <div class="bead"></div>
+    <div class="brand-container">
+        <h1 class="brand-name">MISHA</h1>
+        <p class="subtitle">COUTURE JEWELLERY</p>
+    </div>
     
-    <h1 class="brand">Misha Jewellery</h1>
-    <p class="tagline">Coming Soon — Fall 2025</p>
-  </div>
+    <div class="coming-soon">
+        EXQUISITE COLLECTION ARRIVING 2025
+    </div>
+    
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <script>
+        // Custom mouse cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let followerX = 0, followerY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+            followerX += (mouseX - followerX) * 0.1;
+            followerY += (mouseY - followerY) * 0.1;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            cursorFollower.style.left = followerX + 'px';
+            cursorFollower.style.top = followerY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        
+        // Particle system
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        const particles = [];
+        const particleCount = 200;
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.z = Math.random() * 1000;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 3 + 1;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.color = Math.random() > 0.5 ? '#d4af37' : '#fff';
+            }
+            
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.z -= 2;
+                
+                if (this.z < 0) this.z = 1000;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                
+                // Mouse attraction
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 150) {
+                    const force = (150 - distance) / 150;
+                    this.x -= dx * force * 0.01;
+                    this.y -= dy * force * 0.01;
+                }
+            }
+            
+            draw() {
+                const scale = 200 / (200 + this.z);
+                ctx.save();
+                ctx.globalAlpha = this.opacity * scale;
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * scale, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+        
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        animate();
+        
+        // Glitch effect on load
+        setInterval(() => {
+            const brand = document.querySelector('.brand-name');
+            brand.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`;
+            setTimeout(() => {
+                brand.style.transform = 'translate(0, 0)';
+            }, 50);
+        }, 5000);
+    </script>
 </body>
 </html>

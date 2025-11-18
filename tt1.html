@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Misha Jewellery — Coming Soon</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -21,11 +21,6 @@
       font-family: 'Inter', sans-serif;
       color: #333;
       padding: 2rem;
-      background-image: 
-        radial-gradient(#e0e0e0 1px, transparent 1px),
-        radial-gradient(#e0e0e0 1px, transparent 1px);
-      background-size: 40px 40px;
-      background-position: 0 0, 20px 20px;
     }
 
     .container {
@@ -36,7 +31,7 @@
 
     .signature {
       width: 100%;
-      height: 120px;
+      height: 140px;
       margin: 1.5rem auto 2rem;
       position: relative;
     }
@@ -48,14 +43,14 @@
     }
 
     .signature path {
-      stroke: #c0c6d4;
-      stroke-width: 2.8;
+      stroke: #c0c6d4; /* Cool silver */
+      stroke-width: 2.4;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
-      stroke-dasharray: 1200;
-      stroke-dashoffset: 1200;
-      animation: draw 3.2s ease-in-out forwards;
+      stroke-dasharray: 1800;
+      stroke-dashoffset: 1800;
+      animation: draw 3.5s ease-in-out forwards;
     }
 
     @keyframes draw {
@@ -65,19 +60,18 @@
     }
 
     .bead {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       background: #c0c6d4;
       border-radius: 50%;
       margin: 1.8rem auto 1.5rem;
       opacity: 0;
-      animation: beadAppear 1s 3.2s forwards;
+      animation: beadAppear 1s 3.5s forwards;
     }
 
     @keyframes beadAppear {
       to {
         opacity: 1;
-        transform: scale(1);
       }
     }
 
@@ -87,7 +81,7 @@
       color: #4a4a4a;
       margin-bottom: 0.8rem;
       opacity: 0;
-      animation: fadeUp 1s 3.8s forwards;
+      animation: fadeUp 1s 4s forwards;
     }
 
     .tagline {
@@ -96,45 +90,43 @@
       color: #7a7a7a;
       letter-spacing: 0.05em;
       opacity: 0;
-      animation: fadeUp 1s 4.1s forwards;
+      animation: fadeUp 1s 4.2s forwards;
     }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .brand { font-size: 1.5rem; }
-      .tagline { font-size: 1rem; }
-      .signature { height: 100px; }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="signature">
-      <svg viewBox="0 0 500 120" preserveAspectRatio="xMidYMid meet">
-        <!-- Hand-drawn "Misha" in elegant script -->
-        <path d="M60,80 
-                 Q70,40 90,70 
-                 Q105,95 120,70 
-                 Q135,45 150,75 
-                 Q160,90 175,75 
-                 Q185,60 195,70 
-                 Q205,80 220,65 
-                 Q235,50 250,75 
-                 Q260,90 275,70 
-                 Q285,55 295,70 
-                 Q305,85 320,70 
-                 Q330,60 340,70 
-                 Q350,80 365,65" />
+      <svg viewBox="0 0 600 140" preserveAspectRatio="xMidYMid meet">
+        <!-- Realistic handwritten "Misha" -->
+        <path d="
+          M 80 90
+          Q 85 60, 105 70
+          Q 120 78, 130 65
+          Q 140 50, 155 65
+          L 160 70
+          Q 165 80, 175 75
+          Q 185 70, 190 60
+          Q 195 50, 205 60
+          Q 210 65, 215 70
+          Q 220 80, 230 75
+          Q 240 70, 245 60
+          Q 250 50, 260 60
+          Q 265 65, 270 70
+          Q 275 80, 285 75
+          Q 295 70, 300 60
+          Q 305 50, 315 60
+          Q 320 65, 325 70
+          Q 330 80, 340 70
+          Q 345 65, 350 70
+          Q 355 80, 365 70
+          Q 370 65, 375 70
+        " />
       </svg>
     </div>
     

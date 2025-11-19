@@ -72,8 +72,8 @@
     
     .header-content {
       background: var(--primary);
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
       padding: 1rem 2rem;
       gap: 2rem;
@@ -89,8 +89,6 @@
       gap: 5px;
       padding: 8px;
       z-index: 101;
-      position: absolute;
-      left: 2rem;
     }
 
     .hamburger-menu span {
@@ -205,10 +203,8 @@
       cursor: pointer;
       display: flex;
       align-items: center;
+      justify-content: center;
       flex-shrink: 0;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
       overflow: hidden;
       z-index: 50;
     }
@@ -221,23 +217,35 @@
       object-fit: contain;
     }
 
-    /* Search Bar - Fixed positioning without stretching over logo */
+    /* Search Bar - On new line below header */
     .search-container {
-      position: fixed;
-      right: 240px;
-      top: 20px;
-      z-index: 150;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 90;
+      background: var(--primary);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .search-container.active {
+      max-height: 80px;
+      padding: 1rem 2rem;
     }
 
     .search-bar {
       position: relative;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    .search-icon-btn {
-      background: var(--primary);
+    .search-icon-trigger {
+      background: none;
       border: 2px solid var(--white);
       color: var(--white);
       font-size: 1.2rem;
@@ -249,66 +257,55 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10;
-      position: relative;
     }
 
-    .search-icon-btn:hover {
+    .search-icon-trigger:hover {
       transform: scale(1.1);
       background: var(--white);
       color: var(--primary);
     }
 
     .search-bar input {
-      position: absolute;
-      right: 0;
-      width: 0;
-      padding: 0;
+      width: 100%;
+      padding: 0.8rem 3rem 0.8rem 1.5rem;
       border: 2px solid var(--white);
       font-family: 'Montserrat', sans-serif;
-      font-size: 0.85rem;
-      transition: all 0.4s ease;
+      font-size: 0.9rem;
       background: var(--white);
       color: var(--text);
-      opacity: 0;
       border-radius: 25px;
-      height: 45px;
-    }
-
-    .search-bar.expanded input {
-      width: 300px;
-      padding: 0 3rem 0 1rem;
-      opacity: 1;
-      z-index: 5;
+      transition: all 0.3s ease;
     }
 
     .search-bar input:focus {
       outline: none;
-      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
     }
 
-    .search-bar .search-submit {
+    .search-bar input::placeholder {
+      color: var(--text-light);
+    }
+
+    .search-submit {
       position: absolute;
-      right: 55px;
+      right: 1rem;
       color: var(--text-light);
       background: none;
       border: none;
       cursor: pointer;
-      display: none;
-      font-size: 1rem;
-      z-index: 20;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
     }
 
-    .search-bar.expanded .search-submit {
-      display: block;
+    .search-submit:hover {
+      color: var(--primary);
     }
     
     .header-icons {
       display: flex;
       gap: 1.5rem;
       align-items: center;
-      position: absolute;
-      right: 2rem;
+      justify-content: flex-end;
     }
 
     /* Wishlist Icon */
@@ -614,131 +611,186 @@
       border-color: var(--white);
     }
 
-    /* Infinite Loop Carousel Slider */
-    .infinite-carousel-section {
+    /* Modern Card Slider with Smooth Scrolling */
+    .card-slider-section {
       position: relative;
       margin: 5rem 0;
       padding: 2rem 0;
-      overflow: hidden;
     }
 
-    .infinite-carousel-wrapper {
-      overflow: hidden;
+    .slider-wrapper {
       position: relative;
-      width: 100%;
+      overflow: hidden;
+      padding: 2rem 0;
     }
 
-    .infinite-carousel-track {
+    .slider-container {
       display: flex;
       gap: 2rem;
-      animation: scroll 30s linear infinite;
-      width: fit-content;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 1rem;
     }
 
-    .infinite-carousel-track:hover {
-      animation-play-state: paused;
+    .slider-container::-webkit-scrollbar {
+      display: none;
     }
 
-    @keyframes scroll {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-
-    .carousel-item-wrapper {
+    .slider-card {
+      min-width: 320px;
       flex-shrink: 0;
-      width: 320px;
-      transition: transform 0.3s ease;
-    }
-
-    .carousel-item-wrapper:hover {
-      transform: scale(1.05);
-    }
-
-    .category-card-infinite,
-    .product-card-infinite {
-      width: 100%;
-      height: 380px;
       background: var(--white);
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(28, 33, 76, 0.12);
+      border-radius: 20px;
       overflow: hidden;
+      box-shadow: 0 10px 30px rgba(28, 33, 76, 0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       cursor: pointer;
-      transition: all 0.4s ease;
+      border: 2px solid transparent;
+    }
+
+    .slider-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 50px rgba(28, 33, 76, 0.2);
+      border-color: var(--primary);
+    }
+
+    .category-slider-card {
+      height: 380px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 2rem;
-      border: 2px solid var(--border);
+      padding: 2.5rem 2rem;
+      background: linear-gradient(135deg, var(--white) 0%, var(--light) 100%);
     }
 
-    .category-card-infinite:hover,
-    .product-card-infinite:hover {
-      box-shadow: 0 15px 50px rgba(28, 33, 76, 0.2);
-      border-color: var(--primary);
-      transform: translateY(-5px);
-    }
-
-    .category-card-infinite img {
-      width: 120px;
-      height: 120px;
+    .category-slider-card img {
+      width: 140px;
+      height: 140px;
       object-fit: cover;
       border-radius: 50%;
       margin-bottom: 1.5rem;
-      border: 4px solid var(--light);
+      border: 5px solid var(--white);
+      box-shadow: 0 5px 20px rgba(28, 33, 76, 0.15);
+      transition: all 0.4s ease;
+    }
+
+    .slider-card:hover .category-slider-card img {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 10px 30px rgba(28, 33, 76, 0.25);
+    }
+
+    .category-slider-card h3 {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
       transition: all 0.3s ease;
     }
 
-    .category-card-infinite:hover img {
-      transform: scale(1.1);
-      border-color: var(--primary);
+    .slider-card:hover .category-slider-card h3 {
+      transform: translateY(-5px);
     }
 
-    .category-card-infinite h3 {
-      font-size: 1.6rem;
-      color: var(--primary);
-      margin-bottom: 0.8rem;
-    }
-
-    .category-card-infinite p {
-      font-size: 0.9rem;
+    .category-slider-card p {
+      font-size: 0.95rem;
       color: var(--text-light);
+      line-height: 1.6;
     }
 
-    .product-card-infinite {
-      padding: 1.5rem;
+    .product-slider-card {
+      height: 450px;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
     }
 
-    .product-card-infinite img {
-      width: 100%;
-      height: 200px;
+    .product-slider-card .product-img {
+      height: 250px;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-slider-card .product-img img {
+      max-width: 90%;
+      max-height: 90%;
       object-fit: contain;
-      margin-bottom: 1rem;
+      transition: transform 0.5s ease;
     }
 
-    .product-card-infinite h3 {
+    .slider-card:hover .product-img img {
+      transform: scale(1.15);
+    }
+
+    .product-slider-info {
+      padding: 1.5rem;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-slider-info h3 {
       font-size: 1.3rem;
       color: var(--primary);
       margin-bottom: 0.5rem;
     }
 
-    .product-card-infinite .price {
-      font-size: 1.4rem;
+    .product-slider-info .price {
+      font-size: 1.5rem;
       color: var(--primary);
       font-weight: 600;
       font-family: 'Cormorant Garamond', serif;
-      margin: 0.5rem 0 1rem;
+      margin: 0.8rem 0;
     }
 
-    .product-card-infinite .product-actions {
+    .product-slider-actions {
       display: flex;
       gap: 1rem;
       justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .slider-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+      box-shadow: 0 5px 20px var(--shadow);
+    }
+
+    .slider-nav-btn:hover {
+      background: var(--white);
+      color: var(--primary);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 8px 30px var(--shadow);
+    }
+
+    .slider-nav-btn.left {
+      left: -20px;
+    }
+
+    .slider-nav-btn.right {
+      right: -20px;
     }
     
     .section-header {
@@ -1521,19 +1573,13 @@
       }
 
       .header-content {
+        grid-template-columns: auto 1fr auto;
         padding: 1rem;
-        justify-content: center;
         min-height: 70px;
-      }
-
-      .hamburger-menu {
-        left: 1rem;
       }
 
       .logo {
         max-height: 55px;
-        position: static;
-        transform: none;
       }
 
       .logo img {
@@ -1541,17 +1587,11 @@
         max-height: 55px;
       }
 
-      .search-container {
-        right: 60px;
-        top: 15px;
-      }
-
-      .search-bar.expanded input {
-        width: 200px;
+      .search-container.active {
+        padding: 1rem;
       }
 
       .header-icons {
-        right: 1rem;
         gap: 1rem;
       }
 
@@ -1601,8 +1641,22 @@
         font-size: 2rem;
       }
 
-      .carousel-item-wrapper {
-        width: 250px;
+      .slider-card {
+        min-width: 260px;
+      }
+
+      .slider-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+      }
+
+      .slider-nav-btn.left {
+        left: 5px;
+      }
+
+      .slider-nav-btn.right {
+        right: 5px;
       }
 
       .products {
@@ -1680,19 +1734,11 @@
         <img src="https://res.cloudinary.com/dsm5crlf1/image/upload/v1763133630/Maisha_Jewellery_Logo_2_ph7wqa.png" alt="Misha Jewellery" />
       </a>
 
-      <div class="search-container">
-        <div class="search-bar" id="searchBar">
-          <button class="search-icon-btn" onclick="app.toggleSearch()">
-            <i class="fas fa-search"></i>
-          </button>
-          <input type="text" id="searchInput" placeholder="Search for jewelry..." />
-          <button class="search-submit" onclick="app.performSearchFromInput()">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-
       <div class="header-icons">
+        <button class="search-icon-trigger" onclick="app.toggleSearch()" title="Search">
+          <i class="fas fa-search"></i>
+        </button>
+
         <div class="wishlist-icon" id="wishlistIcon" onclick="app.showWishlist()">
           <i class="fas fa-heart"></i>
           <span class="wishlist-count" id="wishlistCount">0</span>
@@ -1702,6 +1748,16 @@
           <i class="fas fa-shopping-cart"></i>
           <span class="cart-count" id="cartCount">0</span>
         </div>
+      </div>
+    </div>
+
+    <!-- Search Bar on new line -->
+    <div class="search-container" id="searchContainer">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for jewelry..." />
+        <button class="search-submit" onclick="app.performSearchFromInput()">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
     </div>
   </header>
@@ -1751,9 +1807,15 @@
           <p class="section-subtitle">Discover our curated collections</p>
         </div>
         
-        <div class="infinite-carousel-section">
-          <div class="infinite-carousel-wrapper">
-            <div class="infinite-carousel-track" id="categoriesTrack"></div>
+        <div class="card-slider-section">
+          <div class="slider-wrapper">
+            <div class="slider-container" id="categoriesSlider"></div>
+            <button class="slider-nav-btn left" onclick="app.slideLeft('categories')">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-nav-btn right" onclick="app.slideRight('categories')">
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
         </div>
 
@@ -1762,9 +1824,15 @@
           <p class="section-subtitle">Handpicked favorites just for you</p>
         </div>
         
-        <div class="infinite-carousel-section">
-          <div class="infinite-carousel-wrapper">
-            <div class="infinite-carousel-track" id="productsTrack"></div>
+        <div class="card-slider-section">
+          <div class="slider-wrapper">
+            <div class="slider-container" id="productsSlider"></div>
+            <button class="slider-nav-btn left" onclick="app.slideLeft('products')">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-nav-btn right" onclick="app.slideRight('products')">
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
         </div>
       </main>
@@ -2173,9 +2241,9 @@
 
       async init() {
         await this.loadProducts();
-        this.renderInfiniteCategories();
+        this.renderCardSlider();
         this.renderCategorySidebar();
-        this.renderInfiniteFeaturedProducts();
+        this.renderProductSlider();
         this.updateCartCount();
         this.updateWishlistCount();
         this.setupEventListeners();
@@ -2349,15 +2417,15 @@
       },
 
       toggleSearch() {
-        const searchBar = document.getElementById('searchBar');
-        const searchInput = document.getElementById('searchInput');
+        const container = document.getElementById('searchContainer');
+        const input = document.getElementById('searchInput');
         
-        if (searchBar.classList.contains('expanded')) {
-          searchBar.classList.remove('expanded');
-          searchInput.value = '';
+        if (container.classList.contains('active')) {
+          container.classList.remove('active');
+          input.value = '';
         } else {
-          searchBar.classList.add('expanded');
-          searchInput.focus();
+          container.classList.add('active');
+          setTimeout(() => input.focus(), 400);
         }
       },
 
@@ -2366,55 +2434,65 @@
         this.performSearch(query);
       },
 
-      // Infinite Loop Carousel
-      renderInfiniteCategories() {
-        const track = document.getElementById('categoriesTrack');
-        const categoriesHTML = this.categories.map(cat => `
-          <div class="carousel-item-wrapper">
-            <div class="category-card-infinite" onclick="app.showCategory('${cat.id}')">
+      // Modern Card Slider
+      renderCardSlider() {
+        const slider = document.getElementById('categoriesSlider');
+        slider.innerHTML = this.categories.map(cat => `
+          <div class="slider-card">
+            <div class="category-slider-card" onclick="app.showCategory('${cat.id}')">
               <img src="${cat.image}" alt="${cat.name}">
               <h3>${cat.name}</h3>
               <p>${cat.description}</p>
             </div>
           </div>
         `).join('');
-        
-        // Duplicate for infinite loop effect
-        track.innerHTML = categoriesHTML + categoriesHTML;
       },
 
-      renderInfiniteFeaturedProducts() {
-        const track = document.getElementById('productsTrack');
+      renderProductSlider() {
+        const slider = document.getElementById('productsSlider');
         const featured = this.products.slice(0, 6);
         
-        const productsHTML = featured.map(p => {
+        slider.innerHTML = featured.map(p => {
           const isInWishlist = this.wishlist.some(item => item.id === p.id);
           
           return `
-            <div class="carousel-item-wrapper">
-              <div class="product-card-infinite" onclick="app.showProductDetail('${p.id}')">
-                <img src="${p.images[0]}" alt="${p.name}">
-                <h3>${p.name}</h3>
-                <div class="price">₹${p.price.toLocaleString()}</div>
-                <div class="product-actions">
-                  <button class="wishlist-btn ${isInWishlist ? 'active' : ''}" 
-                          onclick="event.stopPropagation(); app.toggleWishlist('${p.id}')"
-                          title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}">
-                    <i class="fas fa-heart"></i>
-                  </button>
-                  <button class="add-to-cart-icon" 
-                          onclick="event.stopPropagation(); app.addToCart('${p.id}')"
-                          title="Add to Cart">
-                    <i class="fas fa-cart-plus"></i>
-                  </button>
+            <div class="slider-card">
+              <div class="product-slider-card" onclick="app.showProductDetail('${p.id}')">
+                <div class="product-img">
+                  <img src="${p.images[0]}" alt="${p.name}">
+                </div>
+                <div class="product-slider-info">
+                  <div>
+                    <h3>${p.name}</h3>
+                    <div class="price">₹${p.price.toLocaleString()}</div>
+                  </div>
+                  <div class="product-slider-actions">
+                    <button class="wishlist-btn ${isInWishlist ? 'active' : ''}" 
+                            onclick="event.stopPropagation(); app.toggleWishlist('${p.id}')"
+                            title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}">
+                      <i class="fas fa-heart"></i>
+                    </button>
+                    <button class="add-to-cart-icon" 
+                            onclick="event.stopPropagation(); app.addToCart('${p.id}')"
+                            title="Add to Cart">
+                      <i class="fas fa-cart-plus"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           `;
         }).join('');
-        
-        // Duplicate for infinite loop effect
-        track.innerHTML = productsHTML + productsHTML;
+      },
+
+      slideLeft(type) {
+        const slider = document.getElementById(type === 'categories' ? 'categoriesSlider' : 'productsSlider');
+        slider.scrollBy({ left: -360, behavior: 'smooth' });
+      },
+
+      slideRight(type) {
+        const slider = document.getElementById(type === 'categories' ? 'categoriesSlider' : 'productsSlider');
+        slider.scrollBy({ left: 360, behavior: 'smooth' });
       },
 
       updateWishlistCount() {
@@ -2732,7 +2810,7 @@
               </div>
             </div>
             <button class="remove-item" onclick="app.removeFromCart('${item.id}')">
-              <i class="fas fa-trash"></i>
+                          <i class="fas fa-trash"></i>
             </button>
           </div>
         `).join('');
@@ -2819,7 +2897,7 @@
         const state = document.getElementById('customerState').value.trim();
         
         document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-        document.queryelectorAll('.form-group input, .form-group textarea').forEach(el => el.classList.remove('error'));
+        document.querySelectorAll('.form-group input, .form-group textarea').forEach(el => el.classList.remove('error'));
         
         let hasError = false;
         
@@ -3116,8 +3194,8 @@
         
         document.getElementById('pagination').innerHTML = '';
         
-        const searchBar = document.getElementById('searchBar');
-        searchBar.classList.remove('expanded');
+        const searchContainer = document.getElementById('searchContainer');
+        searchContainer.classList.remove('active');
         document.getElementById('searchInput').value = '';
         
         window.scrollTo(0, 0);
@@ -3130,3 +3208,4 @@
   </script>
 </body>
 </html>
+

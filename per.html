@@ -3307,8 +3307,8 @@
           
           if (data[0].Status === 'Success' && data[0].PostOffice.length > 0) {
             const postOffice = data[0].PostOffice[0];
-            document.getElementById('customerCity').value = postOffice.District;
-            document.getElementById('customerDistrict').value = postOffice.Division;
+            document.getElementById('customerCity').value = postOffice.Name;
+            document.getElementById('customerDistrict').value = postOffice.District;
             document.getElementById('customerState').value = postOffice.State;
           }
         } catch (err) {

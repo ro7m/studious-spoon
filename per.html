@@ -3145,8 +3145,7 @@
             },
             body: JSON.stringify({
               type: 'order_confirmation',
-              orderData,
-              ${CONFIG.store.email}
+              orderData
             })
           });
         } catch (err) {

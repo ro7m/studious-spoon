@@ -3301,21 +3301,56 @@
       },
 
       async fetchPincodeData(pincode) {
-        try {
-          const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
-          const data = await response.json();
-          
-          if (data[0].Status === 'Success' && data[0].PostOffice.length > 0) {
-            const postOffice = data[0].PostOffice[0];
-            document.getElementById('customerCity').value = postOffice.Name;
-            document.getElementById('customerDistrict').value = postOffice.District;
-            document.getElementById('customerState').value = postOffice.State;
+        const pincode = document.getElementById('customerPincode').value.trim();
+        const cityInput = document.getElementById('customerCity');
+        const districtInput = document.getElementById('customerDistrict');
+        const stateInput = document.getElementById('customerState');
+        const pincodeError = document.getElementById('pincodeError');
+        
+        if (pincode.length === 6 && /^\d+$/.test(pincode)) {
+          try {
+            pincodeError.textContent = 'Fetching location...';
+            pincodeError.style.color = 'var(--primary)';
+            
+            const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+            const data = await response.json();
+            
+            if (data && data[0].Status === 'Success' && data[0].PostOffice && data[0].PostOffice.length > 0) {
+              const postOffice = data[0].PostOffice[0];
+              
+              cityInput.value = postOffice.Name || postOffice.District || '';
+              cityInput.removeAttribute('readonly');
+              
+              districtInput.value = postOffice.District || '';
+              stateInput.value = postOffice.State || '';
+              
+              pincodeError.textContent = '';
+              document.getElementById('cityError').textContent = '';
+              document.getElementById('districtError').textContent = '';
+              document.getElementById('stateError').textContent = '';
+              
+              cityInput.classList.remove('error');
+              districtInput.classList.remove('error');
+              stateInput.classList.remove('error');
+            } else {
+              cityInput.value = '';
+              districtInput.value = '';
+              stateInput.value = '';
+              cityInput.removeAttribute('readonly');
+              
+              pincodeError.textContent = 'Invalid PIN code or location not found';
+            }
+          } catch (error) {
+            console.error('Error fetching PIN code data:', error);
+            cityInput.value = '';
+            districtInput.value = '';
+            stateInput.value = '';
+            cityInput.removeAttribute('readonly');
+            
+            pincodeError.textContent = 'Error fetching location data';
           }
-        } catch (err) {
-          console.error('Failed to fetch pincode data:', err);
         }
-      }
-    };
+      };
 
     document.addEventListener('DOMContentLoaded', () => {
       app.init();

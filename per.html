@@ -1317,7 +1317,100 @@
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
     }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
 
+    .form-group input.error,
+    .form-group textarea.error {
+      border-color: var(--primary);
+      border-style: dashed;
+    }
+
+    .error-message {
+      display: block;
+      color: var(--primary);
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      min-height: 1rem;
+      font-weight: 500;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-info {
+      background: var(--light);
+      padding: 1rem;
+      border-left: 4px solid var(--primary);
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .form-info i {
+      color: var(--primary);
+      margin-right: 0.5rem;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn-cancel,
+    .btn-submit {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .btn-cancel {
+      background: var(--light);
+      color: var(--primary);
+      border: 2px solid var(--border);
+    }
+
+    .btn-cancel:hover {
+      background: var(--border);
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-submit:hover {
+      background: var(--white);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .loading-indicator {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid var(--white);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 0.5rem;
+    }
+    
     .checkout-summary {
         background: var(--white);
         padding: 2rem;
@@ -2134,8 +2227,8 @@
           </div>
 
           <div class="form-buttons" style="display: flex; gap: 1rem; margin-top: 2rem;">
-            <button type="button" class="btn" onclick="app.closeCustomerForm()">Cancel</button>
-            <button type="button" class="btn" onclick="app.submitCustomerForm()">Proceed to Payment</button>
+          <button type="button" class="btn-cancel" onclick="app.closeCustomerForm()">Cancel</button>
+          <button type="button" class="btn-submit" onclick="app.submitCustomerForm()">Proceed to Payment</button>
           </div>
         </form>
 
@@ -2253,6 +2346,11 @@
 
       async loadProducts() {
         try {
+          const productsEl = document.getElementById('featuredProducts');
+          if (productsEl) {
+            productsEl.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading products...</p></div>';
+          }
+
           const { data, error } = await supabase
             .from('products')
             .select('*')
@@ -2263,6 +2361,10 @@
             this.products = this.getSampleProducts();
           } else {
             this.products = data && data.length > 0 ? data : this.getSampleProducts();
+          }
+
+          if (productsEl) {
+            productsEl.innerHTML = '';
           }
         } catch (err) {
           console.error('Failed to load products:', err);
@@ -2396,7 +2498,6 @@
         }
       },
 
-      // Sidebar functions
       renderCategorySidebar() {
         const content = document.getElementById('categorySidebarContent');
         content.innerHTML = this.categories.map(cat => `

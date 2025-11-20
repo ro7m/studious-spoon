@@ -1754,7 +1754,7 @@
     <!-- Search Bar on new line -->
     <div class="search-container" id="searchContainer">
       <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search for jewelry..." />
+        <input type="text" id="searchInput" placeholder="Search...." />
         <button class="search-submit" onclick="app.performSearchFromInput()">
           <i class="fas fa-search"></i>
         </button>
@@ -2201,7 +2201,7 @@
     </div>
   </footer>
 
-  <script>
+<script>
     const CONFIG = {
       supabase: {
         url: 'https://kplmeebifsuziytppwzb.supabase.co', 
@@ -2267,64 +2267,6 @@
         } catch (err) {
           console.error('Failed to load products:', err);
           this.products = this.getSampleProducts();
-        }
-      },
-
-      initBannerCarousel() {
-        const dotsContainer = document.getElementById('bannerDots');
-        dotsContainer.innerHTML = '';
-        
-        for (let i = 0; i < this.totalBanners; i++) {
-          const dot = document.createElement('div');
-          dot.className = `banner-dot ${i === 0 ? 'active' : ''}`;
-          dot.onclick = () => this.goToBanner(i);
-          dotsContainer.appendChild(dot);
-        }
-        
-        this.startBannerAutoPlay();
-      },
-
-      goToBanner(index) {
-        this.currentBannerIndex = index;
-        this.updateBannerPosition();
-        this.stopBannerAutoPlay();
-        this.startBannerAutoPlay();
-      },
-
-      nextBanner() {
-        this.currentBannerIndex = (this.currentBannerIndex + 1) % this.totalBanners;
-        this.updateBannerPosition();
-        this.stopBannerAutoPlay();
-        this.startBannerAutoPlay();
-      },
-
-      prevBanner() {
-        this.currentBannerIndex = (this.currentBannerIndex - 1 + this.totalBanners) % this.totalBanners;
-        this.updateBannerPosition();
-        this.stopBannerAutoPlay();
-        this.startBannerAutoPlay();
-      },
-
-      updateBannerPosition() {
-        const slides = document.getElementById('bannerSlides');
-        slides.style.transform = `translateX(-${this.currentBannerIndex * 100}%)`;
-        
-        document.querySelectorAll('.banner-dot').forEach((dot, index) => {
-          dot.classList.toggle('active', index === this.currentBannerIndex);
-        });
-      },
-
-      startBannerAutoPlay() {
-        this.stopBannerAutoPlay();
-        this.bannerInterval = setInterval(() => {
-          this.nextBanner();
-        }, 5000);
-      },
-
-      stopBannerAutoPlay() {
-        if (this.bannerInterval) {
-          clearInterval(this.bannerInterval);
-          this.bannerInterval = null;
         }
       },
 
@@ -2396,6 +2338,65 @@
         ];
       },
 
+      initBannerCarousel() {
+        const dotsContainer = document.getElementById('bannerDots');
+        dotsContainer.innerHTML = '';
+        
+        for (let i = 0; i < this.totalBanners; i++) {
+          const dot = document.createElement('div');
+          dot.className = `banner-dot ${i === 0 ? 'active' : ''}`;
+          dot.onclick = () => this.goToBanner(i);
+          dotsContainer.appendChild(dot);
+        }
+        
+        this.startBannerAutoPlay();
+      },
+
+      goToBanner(index) {
+        this.currentBannerIndex = index;
+        this.updateBannerPosition();
+        this.stopBannerAutoPlay();
+        this.startBannerAutoPlay();
+      },
+
+      nextBanner() {
+        this.currentBannerIndex = (this.currentBannerIndex + 1) % this.totalBanners;
+        this.updateBannerPosition();
+        this.stopBannerAutoPlay();
+        this.startBannerAutoPlay();
+      },
+
+      prevBanner() {
+        this.currentBannerIndex = (this.currentBannerIndex - 1 + this.totalBanners) % this.totalBanners;
+        this.updateBannerPosition();
+        this.stopBannerAutoPlay();
+        this.startBannerAutoPlay();
+      },
+
+      updateBannerPosition() {
+        const slides = document.getElementById('bannerSlides');
+        slides.style.transform = `translateX(-${this.currentBannerIndex * 100}%)`;
+        
+        document.querySelectorAll('.banner-dot').forEach((dot, index) => {
+          dot.classList.toggle('active', index === this.currentBannerIndex);
+        });
+      },
+
+      startBannerAutoPlay() {
+        this.stopBannerAutoPlay();
+        this.bannerInterval = setInterval(() => {
+          this.nextBanner();
+        }, 5000);
+      },
+
+      stopBannerAutoPlay() {
+        if (this.bannerInterval) {
+          clearInterval(this.bannerInterval);
+          this.bannerInterval = null;
+        }
+      },
+
+      // Sidebar functions
       renderCategorySidebar() {
         const content = document.getElementById('categorySidebarContent');
         content.innerHTML = this.categories.map(cat => `
@@ -2416,6 +2417,7 @@
         document.getElementById('sidebarOverlay').classList.remove('active');
       },
 
+      // Search functions
       toggleSearch() {
         const container = document.getElementById('searchContainer');
         const input = document.getElementById('searchInput');
@@ -2434,7 +2436,52 @@
         this.performSearch(query);
       },
 
-      // Modern Card Slider
+      performSearch(query) {
+        if (!query.trim()) return;
+        
+        const searchResults = this.products.filter(p => 
+          p.name.toLowerCase().includes(query.toLowerCase()) ||
+          p.description.toLowerCase().includes(query.toLowerCase()) ||
+          p.category.toLowerCase().includes(query.toLowerCase())
+        );
+        
+        this.stopBannerAutoPlay();
+        
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.remove('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+        document.getElementById('checkoutPage').classList.add('hidden');
+        document.getElementById('wishlistPage').classList.add('hidden');
+        
+        document.getElementById('categoryBreadcrumb').textContent = `Search: "${query}"`;
+        document.getElementById('categoryTitle').textContent = `Search Results`;
+        document.getElementById('categorySubtitle').textContent = `Found ${searchResults.length} products`;
+        
+        const grid = document.getElementById('categoryProducts');
+        grid.innerHTML = searchResults.map(p => this.renderProductCard(p)).join('');
+        
+        document.getElementById('pagination').innerHTML = '';
+        
+        const searchContainer = document.getElementById('searchContainer');
+        searchContainer.classList.remove('active');
+        document.getElementById('searchInput').value = '';
+        
+        window.scrollTo(0, 0);
+      },
+
+      setupSearch() {
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            this.performSearch(searchInput.value);
+          }
+        });
+      },
+
+      // Slider functions
       renderCardSlider() {
         const slider = document.getElementById('categoriesSlider');
         slider.innerHTML = this.categories.map(cat => `
@@ -2495,13 +2542,7 @@
         slider.scrollBy({ left: 360, behavior: 'smooth' });
       },
 
-      updateWishlistCount() {
-        const count = this.wishlist.length;
-        const countEl = document.getElementById('wishlistCount');
-        
-        if (countEl) countEl.textContent = count;
-      },
-
+      // Product functions
       renderProductCard(product) {
         const isInWishlist = this.wishlist.some(item => item.id === product.id);
         
@@ -2531,60 +2572,74 @@
         `;
       },
 
-      toggleWishlistFromDetail() {
-        if (!this.currentProduct) return;
-        
-        this.toggleWishlist(this.currentProduct.id);
-        
-        const button = document.getElementById('productDetailWishlist');
-        const isInWishlist = this.wishlist.some(item => item.id === this.currentProduct.id);
-        button.classList.toggle('active', isInWishlist);
-        button.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
-      },
-      
-      toggleWishlist(productId) {
+      showProductDetail(productId) {
         const product = this.products.find(p => p.id === productId);
         if (!product) return;
         
-        const existingIndex = this.wishlist.findIndex(item => item.id === productId);
+        this.currentProduct = product;
+        this.productQuantity = 1;
         
-        if (existingIndex !== -1) {
-          this.wishlist.splice(existingIndex, 1);
-          this.showWishlistNotification('Removed from wishlist');
-        } else {
-          this.wishlist.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            image: product.images[0]
-          });
-          this.showWishlistNotification('Added to wishlist!');
-        }
+        this.stopBannerAutoPlay();
         
-        this.saveWishlist();
-        this.updateWishlistCount();
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.remove('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+        document.getElementById('checkoutPage').classList.add('hidden');
+        document.getElementById('wishlistPage').classList.add('hidden');
         
-        const buttons = document.querySelectorAll(`[onclick*="toggleWishlist('${productId}')"]`);
-        buttons.forEach(button => {
-          const isInWishlist = this.wishlist.some(item => item.id === productId);
-          button.classList.toggle('active', isInWishlist);
-          button.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
+        const category = this.categories.find(c => c.id === product.category);
+        document.getElementById('productCategoryBreadcrumb').textContent = category.name;
+        document.getElementById('productNameBreadcrumb').textContent = product.name;
+        
+        document.getElementById('productDetailTitle').textContent = product.name;
+        document.getElementById('productDetailPrice').textContent = `₹${product.price.toLocaleString()}`;
+        document.getElementById('productDetailDescription').textContent = product.description;
+        document.getElementById('productQuantity').textContent = this.productQuantity;
+        
+        const mainImage = document.getElementById('mainImage').querySelector('img');
+        mainImage.src = product.images[0];
+        mainImage.alt = product.name;
+        
+        const thumbnails = document.getElementById('thumbnails');
+        thumbnails.innerHTML = product.images.map((img, idx) => `
+          <div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="app.changeMainImage('${img}', ${idx})">
+            <img src="${img}" alt="${product.name}">
+          </div>
+        `).join('');
+        
+        const wishlistBtn = document.getElementById('productDetailWishlist');
+        const isInWishlist = this.wishlist.some(item => item.id === product.id);
+        wishlistBtn.classList.toggle('active', isInWishlist);
+        wishlistBtn.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
+        
+        window.scrollTo(0, 0);
+      },
+
+      changeMainImage(imageSrc, index) {
+        const mainImage = document.getElementById('mainImage').querySelector('img');
+        mainImage.src = imageSrc;
+        
+        document.querySelectorAll('.thumbnail').forEach((thumb, idx) => {
+          thumb.classList.toggle('active', idx === index);
         });
       },
 
-      showWishlistNotification(message) {
-        const notification = document.getElementById('wishlistNotification');
-        document.getElementById('wishlistNotificationText').textContent = message;
-        notification.classList.add('show');
-        setTimeout(() => {
-          notification.classList.remove('show');
-        }, 2000);
-      },
-      
-      saveWishlist() {
-        localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+      increaseQuantity() {
+        this.productQuantity++;
+        document.getElementById('productQuantity').textContent = this.productQuantity;
       },
 
+      decreaseQuantity() {
+        if (this.productQuantity > 1) {
+          this.productQuantity--;
+          document.getElementById('productQuantity').textContent = this.productQuantity;
+        }
+      },
+
+      // Navigation functions
       showHome() {
         document.getElementById('homePage').classList.remove('hidden');
         document.getElementById('categoryPage').classList.add('hidden');
@@ -2664,71 +2719,122 @@
         window.scrollTo(0, 0);
       },
 
-      showProductDetail(productId) {
-        const product = this.products.find(p => p.id === productId);
-        if (!product) return;
-        
-        this.currentProduct = product;
-        this.productQuantity = 1;
-        
+      showPolicy() {
         this.stopBannerAutoPlay();
-        
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('categoryPage').classList.add('hidden');
-        document.getElementById('productDetailPage').classList.remove('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.remove('hidden');
+        document.getElementById('careGuidePage').classList.add('hidden');
+        document.getElementById('checkoutPage').classList.add('hidden');
+        document.getElementById('wishlistPage').classList.add('hidden');
+        window.scrollTo(0, 0);
+      },
+
+      showCareGuide() {
+        this.stopBannerAutoPlay();
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
+        document.getElementById('orderConfirmationPage').classList.add('hidden');
+        document.getElementById('policyPage').classList.add('hidden');
+        document.getElementById('careGuidePage').classList.remove('hidden');
+        document.getElementById('checkoutPage').classList.add('hidden');
+        document.getElementById('wishlistPage').classList.add('hidden');
+        window.scrollTo(0, 0);
+      },
+
+      showWishlist() {
+        this.stopBannerAutoPlay();
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('categoryPage').classList.add('hidden');
+        document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
         document.getElementById('careGuidePage').classList.add('hidden');
         document.getElementById('checkoutPage').classList.add('hidden');
-        document.getElementById('wishlistPage').classList.add('hidden');
+        document.getElementById('wishlistPage').classList.remove('hidden');
         
-        const category = this.categories.find(c => c.id === product.category);
-        document.getElementById('productCategoryBreadcrumb').textContent = category.name;
-        document.getElementById('productNameBreadcrumb').textContent = product.name;
-        
-        document.getElementById('productDetailTitle').textContent = product.name;
-        document.getElementById('productDetailPrice').textContent = `₹${product.price.toLocaleString()}`;
-        document.getElementById('productDetailDescription').textContent = product.description;
-        document.getElementById('productQuantity').textContent = this.productQuantity;
-        
-        const mainImage = document.getElementById('mainImage').querySelector('img');
-        mainImage.src = product.images[0];
-        mainImage.alt = product.name;
-        
-        const thumbnails = document.getElementById('thumbnails');
-        thumbnails.innerHTML = product.images.map((img, idx) => `
-          <div class="thumbnail ${idx === 0 ? 'active' : ''}" onclick="app.changeMainImage('${img}', ${idx})">
-            <img src="${img}" alt="${product.name}">
-          </div>
-        `).join('');
-        
-        const wishlistBtn = document.getElementById('productDetailWishlist');
-        const isInWishlist = this.wishlist.some(item => item.id === product.id);
-        wishlistBtn.classList.toggle('active', isInWishlist);
-        wishlistBtn.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
-        
+        this.renderWishlist();
         window.scrollTo(0, 0);
       },
 
-      changeMainImage(imageSrc, index) {
-        const mainImage = document.getElementById('mainImage').querySelector('img');
-        mainImage.src = imageSrc;
+      renderWishlist() {
+        const container = document.getElementById('wishlistProducts');
         
-        document.querySelectorAll('.thumbnail').forEach((thumb, idx) => {
-          thumb.classList.toggle('active', idx === index);
+        if (this.wishlist.length === 0) {
+          container.innerHTML = '<div class="empty-cart">Your wishlist is empty</div>';
+          return;
+        }
+        
+        const wishlistProductsData = this.wishlist.map(wItem => {
+          return this.products.find(p => p.id === wItem.id);
+        }).filter(p => p);
+        
+        container.innerHTML = wishlistProductsData.map(p => this.renderProductCard(p)).join('');
+      },
+
+      // Wishlist functions
+      toggleWishlistFromDetail() {
+        if (!this.currentProduct) return;
+        
+        this.toggleWishlist(this.currentProduct.id);
+        
+        const button = document.getElementById('productDetailWishlist');
+        const isInWishlist = this.wishlist.some(item => item.id === this.currentProduct.id);
+        button.classList.toggle('active', isInWishlist);
+        button.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
+      },
+      
+      toggleWishlist(productId) {
+        const product = this.products.find(p => p.id === productId);
+        if (!product) return;
+        
+        const existingIndex = this.wishlist.findIndex(item => item.id === productId);
+        
+        if (existingIndex !== -1) {
+          this.wishlist.splice(existingIndex, 1);
+          this.showWishlistNotification('Removed from wishlist');
+        } else {
+          this.wishlist.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.images[0]
+          });
+          this.showWishlistNotification('Added to wishlist!');
+        }
+        
+        this.saveWishlist();
+        this.updateWishlistCount();
+        
+        const buttons = document.querySelectorAll(`[onclick*="toggleWishlist('${productId}')"]`);
+        buttons.forEach(button => {
+          const isInWishlist = this.wishlist.some(item => item.id === productId);
+          button.classList.toggle('active', isInWishlist);
+          button.setAttribute('title', isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist');
         });
       },
 
-      increaseQuantity() {
-        this.productQuantity++;
-        document.getElementById('productQuantity').textContent = this.productQuantity;
+      showWishlistNotification(message) {
+        const notification = document.getElementById('wishlistNotification');
+        document.getElementById('wishlistNotificationText').textContent = message;
+        notification.classList.add('show');
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 2000);
+      },
+      
+      saveWishlist() {
+        localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
       },
 
-      decreaseQuantity() {
-        if (this.productQuantity > 1) {
-          this.productQuantity--;
-          document.getElementById('productQuantity').textContent = this.productQuantity;
-        }
+      updateWishlistCount() {
+        const count = this.wishlist.length;
+        const countEl = document.getElementById('wishlistCount');
+        
+        if (countEl) countEl.textContent = count;
       },
 
       addToCart(productId, quantity = 1) {
@@ -2810,7 +2916,7 @@
               </div>
             </div>
             <button class="remove-item" onclick="app.removeFromCart('${item.id}')">
-                          <i class="fas fa-trash"></i>
+              <i class="fas fa-trash"></i>
             </button>
           </div>
         `).join('');
@@ -2849,20 +2955,29 @@
       },
 
       proceedToCheckout() {
-        if (this.cart.length === 0) return;
+        if (this.cart.length === 0) {
+          alert('Your cart is empty!');
+          return;
+        }
         
-        this.toggleCart();
+        const sidebar = document.getElementById('cartSidebar');
+        sidebar.classList.remove('active');
+        
         this.stopBannerAutoPlay();
         
+        // Hide all pages
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('categoryPage').classList.add('hidden');
         document.getElementById('productDetailPage').classList.add('hidden');
         document.getElementById('orderConfirmationPage').classList.add('hidden');
         document.getElementById('policyPage').classList.add('hidden');
         document.getElementById('careGuidePage').classList.add('hidden');
-        document.getElementById('checkoutPage').classList.remove('hidden');
         document.getElementById('wishlistPage').classList.add('hidden');
         
+        // Show checkout page
+        document.getElementById('checkoutPage').classList.remove('hidden');
+        
+        // Render checkout
         this.renderCheckout();
         window.scrollTo(0, 0);
       },
@@ -3030,7 +3145,8 @@
             },
             body: JSON.stringify({
               type: 'order_confirmation',
-              orderData
+              orderData,
+              CONFIG.store.email
             })
           });
         } catch (err) {
@@ -3072,62 +3188,6 @@
         window.scrollTo(0, 0);
       },
 
-      showPolicy() {
-        this.stopBannerAutoPlay();
-        document.getElementById('homePage').classList.add('hidden');
-        document.getElementById('categoryPage').classList.add('hidden');
-        document.getElementById('productDetailPage').classList.add('hidden');
-        document.getElementById('orderConfirmationPage').classList.add('hidden');
-        document.getElementById('policyPage').classList.remove('hidden');
-        document.getElementById('careGuidePage').classList.add('hidden');
-        document.getElementById('checkoutPage').classList.add('hidden');
-        document.getElementById('wishlistPage').classList.add('hidden');
-        window.scrollTo(0, 0);
-      },
-
-      showCareGuide() {
-        this.stopBannerAutoPlay();
-        document.getElementById('homePage').classList.add('hidden');
-        document.getElementById('categoryPage').classList.add('hidden');
-        document.getElementById('productDetailPage').classList.add('hidden');
-        document.getElementById('orderConfirmationPage').classList.add('hidden');
-        document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('careGuidePage').classList.remove('hidden');
-        document.getElementById('checkoutPage').classList.add('hidden');
-        document.getElementById('wishlistPage').classList.add('hidden');
-        window.scrollTo(0, 0);
-      },
-
-      showWishlist() {
-        this.stopBannerAutoPlay();
-        document.getElementById('homePage').classList.add('hidden');
-        document.getElementById('categoryPage').classList.add('hidden');
-        document.getElementById('productDetailPage').classList.add('hidden');
-        document.getElementById('orderConfirmationPage').classList.add('hidden');
-        document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('careGuidePage').classList.add('hidden');
-        document.getElementById('checkoutPage').classList.add('hidden');
-        document.getElementById('wishlistPage').classList.remove('hidden');
-        
-        this.renderWishlist();
-        window.scrollTo(0, 0);
-      },
-
-      renderWishlist() {
-        const container = document.getElementById('wishlistProducts');
-        
-        if (this.wishlist.length === 0) {
-          container.innerHTML = '<div class="empty-cart">Your wishlist is empty</div>';
-          return;
-        }
-        
-        const wishlistProductsData = this.wishlist.map(wItem => {
-          return this.products.find(p => p.id === wItem.id);
-        }).filter(p => p);
-        
-        container.innerHTML = wishlistProductsData.map(p => this.renderProductCard(p)).join('');
-      },
-
       setupEventListeners() {
         document.getElementById('cartIcon').addEventListener('click', () => this.toggleCart());
         document.getElementById('closeCart').addEventListener('click', () => this.toggleCart());
@@ -3154,51 +3214,6 @@
         } catch (err) {
           console.error('Failed to fetch pincode data:', err);
         }
-      },
-
-      setupSearch() {
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') {
-            this.performSearch(searchInput.value);
-          }
-        });
-      },
-
-      performSearch(query) {
-        if (!query.trim()) return;
-        
-        const searchResults = this.products.filter(p => 
-          p.name.toLowerCase().includes(query.toLowerCase()) ||
-          p.description.toLowerCase().includes(query.toLowerCase()) ||
-          p.category.toLowerCase().includes(query.toLowerCase())
-        );
-        
-        this.stopBannerAutoPlay();
-        
-        document.getElementById('homePage').classList.add('hidden');
-        document.getElementById('categoryPage').classList.remove('hidden');
-        document.getElementById('productDetailPage').classList.add('hidden');
-        document.getElementById('orderConfirmationPage').classList.add('hidden');
-        document.getElementById('policyPage').classList.add('hidden');
-        document.getElementById('careGuidePage').classList.add('hidden');
-        document.getElementById('checkoutPage').classList.add('hidden');
-        document.getElementById('wishlistPage').classList.add('hidden');
-        
-        document.getElementById('categoryBreadcrumb').textContent = `Search: "${query}"`;
-        document.getElementById('categoryTitle').textContent = `Search Results`;
-        document.getElementById('categorySubtitle').textContent = `Found ${searchResults.length} products`;
-        
-        const grid = document.getElementById('categoryProducts');
-        grid.innerHTML = searchResults.map(p => this.renderProductCard(p)).join('');
-        
-        document.getElementById('pagination').innerHTML = '';
-        
-        const searchContainer = document.getElementById('searchContainer');
-        searchContainer.classList.remove('active');
-        document.getElementById('searchInput').value = '';
-        
-        window.scrollTo(0, 0);
       }
     };
 

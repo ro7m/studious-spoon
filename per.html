@@ -190,6 +190,133 @@
       opacity: 1;
       visibility: visible;
     }
+
+    .newsletter-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(28, 33, 76, 0.6); /* Primary color with opacity */
+      z-index: 10002; /* Higher than header/sidebar */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(3px);
+    }
+
+    .newsletter-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .newsletter-modal {
+      background: var(--white);
+      width: 90%;
+      max-width: 500px;
+      padding: 3rem 2rem;
+      border-radius: 15px; /* Matching card border radius */
+      text-align: center;
+      position: relative;
+      transform: translateY(50px);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      border: 1px solid var(--border);
+    }
+
+    .newsletter-overlay.active .newsletter-modal {
+      transform: translateY(0);
+    }
+
+    .close-newsletter {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close-newsletter:hover {
+      color: var(--primary);
+    }
+
+    .newsletter-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .newsletter-modal h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .newsletter-modal p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .newsletter-form input {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-form input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .newsletter-btn {
+      background: var(--primary);
+      color: var(--white);
+      border: 1px solid var(--primary);
+      padding: 1rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-btn:hover {
+      background: var(--white);
+      color: var(--primary);
+    }
+
+    .no-thanks {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }    
     
     .logo {
       font-family: 'Cormorant Garamond', serif;
@@ -2151,9 +2278,39 @@
     </div>
   </div>
 
+  
   <a href="https://wa.me/918871542203" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
+
+    <div class="newsletter-overlay" id="newsletterOverlay">
+    <div class="newsletter-modal">
+      <button class="close-newsletter" onclick="app.closeNewsletter()">&times;</button>
+      
+      <div id="newsletterContent">
+        <div class="newsletter-icon">
+          <i class="fas fa-envelope-open-text"></i>
+        </div>
+        <h2>Unlock 10% Off</h2>
+        <p>Subscribe to the Misha newsletter to receive exclusive offers, new arrival updates, and a welcome gift for your first order.</p>
+        
+        <form class="newsletter-form" onsubmit="event.preventDefault(); app.submitNewsletter();">
+          <input type="email" id="newsletterEmail" placeholder="Enter your email address" required>
+          <button type="submit" class="newsletter-btn">Subscribe Now</button>
+        </form>
+        <button class="no-thanks" onclick="app.closeNewsletter()">No thanks, I prefer paying full price</button>
+      </div>
+
+      <div id="newsletterSuccess" class="hidden">
+        <div class="newsletter-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>You're on the list!</h2>
+        <p>Thank you for subscribing. Use code <strong>MISHA10</strong> at checkout.</p>
+        <button class="newsletter-btn" onclick="app.closeNewsletter()">Start Shopping</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Notifications -->
   <div id="cartNotification" class="notification cart-notification">
@@ -2342,6 +2499,44 @@
         this.setupEventListeners();
         this.setupSearch();
         this.initBannerCarousel();
+        this.initNewsletter(); 
+      },
+
+            initNewsletter() {
+        // Check if user has already seen the modal or subscribed
+        const hasSeenNewsletter = localStorage.getItem('misha_newsletter_seen');
+        
+        if (!hasSeenNewsletter) {
+          // Set delay for 15 seconds (15000 milliseconds)
+          setTimeout(() => {
+            this.openNewsletter();
+          }, 15000);
+        }
+      },
+
+      openNewsletter() {
+        const checkoutPage = document.getElementById('checkoutPage');
+        if (checkoutPage.classList.contains('hidden')) {
+            document.getElementById('newsletterOverlay').classList.add('active');
+        }
+      },
+
+      closeNewsletter() {
+        document.getElementById('newsletterOverlay').classList.remove('active');
+        localStorage.setItem('misha_newsletter_seen', 'true');
+      },
+
+      submitNewsletter() {
+        const email = document.getElementById('newsletterEmail').value;
+        if(email) {
+            document.getElementById('newsletterContent').classList.add('hidden');
+            document.getElementById('newsletterSuccess').classList.remove('hidden');
+            
+            localStorage.setItem('misha_newsletter_seen', 'true');
+            
+            // Optional: You could send this email to Supabase here
+            //console.log("Subscribed email:", email);
+        }
       },
 
       async loadProducts() {
